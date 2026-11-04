@@ -1,0 +1,200 @@
+# Security Events
+
+## Event Contract
+
+This file owns security-event definitions, their contract and ledger status. It assesses the [architecture boundaries TB-1–TB-10](ARCHITECTURE.md#trust-boundaries-and-enforcement-points), not verified runtime coverage. Controls and open security decisions are owned by [SECURITY.md](SECURITY.md); agent implementation/review workflow is in [AGENTS.md](AGENTS.md#security-event-implementation-workflow).
+
+- **Baseline target:** `56122c13b367dda73cbaf131960f97cf308aacc7`; clean specification baseline before the original assessment. The current consolidation preserves all ledger rows and runtime evidence status.
+- **Library:** [Dread Ledger](https://github.com/jmanico/dread-ledger), local checkout `../dread-ledger`, clean revision `c8c7e3892de9eb9264d4ea8344d47b5aff2cc2a4`. Assessment inputs: `runbook.md`, `prompts/00-shared-instruction.md`, `prompts/01-assess.md`, and `reference/{coverage,event-contract,security-events,verification}.md`.
+- **Gates:** specification scope/checklist reconciliation **PASS**; local foundation, waves, and deployment **NOT RUN**. No application, collectors, provider audit feeds, production policy, or runtime tests establish coverage. No production logs were accessed.
+- **Implementation sequence:** See [AGENTS.md](AGENTS.md#security-event-implementation-workflow).
+
+### Required audit events
+
+- **NFR-2.2** Source/repository registration, permission/role changes, archive/restore actions, issue writes, exports and delivery failures MUST record actor/service, action, time, affected record, outcome and safe reason in the audit trail. FR-6.9, FR-7.8 and FR-12.7 additionally require audit for their configuration changes; administrative mutation audit is governed by [SEC-8](SECURITY.md#sec-8--durable-jobs-errors-and-audit). The envelope below defines the representation, and the ledger maps actions to event names.
+
+### AI egress audit obligation
+
+Approved external-AI requests require an audit digest of the approved outbound bytes and safe provider metadata (relocated from SEC-6). The current contract has no payload-digest field; [OD-005](SECURITY.md#od-005) retains this unresolved representation question without extending the schema. Projection/privacy enforcement remains in [SEC-6](SECURITY.md#sec-6--secrets-retention-and-external-ai) and [SEC-11](SECURITY.md#sec-11--security-event-enforcement).
+
+### Schema and field ownership
+
+The [architecture](ARCHITECTURE.md#service-and-persistence-organization) identifies the logger/audit interfaces; [SEC-11](SECURITY.md#sec-11--security-event-enforcement) defines serialization, privacy, identity and delivery enforcement.
+
+Names below are stable constants in the `dread.` namespace. `schema_version` starts at `1`; changes to meaning or types require an explicit versioned migration. Each event permits only the envelope plus the extra fields explicitly listed for that name in the ledger; repeated names share one contract. No free-form message, metadata bag, nested object, dynamic key, or undeclared field is permitted.
+
+String limits count **UTF-8 bytes after JSON escaping, excluding the surrounding quotation marks**. Keys are fixed ASCII identifiers of at most 40 bytes. The complete serialized record, including punctuation and logger/receiver additions, is at most **8,192 bytes**; reserve **4,096 bytes** for the envelope. Only `supporting_event_refs` may be an array: at most eight reference strings. No other collections or nesting are allowed. Invalid-field handling follows [SEC-11](SECURITY.md#sec-11--security-event-enforcement).
+
+| Field | Type and limit | Trusted source and meaning |
+| --- | --- | --- |
+| `schema_version` | Integer, exactly `1` | Code-owned event catalog. |
+| `event_id` | String, 36 bytes; generated UUID | Producer-generated non-secret record identity, never client correlation or a business credential. |
+| `producer_ref` | Opaque string, 128 bytes | Deployment-established producer namespace; receiver authenticates its source rather than trusting the payload alone. |
+| `event` | Catalog string, 96 bytes | Exact name from this ledger; never concatenate input. |
+| `timestamp` | UTC RFC 3339 string, 24 bytes, millisecond precision | Producer time at the named decision/outcome boundary. |
+| `ingested_timestamp`, `observed_timestamp` | Same timestamp type | Receiver-owned ingestion time; separately observed provider/platform time only when available. Omit unavailable times; never copy event time to invent receipt time. |
+| `service`, `environment` | Strings, 32 bytes each | `service=daily-dread`; environment from validated deployment configuration. |
+| `severity` | Enum `info`, `warn`, `error`, `fatal` | Catalog mapping: normal attempts/commits `info`, control denials/validation failures `warn`, failed operations/pipeline faults `error`, unrecoverable termination `fatal`. An event-specific exception needs a documented rationale. No attack-confidence claim follows from level. |
+| `security_relevant` | Boolean, always `true` | Producer classification for this stream. |
+| `audit_required` | Boolean | Trusted catalog policy: true for the [required audit events](#required-audit-events). Other classes remain `pending_decision` in this assessment until OD-004 resolves them; never emit that string or silently use false at runtime. |
+| `actor_kind` | Enum `user`, `service`, `anonymous`, `unknown` | Authentication boundary; failed login with no established identity uses `unknown`. |
+| `actor_ref`, `tenant_ref`, `target_ref` | Opaque non-secret strings, 128 bytes each | Existing internal account/service, installation-company, and authorized object references. Include when established; provenance enforcement is in S§11. |
+| `actor_provenance` | Enum `verified_session`, `validated_token`, `authenticated_service`, `trusted_internal_assertion` | Validated session/token or recorded trusted service context. Omit when identity is unknown. No impersonation provenance is authorized by this schema. |
+| `source`, `action`, `reason_code`, `policy_ref` | Catalog strings, 64 bytes each | Component, named operation, safe categorical result, and applicable versioned policy/rule. `source` and `action` required; reason required for non-success and required audit; policy required for policy decisions. No exception text or submitted field values. |
+| `outcome` | Enum defined below | Authoritative decision, commit, or adapter result; not inferred from HTTP status. |
+| `interaction_id`, `operation_ref`, `job_ref`, `risk_event_ref` | Opaque strings, 128 bytes each | Server-generated request/operation identity or trusted durable job/original risk-event identity. Required where the operation has that correlation; omit when unavailable. |
+| `trace_id` | Validated hexadecimal string, 32 bytes | Optional trace context; separate from trusted request identity and never authorization evidence. |
+| `context_status` | Enum `optional_context_omitted`, `optional_context_invalid` | Serializer-owned marker; otherwise absent. |
+
+Every row inherits applicable envelope fields. Identity provenance and reference handling are enforced by [SEC-11](SECURITY.md#sec-11--security-event-enforcement); additional collection remains subject to [OD-003](SECURITY.md#od-003).
+
+**Extra-field dictionary:** each field is allowed only in rows naming it. Reference fields identify approved local records, never credentials or raw provider IDs; denied input is never promoted to a reference.
+
+| Fields | Type and maximum | Source |
+| --- | --- | --- |
+| `provider_ref`, `config_ref`, `revision_ref`, `previous_revision_ref`, `approval_ref`, `destination_ref`, `recipient_ref`, `report_ref`, `delivery_ref`, `evidence_ref`, `credential_record_ref`, `key_record_ref`, `backup_ref` | Opaque string, 128 bytes each | Authorized internal owner records; recipient is a personal reference subject to OD-003. Credential/key references are independently allocated, non-authenticating audit surrogates, subject to SEC-11 approval/exclusion controls. |
+| `resource_kind`, `auth_method`, `stage`, `state`, `previous_state`, `role`, `channel`, `format`, `data_category`, `limit_kind`, `error_code`, `change_kind`, `disclosure_class`, `boundary` | Catalog enum string, 64 bytes each | Typed owner/control result. Each event's implementation must close its enum to its documented subcases; no arbitrary input accepted as a category. |
+| `count`, `attempt`, `limit`, `observed`, `duration_ms`, `dropped_count`, `lag_ms` | Integer, 0 through 9,007,199,254,740,991 | Bounded server counters, with no coercion or rounding. Limit/observed units follow `limit_kind`; duration/lag are milliseconds. |
+| `retryable` | Boolean | Typed adapter/domain decision. |
+| `signal_provenance` | Enum `client_report`, `server_control`, `trusted_provider`, `heuristic` | Actual validated signal origin, never caller-selected trust. |
+| `detector_id`, `detector_version` | Catalog strings, 64 bytes each | Existing verified detector identity/version, if one exists. |
+| `confidence` | Enum `low`, `medium`, `high`, `unknown` | Detector-specific documented meaning; distinct from finding confidence scores and severity. |
+| `supporting_event_refs` | Up to eight opaque strings, 128 bytes each | Authorized supporting event records; no cross-context disclosure. |
+
+In the ledger, **D** means the six detector fields (`signal_provenance`, `detector_id`, `detector_version`, `confidence`, `supporting_event_refs`, `evidence_ref`). D is conditional on an actual documented signal contract. A report, blocked request or rule match does not mean exploitation or compromise; collection controls are in SEC-11.
+
+### Outcome and retransmission semantics
+
+`attempted` means initiation only; `success` means the named operation completed, and a mutation committed; `failure` means the operation failed, including rejected credential verification; `denied` means a policy/validation rejection; `rolled_back` means a started mutation was undone; `unknown` means completion is unestablished. Record stages separately where initiation, authorization, approval, execution, or reversal matter. Cancellation is a `state`, not an invented success. Provider acceptance is success only for the named acceptance operation, never human readership. A queued export is not a completed download; retain later failure/unknown outcomes.
+
+Producer acceptance, queue admission, database commit, collector acknowledgment, searchable storage and alert delivery are distinct outcomes. `event_id` identifies one immutable event within its authenticated producer namespace; identical retransmissions retain it, while distinct attempts/outcomes receive new IDs and share operation/job references. Receiver-added metadata is not part of the producer record. Arrival can be out of order; timestamps do not establish total order.
+
+Privacy, audit durability, deduplication, bounded failure handling and destination enforcement are in [SEC-8](SECURITY.md#sec-8--durable-jobs-errors-and-audit) and [SEC-11](SECURITY.md#sec-11--security-event-enforcement); unresolved policy remains in [OD-001–OD-005](SECURITY.md#open-decisions-for-security-events).
+
+## Ledger
+
+**Disposition:** `missing` means the specifications make a subcase applicable but no code has passed verification. `unavailable_signal` means applicability, detector, provider/platform evidence, or access is unresolved. `not_applicable` requires an absent feature. Compound rows use missing before unavailable evidence; residual unavailable subcases remain explicit. No row is covered. Shared names represent one emission mapped to several checklist IDs, not duplicate events.
+
+**Consumers:** **A** = specified restricted audit history; **H** = specified admin operational dashboard/health projection; **P** = authorized product status/history view; **U** = consumer/query and access assignment unresolved under OD-001. These are logical consumers, not new destinations or named owners. A/H/P do not authorize forwarding full events or granting every user audit access. Unless already identified in the specifications (for example company IT for backups), accountable assignments remain unassigned; resolve them before claiming coverage.
+
+**Waves:** **0** foundation, pipeline safety and health; **1** privileged changes, identity, company/owner boundaries and disclosure (promoted because one admitted account can read all company repositories); **2** credential lifecycle and integration trust; **3** validation, resource and workflow enforcement; **4** contextual/platform evidence. An unavailable row's wave is a review priority, not permission to build a detector. Implementation steps are in [AGENTS.md](AGENTS.md#security-event-implementation-workflow).
+
+Requirement IDs resolve through [REQUIREMENTS.md](REQUIREMENTS.md), including its relocated-ID owner links: NFR-2.2 is defined here; FR-4.12/NFR-3.1 in DESIGN.md; NFR-3.2/NFR-5 in AGENTS.md; FR-7.7/FR-8.10/FR-12.1–FR-12.3/NFR-2.1/NFR-2.3–NFR-2.4 in SECURITY.md. `S§n` means that file's `SEC-n` control section, distinct from zero-padded ledger IDs. Component, DR and TB references refer to ARCHITECTURE.md. Slash/range references retain their leading family (for example FR-7.1/7.6 and SEC-040/033).
+
+| ID | Disposition | Requirement/component and trigger or limit | Proposed event name and extra fields | Consumer | Wave |
+| --- | --- | --- | --- | --- | --- |
+| SEC-001 | missing | FR-7.1/7.6; identity gate: browser/API authentication success/failure; adapter service authentication results when exposed. Provider-internal workload logins unavailable. | `dread.auth.result`: auth_method, provider_ref, stage, error_code | A/U | 1 |
+| SEC-002 | unavailable_signal | Identity provider/identity gate: no repeated-failure, lockout/reset correlation signal specified. | Reserved `dread.auth.recovery_login`: D, auth_method | U | 2 |
+| SEC-003 | unavailable_signal | S§5 requires rate limits, not spraying/stuffing/enumeration detection. | Reserved `dread.auth.abuse_signal`: D | U | 3 |
+| SEC-004 | missing | FR-7.8, S§2: deny removed/stale roles and invalidate affected sessions. Provider account lock/unlock/suspension/reactivation lifecycle unavailable. | `dread.auth.access_state`: state, previous_state, role, config_ref | A/U | 1 |
+| SEC-005 | unavailable_signal | FR-7.1 excludes local passwords/recovery; upstream IdP password/reset/failure events are not supplied. | Reserved `dread.identity.recovery`: D, stage | U | 2 |
+| SEC-006 | unavailable_signal | S§2 fresh authentication is not MFA evidence; IdP challenge/push/fatigue feed unspecified. | Reserved `dread.identity.mfa_challenge`: D, stage | U | 2 |
+| SEC-007 | unavailable_signal | No native MFA enrollment/recovery; IdP factor lifecycle/strength events unavailable. | Reserved `dread.identity.mfa_change`: D, change_kind | U | 2 |
+| SEC-008 | unavailable_signal | No native passkey management; provider registration/removal/verification feed unavailable. | Reserved `dread.identity.passkey`: D, stage | U | 2 |
+| SEC-009 | unavailable_signal | Notification destinations are not recovery channels. IdP recovery contacts/devices/account ownership signals unspecified. | Reserved `dread.identity.recovery_change`: D, change_kind | U | 2 |
+| SEC-010 | unavailable_signal | FR-7.1 excludes local emergency accounts; provider shared/dormant/unexpected-account classification absent. | Reserved `dread.auth.account_class_signal`: D | U | 2 |
+| SEC-011 | unavailable_signal | No travel detector, trusted location feed, or collection policy. | Reserved `dread.auth.travel_signal`: D | U | 4 |
+| SEC-012 | unavailable_signal | No unfamiliar-device/network/reputation detector or approved collection. | Reserved `dread.auth.origin_signal`: D | U | 4 |
+| SEC-013 | unavailable_signal | Session store does not establish concurrent-session/location/token anomaly detection. | Reserved `dread.session.anomaly`: D | U | 2 |
+| SEC-014 | unavailable_signal | No phishing/stolen-session/compromised-credential detector feed specified. | Reserved `dread.auth.compromise_signal`: D | U | 1 |
+| SEC-015 | missing | FR-7.3–7.5, S§1–3: scoped object/function/admin/field authorization denies. | `dread.authz.decision`: resource_kind, role, stage | A/U | 1 |
+| SEC-016 | missing | TB-1/TB-8, DR-9: enforce installation company scope despite single-company deployment; reject mismatched context. No foreign-company enrichment. | `dread.authz.company_boundary`: resource_kind, boundary | A/U | 1 |
+| SEC-017 | missing | FR-7.5: personal preferences, destinations, watchlists and alert history ownership checks. | `dread.authz.owner_boundary`: resource_kind | A/U | 1 |
+| SEC-018 | missing | FR-7.3/7.8, S§2: admin-role acquisition/removal, privileged attempts and rotation. Temporary grants/expiration and escalation detectors unspecified. | `dread.authz.role_transition`: role, stage, config_ref; `dread.authz.decision` | A/U | 1 |
+| SEC-019 | missing | NFR-2.2, FR-7.8: trusted role/mapping/permission changes. Provider group/delegation administration feed unavailable. | `dread.authz.policy_change`: change_kind, config_ref, revision_ref, previous_revision_ref | A | 1 |
+| SEC-020 | unavailable_signal | FR-7.1 excludes local emergency account; no impersonation/support/delegation workflow or upstream access evidence specified. | Reserved `dread.identity.special_access`: D, stage; identity contract must be extended before use | U | 1 |
+| SEC-021 | missing | FR-7.8, S§1/2: mapping change and policy evaluation error/stale authority denial; fail-open prohibited, detector unavailable. | `dread.authz.policy_change`; `dread.authz.evaluation`: error_code, config_ref | A/H | 1 |
+| SEC-022 | unavailable_signal | S§2/8 require denial after revocation, but no runtime detector for a successful policy bypass exists. Verification follows S§10. | Reserved `dread.authz.unexpected_success`: D | U | 1 |
+| SEC-023 | missing | FR-7.7/7.8, S§2: session creation, rotation/renewal, idle/absolute expiry, logout, revocation and invalidation failure. | `dread.session.lifecycle`: stage, state, config_ref, error_code; no session identifier | A/U | 1 |
+| SEC-024 | missing | S§2: reject revoked/rotated sessions. Fixation/hijacking detection otherwise unavailable. | `dread.session.rejected`: state, error_code; no credential fingerprint | A/U | 1 |
+| SEC-025 | missing | FR-3.3/3.17/12.7, S§6: provider credential replacement/rotation/revocation and scope settings; no independent app API keys (FR-6.2); provider issuance feed may be unavailable. | `dread.credential.lifecycle`: provider_ref, credential_record_ref, stage, config_ref | A/H | 2 |
+| SEC-026 | missing | FR-7.6, S§2: signature/issuer/audience/expiry/claim/type validation failure. | `dread.auth.token_rejected`: provider_ref, stage, error_code | A/U | 1 |
+| SEC-027 | missing | S§2: atomically consumed login transaction rejects code/state reuse. Provider refresh/access-token replay detectors unavailable. | `dread.auth.transaction_rejected`: stage, error_code; never code/token/state values | A/U | 1 |
+| SEC-028 | missing | FR-7.7, S§2: callback, state, nonce, PKCE and browser binding failures. Sender-constrained tokens are unspecified. | `dread.auth.protocol_rejected`: provider_ref, stage, error_code | A/U | 1 |
+| SEC-029 | missing | FR-3.3/3.7/3.17: GitHub installation grant/access and issue-scope changes/revocation observed by adapter. Broader OAuth app/consent administration feed unavailable. | `dread.integration.grant`: provider_ref, stage, config_ref, resource_kind | A/H | 2 |
+| SEC-030 | missing | FR-7.8, S§2: OIDC issuer/client/mapping activation, replacement trust validation and authorization invalidation. Provider signing-key administration unavailable. | `dread.identity.config_change`: config_ref, revision_ref, previous_revision_ref, stage | A | 1 |
+| SEC-031 | missing | FR-6.4, FR-8.11/8.12, S§3/5: reject unknown/duplicate fields, invalid encodings/types/schema and unsafe parse results. | `dread.input.rejected`: resource_kind, stage, error_code | H/U | 3 |
+| SEC-032 | unavailable_signal | S§1/3 prevent injection; no SQL/command/template/LDAP attack detector is specified. Validator rejection alone is not detection. | Reserved `dread.input.injection_signal`: D | U | 3 |
+| SEC-033 | missing | S§5/7: traversal/symlink containment and prohibited parsing/rendering controls reject unsafe content. XSS/file-inclusion exploit detection otherwise unavailable. | `dread.content.policy_rejected`: resource_kind, stage, error_code | H/U | 3 |
+| SEC-034 | missing | FR-7.7, S§2/3: CSRF and same-origin/CORS enforcement rejection. | `dread.http.origin_rejected`: stage, error_code | A/U | 1 |
+| SEC-035 | unavailable_signal | S§7 specifies enforced CSP, but no report endpoint/provider or violation feed. Endpoint-addition restrictions are in S§11. | Reserved `dread.browser.csp_report`: D, stage | U | 3 |
+| SEC-036 | missing | NFR-2.3, S§4: adapter blocks unapproved destination/address/redirect, including metadata/private networks. | `dread.egress.denied`: provider_ref, config_ref, stage, disclosure_class | A/H | 1 |
+| SEC-037 | missing | S§2/3: method/media/framing/schema rejection at ingress/Fastify. No independent request-smuggling detector feed established. | `dread.http.rejected`: stage, error_code | H/U | 3 |
+| SEC-038 | missing | S§4/5: retrieved-content decompression/expansion and traversal controls; SEC-040/033 shared emissions. Logo uploads excluded (FR-6.9); upload/malware scanner feed unavailable. | `dread.resource.limit`: limit_kind, limit, observed; `dread.content.policy_rejected` | H/U | 3 |
+| SEC-039 | unavailable_signal | No scanning/forced-browsing/enumeration detector; 404 counts alone do not establish malicious intent. | Reserved `dread.http.enumeration_signal`: D | U | 3 |
+| SEC-040 | missing | FR-3.21, S§5: login/API/export/connector rate limits, concurrency, bytes, depth, parser and job budgets. Queue waiting is not itself a violation. | `dread.resource.limit`: limit_kind, limit, observed, stage | H/U | 3 |
+| SEC-041 | missing | FR-3.4/4.7/7.4/11.2, NFR-2.2: sensitive reads/searches/downloads/exports and denials; recheck archive/source-use scope. | `dread.data.access`: resource_kind, report_ref, revision_ref, format, stage, count | A/U | 1 |
+| SEC-042 | missing | FR-4.7, S§5: report exports and bounded retrieval are known bulk operations (SEC-041). Broad-query/rapid-download anomaly detector unavailable. | `dread.data.access`: resource_kind, format, count; no query/filter text | A/U | 1 |
+| SEC-043 | missing | FR-4.8/5.8/11, NFR-2.2: shared records/notes/context creation/change/archive/restore; permanent user deletion excluded. | `dread.data.change`: resource_kind, change_kind, revision_ref, previous_revision_ref | A | 1 |
+| SEC-044 | missing | FR-10.8–10.12: external notifications/public issue writes and connector routing/access changes; no public report links. Newly public storage feed unavailable. | `dread.disclosure.result`: channel, destination_ref, revision_ref, stage, disclosure_class | A/H | 1 |
+| SEC-045 | missing | FR-12.1–12.3, S§6/7: local sensitive-data classification/redaction and prohibited egress; record category, never contents. | `dread.disclosure.blocked`: data_category, stage, provider_ref, policy_ref | A/H | 1 |
+| SEC-046 | unavailable_signal | S§3/8 require restricted DB/migration roles and append-only audit permissions; privileged SQL/DB permission-change audit source unspecified. | Reserved `dread.database.admin`: resource_kind, change_kind, config_ref | U | 1 |
+| SEC-047 | missing | NFR-4.3, S§6/9: company IT backup/restore operations are applicable; operator emission/access/export/share/delete evidence unavailable until supplied. App restore gate in SEC-APP-012. | `dread.backup.lifecycle`: backup_ref, stage, state, config_ref; conditional on operator evidence | U | 2 |
+| SEC-048 | unavailable_signal | No staging/archive/mass-encryption/destructive-pattern detector. Archive registration means retained business history, not archive-file detection. | Reserved `dread.storage.anomaly`: D | U | 4 |
+| SEC-049 | missing | FR-8.3/11.4, S§2/8, DESIGN confirmation tiers: approval, reauthentication, lifecycle and source-use invariant rejection. Separate-duty workflow unspecified. | `dread.workflow.rejected`: resource_kind, stage, approval_ref, revision_ref | A/H | 1 |
+| SEC-050 | missing | FR-6.6/8.13–8.16/10.6, S§8: duplicate intent, optimistic conflict, stale lease and idempotency enforcement. No exploit inference. | `dread.work.idempotency`: stage, state, revision_ref, attempt | A/H | 3 |
+| SEC-051 | not_applicable | Product Scope/FR-10.11: consumes paid messaging, but implements no payments, beneficiaries, refunds or discounts. Reassess if payment workflows are added. | None | None | 4 |
+| SEC-052 | missing | NFR-2.2, FR-7.8, S§2/8, DESIGN confirmation tiers: archive/restore, issuer/mapping/credential and privileged configuration initiation, authorization, confirmation, commit/failure/reversal. | `dread.admin.action`: resource_kind, stage, approval_ref, config_ref, revision_ref, previous_revision_ref | A | 1 |
+| SEC-053 | missing | S§2: fresh single-operation reauthentication required for identity/credential changes; reject absent/stale/reused evidence. Fraud/payment controls absent. | `dread.admin.verification`: stage, approval_ref, config_ref, error_code | A | 1 |
+| SEC-054 | missing | S§2/6: signature, encryption/decryption and authenticated-integrity failures. | `dread.crypto.failure`: stage, credential_record_ref, key_record_ref, error_code | A/H | 2 |
+| SEC-055 | missing | S§6: company-provisioned versioned key activation/rotation, re-encryption, new write key after restore; full external import/export/delete/destruction feed unavailable. | `dread.crypto.key_lifecycle`: key_record_ref, stage, config_ref | A/H | 2 |
+| SEC-056 | missing | S§6: restricted secret adapter and decrypt-only recovery keys deny invalid use. External key-permission changes/unusual-use detector unavailable. | `dread.crypto.key_use`: key_record_ref, stage, error_code | A/H | 2 |
+| SEC-057 | missing | S§6/TB-10: restricted mounted/encrypted secret access, update and rotation failures. Retrieval-burst detection unspecified. | `dread.secret.access`: credential_record_ref, stage, error_code; `dread.credential.lifecycle` | A/H | 2 |
+| SEC-058 | missing | NFR-2.1, S§3/4: outbound/DB TLS validation and hostname/handshake failures where adapter exposes them; ingress/client-certificate feed unavailable. | `dread.transport.trust_failure`: provider_ref, stage, error_code | H/U | 2 |
+| SEC-059 | unavailable_signal | TLS required; certificate lifecycle and trust-store administration signal/provider not specified. | Reserved `dread.transport.trust_change`: stage, config_ref, change_kind | U | 2 |
+| SEC-060 | missing | S§4/6/9: reject unsafe transport/algorithm settings; no weakening on retries. External downgrade detections unavailable. | `dread.config.security_rejected`: config_ref, stage, error_code | A/H | 2 |
+| SEC-061 | missing | S§6: randomness failures and nonce-reservation collision enforcement; record only code/count, no nonce/IV or key content. | `dread.crypto.randomness_failure`: stage, error_code; `dread.crypto.nonce_collision`: count | H/U | 2 |
+| SEC-062 | missing | FR-7.8, S§5/9: security-relevant configuration changes/rejections, including authentication and resource ceilings. Endpoint-protection administration feed unavailable. | `dread.admin.action`; `dread.config.security_rejected`: config_ref, revision_ref, stage | A/H | 1 |
+| SEC-063 | unavailable_signal | NFR-4.1 and the architecture Stack specify company-operated Docker; cloud control-plane contract/audit feed unavailable. | Reserved `dread.platform.control_plane`: resource_kind, stage, change_kind | U | 4 |
+| SEC-064 | unavailable_signal | S§3/4/9 require ingress/egress restrictions; host firewall/DNS/routing/remote-access change evidence not supplied. | Reserved `dread.platform.network_change`: config_ref, change_kind | U | 2 |
+| SEC-065 | missing | S§4: application egress gate denies prohibited connections (SEC-036); DNS/C2/lateral-movement detectors unavailable. | `dread.egress.denied`: provider_ref, config_ref, stage, disclosure_class | A/H | 1 |
+| SEC-066 | unavailable_signal | FR-6.7 has durable application jobs, not host process/service/task audit. Host execution/parent-child signals unavailable; job events in SEC-APP-005. | Reserved `dread.platform.execution`: resource_kind, stage | U | 4 |
+| SEC-067 | unavailable_signal | No host administrative-tool/credential-dumping/shell/persistence detector feed. | Reserved `dread.platform.tool_signal`: D | U | 4 |
+| SEC-068 | missing | S§8/9, NFR-1.3: startup validation, graceful shutdown/restart, fatal termination and resource exhaustion. Hard kills require independent supervisor evidence. | `dread.service.lifecycle`: stage, state, error_code; `dread.resource.limit` | H | 0 |
+| SEC-069 | unavailable_signal | NFR-4.1/S§9: Docker operations are relevant, but daemon admin/exec/secret/privileged-workload audit signal not supplied. Kubernetes is not the baseline. | Reserved `dread.platform.container_admin`: resource_kind, stage, change_kind | U | 4 |
+| SEC-070 | unavailable_signal | S§9 specifies container isolation; no admission controller, image-admission event or host policy-change feed supplied. | Reserved `dread.platform.admission`: resource_kind, stage, config_ref | U | 2 |
+| SEC-071 | unavailable_signal | FR-3.12 reads repository settings; FR-3.8 prohibits changing them. Snapshots are not a GitHub visibility/access/protection change audit feed. | Reserved `dread.repository.security_change`: resource_kind, change_kind, revision_ref | U | 2 |
+| SEC-072 | unavailable_signal | S§9 requires CI/release controls; CI workflow/runner/approval/deployment audit integration unspecified. Inspected repository workflows are evidence, not execution events. | Reserved `dread.build.lifecycle`: stage, approval_ref, revision_ref | U | 2 |
+| SEC-073 | missing | NFR-5.4/5.5, S§9/10: explicitly reviewed dependency overrides/suppressions/exceptions need evidence. External secret-scanning bypass/Dependabot dismissal audit feed unavailable. | `dread.build.security_exception`: approval_ref, revision_ref, stage, change_kind | A/U | 1 |
+| SEC-074 | missing | NFR-5.2/5.4/5.5, S§9: package/source/lockfile-integrity verification failures/changes. Artifact signing/provenance-verifier feed unspecified. | `dread.build.integrity`: stage, revision_ref, error_code | U | 2 |
+| SEC-075 | unavailable_signal | FR-9.4/12.5, S§6: treat instructions as data; no prompt-injection detector specified. Output/evidence rejection is not proof of prompt injection. | Reserved `dread.ai.instruction_signal`: D | U | 3 |
+| SEC-076 | not_applicable | FR-12.5, S§6: models receive no tools or execution authority; no agent tool-call lifecycle. Reassess if tools are introduced. | None | None | 2 |
+| SEC-077 | missing | S§6: reject invented/cross-assessment/stale model evidence references; no delegated tool/approval execution exists. | `dread.ai.evidence_rejected`: evidence_ref, stage, error_code; evidence_ref only if already authorized | A/H | 1 |
+| SEC-078 | missing | FR-12.7/10.11/10.12, S§4/6: reject unapproved provider/model/connector activation/use; one active AI provider. No tools/MCP. | `dread.integration.policy_rejected`: provider_ref, config_ref, stage, error_code | A/H | 1 |
+| SEC-079 | unavailable_signal | No tool definitions; retrieved content is untrusted, but no poisoning/integrity detector is specified. | Reserved `dread.ai.content_signal`: D | U | 3 |
+| SEC-080 | missing | S§6/TB-6: per-assessment evidence scope must reject cross-context references (SEC-077). Agent memory changes/poisoning are absent; a general context-leak detector is unavailable. | `dread.ai.evidence_rejected`: evidence_ref, stage, error_code; evidence_ref only if already authorized | A/H | 1 |
+| SEC-081 | missing | FR-12.2/12.3, S§6/7: final-byte egress and returned-text sensitive-data gates before persistence/delivery. | `dread.disclosure.blocked`: data_category, stage, provider_ref; `dread.ai.evidence_rejected` | A/H | 1 |
+| SEC-082 | not_applicable | FR-3.8/12.5, S§5/6: no executable agent/sandbox, model tools, subprocesses or model-directed network access. Host process signals remain SEC-066/067. | None | None | 2 |
+| SEC-083 | missing | S§4/5/6, NFR-1.2: bounded AI adapter requests, response/time budgets and retries. Token/spend anomaly detectors and recursive delegation absent. | `dread.resource.limit`: limit_kind, limit, observed, stage | H/U | 3 |
+| SEC-084 | missing | FR-11.1, NFR-2.2, S§8: retained audit history and denied mutation/deletion access; authorized read/export paths require accounting. No audit integrity verifier established. | `dread.audit.access`: resource_kind, stage, format, count; never recursively audit each audit write | A/U | 0 |
+| SEC-085 | missing | Fastify configuration/service lifecycle and S§8 safe logging require configuration/coverage accounting. External logging-agent/destination change feed unavailable. | `dread.audit.config_change`: config_ref, revision_ref, change_kind | A/H | 0 |
+| SEC-086 | missing | S§8, Dread Ledger foundation: serialization/write failures, drops, saturation, lag and storage exhaustion need independent bounded health. Monitor/destination unresolved. | `dread.audit.health`: stage, error_code, dropped_count, lag_ms | H/U | 0 |
+| SEC-087 | unavailable_signal | S§2 time-based controls and audit timestamps depend on clocks; no synchronization/clock-change/anomaly signal supplied. | Reserved `dread.clock.signal`: D, stage | U | 0 |
+| SEC-088 | missing | FR-10.2/10.12: notification routing/suppression rules are mutable. Detection rules/log retention/storage-permission administration signals unspecified. | `dread.delivery.policy_change`: config_ref, revision_ref, previous_revision_ref, change_kind | A | 1 |
+| SEC-089 | missing | S§6/8: allowlist/encoding/redaction failures must produce minimal health evidence; arbitrary injection detector not assumed. Never dump the rejected event. | `dread.audit.validation_failure`: stage, error_code, count | H/U | 0 |
+| SEC-090 | missing | FR-3.7/8.20/10.7, S§2: operational alerts, repository/source pause and session revocation results/failures. Host isolation/automatic remediation excluded or unavailable. | `dread.response.action`: resource_kind, stage, state, error_code | A/H | 1 |
+| SEC-APP-001 | missing | FR-8.1–8.3/11.3, NFR-2.2: source registration/approval, permission revisions, ineligibility pause and use restriction. | `dread.source.permission`: stage, state, config_ref, revision_ref, previous_revision_ref, approval_ref | A/H | 1 |
+| SEC-APP-002 | missing | FR-3.1/3.7/3.16/3.17, NFR-2.2: repository registration/access validation, revoked reads/writes, issue permission gaps and admin revalidation. | `dread.repository.access`: stage, state, provider_ref, config_ref, error_code | A/H/P | 1 |
+| SEC-APP-003 | missing | FR-8.11–8.24: per-item quarantine/storage failure, durable checkpoint result, stale/paused ingestion and retry exhaustion. Counts never imply unstored success. | `dread.source.ingestion`: stage, state, count, attempt, retryable, revision_ref, error_code | H/P | 3 |
+| SEC-APP-004 | missing | FR-3.2/3.10/3.18, FR-8.14–8.16: accepted material risk revision and durable check intent, or rejected non-risk scan trigger; retain original event identity. | `dread.analysis.trigger`: stage, change_kind, revision_ref, count | A/H/P | 3 |
+| SEC-APP-005 | missing | FR-3.19–3.22, S§8: queue claim/retry/recovery, fencing, cancellation, exhaustion and admin concurrency changes; retries do not increase batch membership. | `dread.analysis.work`: stage, state, previous_state, attempt, count, retryable, error_code; concurrency change also `dread.admin.action` | A/H/P | 3 |
+| SEC-APP-006 | missing | FR-3.6/3.12/4.6, S§1/5: incomplete inspection/assessment, exclusions and failure preserving previous report; never emit a clean result from missing evidence. | `dread.analysis.coverage`: stage, state, report_ref, revision_ref, count, error_code | H/P | 3 |
+| SEC-APP-007 | missing | FR-4.9/5.10/8.15/10.9: correction/withdrawal creates new report and correction intent; previous evidence preserved and suppressed correction delivery visible. | `dread.report.correction`: report_ref, revision_ref, previous_revision_ref, change_kind, stage | A/P | 3 |
+| SEC-APP-008 | missing | FR-10.5–10.7/10.9/10.12, NFR-2.2: recipient/route recheck, send acceptance/uncertainty, retries/fallback, suppression and final delivery failure. | `dread.delivery.result`: delivery_ref, destination_ref, recipient_ref, channel, stage, state, attempt, retryable, error_code | A/H/P | 1 |
+| SEC-APP-009 | missing | FR-10.8–10.10, NFR-2.2: system-owned issue create/update/correction, public-evidence gate and human-closed preservation. | `dread.issue.write`: revision_ref, report_ref, stage, disclosure_class, error_code | A/H/P | 1 |
+| SEC-APP-010 | missing | FR-12.3–12.7, S§6: approved AI provider/model revision, permitted safe request, returned evidence validation, and local fallback. Provider/model identities resolve via approved config revision, not copied model text. Audit-digest representation remains open under OD-005. | `dread.ai.assessment`: provider_ref, config_ref, revision_ref, stage, state, error_code | A/H/P | 1 |
+| SEC-APP-011 | missing | FR-5.9/7.5/10.2/10.12: personal route/destination changes and unfollow cancellation; admin Slack changes remain separate. No contact values. | `dread.preference.delivery_change`: destination_ref, channel, change_kind, revision_ref, count | A/P | 2 |
+| SEC-APP-012 | missing | S§6/9, NFR-4.3: restored installation remains quarantined; invalidate sessions, pause work, disable connectors, revalidate and authorize reactivation. | `dread.restore.gate`: backup_ref, config_ref, revision_ref, resource_kind, stage, state | A/H | 1 |
+| SEC-APP-013 | missing | FR-6.9/4.8/5.8/11.2–11.4, NFR-2.2: company name/context, vendor identity, shared notes and archive/restore changes; no note/name content. | `dread.data.change`: resource_kind, change_kind, revision_ref, previous_revision_ref; high-impact stages also `dread.admin.action` | A/P | 1 |
+
+### Verification status
+
+Runtime checks are **NOT RUN**: no application, collectors or deployment evidence establish coverage. Verification gates are defined in [SEC-10](SECURITY.md#security-event-verification); local emission, consumer delivery and deployment readiness require separate evidence. No row is promoted by this consolidation.
+
+## Open Decisions
+
+- [OD-001](SECURITY.md#od-001)
+- [OD-002](SECURITY.md#od-002)
+- [OD-003](SECURITY.md#od-003)
+- [OD-004](SECURITY.md#od-004)
+- [OD-005](SECURITY.md#od-005)
