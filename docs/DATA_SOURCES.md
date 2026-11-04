@@ -4,7 +4,7 @@ Reviewed: 2026-11-04. This file owns the approved news-source list and source-sp
 
 ## Scope and selection
 
-The system may ingest eligible publisher-owned news text for a private company risk feed. Internal use includes storage, display to company-authorized users, and authorized internal API responses, reports, and alerts. Public publication is excluded by the product requirements.
+The system may ingest eligible publisher-owned news text for a private company risk feed. Internal use includes database storage for repository analysis, display to company-authorized users, and authorized internal API responses, reports, and alerts. Public publication is excluded by the product requirements.
 
 Selection is based on published permission for reuse, not an assumption that private business use is noncommercial. Each entry below permits the selected textual use subject to attribution, item-specific restrictions, and access conditions. Approval applies only to the stated news collection and eligible text, not every resource on a publisher's domain. Copyright permission does not guarantee endpoint availability or authorize bypassing access controls.
 
@@ -70,4 +70,4 @@ CISA KEV, CVE, GitHub Advisory Database, EPSS, VERIS, SEC EDGAR, OSV, and NVD ar
 
 The review checked official publisher permission notices, the NCSC feed directory, the approved publication collections, and the applicable OGL/CC BY terms. Direct RSS probes found the access failures recorded above; no working ingestion service is claimed. No publisher was contacted, no contract was accepted on the company's behalf, and no production source was enabled.
 
-Implementation still needs a retrieval method for each source, a schedule, content-field selection, handling of corrections, and news-to-exposure criteria. Those decisions remain in REQUIREMENTS.md's open questions. Before production ingestion, confirm that the relevant item and current access conditions still fall within this documented scope.
+FR-8 defines database ingestion, source provenance, risk fields, repository dependency snapshots, source revisions, and ingestion results. The source list does not automatically expand because those database requirements support other data types. Implementation still needs a retrieval method for each source, a schedule, extraction and validation rules, and news-to-exposure criteria. Those decisions remain in REQUIREMENTS.md's open questions. Before production ingestion, confirm that the relevant item and current access conditions still fall within this documented scope.
