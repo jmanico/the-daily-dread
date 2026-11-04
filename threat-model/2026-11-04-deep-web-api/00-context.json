@@ -1,0 +1,130 @@
+{
+  "schema_version": "1.0",
+  "artifact_type": "TM_CONTEXT",
+  "model_id": "daily-dread-spec-tm",
+  "revision": "00",
+  "parent_revision": null,
+  "status": "partial",
+  "analysis_depth": "deep",
+  "architecture_ids": ["web", "api"],
+  "selected_methods": [],
+  "processed_inputs": [
+    {"id": "I-REQ", "locator": "REQUIREMENTS.md:1-244", "access": "read", "coverage": "Caller-supplied observable product behavior and exclusions.", "reason": null},
+    {"id": "I-ARCH", "locator": "ARCHITECTURE.md:1-210", "access": "read", "coverage": "Caller-supplied stack, components, flows, ownership and TB-1 through TB-10.", "reason": null},
+    {"id": "I-SEC", "locator": "SECURITY.md:1-310", "access": "read", "coverage": "Caller-supplied secure implementation controls, verification obligations and OD-001 through OD-005.", "reason": null},
+    {"id": "I-EVENTS", "locator": "SECURITY_EVENTS.md:1-202", "access": "read", "coverage": "Caller-supplied event contract, ledger dispositions and runtime evidence status.", "reason": null},
+    {"id": "I-DESIGN", "locator": "DESIGN.md:1-352", "access": "read", "coverage": "Caller-supplied interaction, rendering, export and accessibility design.", "reason": null},
+    {"id": "I-CALLER", "locator": "session request", "access": "read", "coverage": "Requested composed deep web/API model and explicit statement that nothing is implemented.", "reason": null}
+  ],
+  "unprocessed_inputs": [
+    {"id": "I-IMPLEMENTATION", "locator": "implementation and runtime evidence", "access": "unavailable", "coverage": "Code, concrete route/schema inventory, database schema, tests, deployment and runtime observations.", "reason": "The caller states that nothing is implemented; no code-level evidence exists to inspect."},
+    {"id": "I-TECH-PACK", "locator": "resolved secure-coding pack", "access": "unavailable", "coverage": "Technology-specific rules beyond the supplied specifications.", "reason": "No exact resolved technology pack or resolver provenance was supplied."}
+  ],
+  "attachments": [],
+  "continuation": null,
+  "model": {
+    "scope": {
+      "description": "Specification-only composed deep threat model of The Daily Dread browser application and private HTTP/JSON API. Web is primary; API is a bounded secondary. Boundary ownership is explicit and shared contributors are retained.",
+      "in_scope": [
+        "Browser application, application origin, OIDC login, server-side session and bearer-token admission",
+        "Private API resource, operation and property authorization",
+        "Report views and PDF, CSV and JSON exports",
+        "Durable asynchronous ingestion, repository analysis, correction, delivery and recovery reached through web/API operations",
+        "GitHub, source, identity, AI and notification adapters and their responses",
+        "PostgreSQL persistence, audit history and security-event obligations",
+        "Rendering of publisher text, evidence, company notes, identifiers and errors"
+      ],
+      "out_of_scope": [
+        "Implementation defects, runtime behavior and deployment claims",
+        "Public APIs, public feeds, native mobile clients and native password or recovery flows",
+        "Inbound notification-provider callbacks and public webhooks, which FR-10.13 excludes",
+        "User file uploads and upload preview/download flows, which the release does not define",
+        "Third-party browser code and service workers, which the specifications exclude from the proposed client",
+        "Optional method executions and risk scoring without a supplied rubric"
+      ],
+      "objectives": [
+        "Prevent unauthorized company, resource, function and property access across UI, API, exports and jobs",
+        "Preserve intended browser request authority, session transitions and current roles",
+        "Keep provider and repository content inert, bounded and unable to direct execution",
+        "Prevent private evidence, credentials and company context from crossing unapproved output or provider boundaries",
+        "Preserve durable work identity, revocation, correction and failure semantics without duplicate effects",
+        "Keep audit and security-event claims distinct from emission, persistence, detection and alert delivery"
+      ],
+      "assumptions": [
+        "The five supplied specifications describe the intended release, not implemented behavior.",
+        "The single-company deployment still requires explicit company context at every protected use case.",
+        "Proposed architecture and control text grounds design hypotheses but is not effectiveness evidence."
+      ],
+      "limitations": [
+        "No implementation, tests, deployment configuration, live provider data or runtime observations exist or were inspected.",
+        "Working-tree cleanliness was not checked because configured clean/process filters made protected status unavailable under the runbook.",
+        "Only the five caller-named project documents were inspected; no optional methods or technology pack ran.",
+        "Open evidence and decision gaps make this artifact partial; they are not proof of vulnerabilities."
+      ]
+    },
+    "evidence": [
+      {"id": "E-001", "locator": "REQUIREMENTS.md:7-17", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "The release is a private company web application and private API; public feeds, third-party API integrations, native mobile applications and native password authentication are excluded.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Specification claim only.", "excerpt": null, "derived_from": []},
+      {"id": "E-002", "locator": "REQUIREMENTS.md:115-138", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "UI and private API share company scope and workflows; OIDC roles distinguish user, admin and owner-scoped personal settings, while all admitted users may read company repository analysis.", "status": "claim", "purpose": "description", "access": "read", "limitations": "No concrete route or policy matrix is supplied.", "excerpt": null, "derived_from": []},
+      {"id": "E-003", "locator": "REQUIREMENTS.md:40-64", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "Admin repository operations feed durable news/advisory-triggered work with bounded concurrency, retained event identity, revocation behavior and visible progress/failure states.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Queue mechanisms remain partly proposed.", "excerpt": null, "derived_from": []},
+      {"id": "E-004", "locator": "REQUIREMENTS.md:85-98", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "Authorized PDF, CSV and JSON exports preserve evidence, status, provenance and gaps; failures cannot overwrite prior findings with a clean result.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Export lifecycle details are incomplete.", "excerpt": null, "derived_from": []},
+      {"id": "E-005", "locator": "REQUIREMENTS.md:140-189", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "Sources, delivery providers and GitHub issues are external boundaries; no inbound notification callback or public webhook is required.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Provider response schemas are not enumerated.", "excerpt": null, "derived_from": []},
+      {"id": "E-006", "locator": "ARCHITECTURE.md:5-13", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "The repository is specification-only. One Node.js/Fastify service and PostgreSQL database are confirmed core choices; the native browser client and HTTP/JSON API are proposed and share Fastify gates.", "status": "claim", "purpose": "description", "access": "read", "limitations": "No implementation evidence.", "excerpt": null, "derived_from": []},
+      {"id": "E-007", "locator": "ARCHITECTURE.md:48-120", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "The architecture assigns logical component ownership and TB-1 through TB-10 across clients, identity, providers, transient/retained data, PostgreSQL, outputs and restricted operations.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Component statuses do not claim implementation or tests.", "excerpt": null, "derived_from": []},
+      {"id": "E-008", "locator": "SECURITY.md:29-76", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "Protected use cases require trusted context and authorization before side effects; browser login/session, CSRF/origin, role freshness, mixed-credential rejection and fresh-auth rules are specified.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Required controls are not implemented or verified.", "excerpt": null, "derived_from": []},
+      {"id": "E-009", "locator": "SECURITY.md:78-195", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "HTTP, SQL, outbound requests, parsing, repository inspection, secrets and AI egress have explicit validation, scoping, destination, budget and evidence rules.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Required controls are not effectiveness observations.", "excerpt": null, "derived_from": []},
+      {"id": "E-010", "locator": "SECURITY.md:197-235", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "Rendering is inert and restricted, private responses are no-store, downloads stay authenticated, output is context-safe, and durable jobs revalidate authority and fence stale work.", "status": "claim", "purpose": "description", "access": "read", "limitations": "No runtime header, browser or worker observations exist.", "excerpt": null, "derived_from": []},
+      {"id": "E-011", "locator": "SECURITY.md:237-310", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "Security verification is future work and OD-001 through OD-005 leave security-event destinations, retention, personal-data policy, durability and AI digest representation unresolved.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Open decisions have no assigned owner in the evidence.", "excerpt": null, "derived_from": []},
+      {"id": "E-012", "locator": "SECURITY_EVENTS.md:1-194", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "The closed security-event contract and ledger are specification mappings only; rows are missing, unavailable-signal or not-applicable, and runtime verification is not run.", "status": "claim", "purpose": "description", "access": "read", "limitations": "No event is covered by implementation evidence.", "excerpt": null, "derived_from": []},
+      {"id": "E-013", "locator": "DESIGN.md:223-352", "source_kind": "document", "source_revision": "06fc95695d6a30a4d88951bbf778a2a4ebe2306a", "date": null, "statement": "Design rules expose uncertainty, identity/role, session loss, confirmation tiers, safe errors, external-link hosts, bidi controls and redaction locations; DQ-8 leaves some confirmation targets unresolved.", "status": "claim", "purpose": "description", "access": "read", "limitations": "Static design specification only.", "excerpt": null, "derived_from": []},
+      {"id": "E-014", "locator": "session request", "source_kind": "caller", "source_revision": null, "date": "2026-11-04", "statement": "Nothing is implemented yet; missing details are evidence gaps rather than code-level findings.", "status": "observation", "purpose": "description", "access": "read", "limitations": "Caller statement about review scope and evidence state.", "excerpt": null, "derived_from": []}
+    ],
+    "system": {"assets": [], "actors": [], "data": [], "zones": [], "boundaries": [], "flows": [], "entry_points": [], "states": [], "dependencies": []},
+    "methods": [],
+    "threats": [],
+    "controls": [],
+    "requirements": [],
+    "risks": [],
+    "attack_trees": [],
+    "attack_paths": [],
+    "visualizations": [],
+    "coverage": [
+      {"id": "COV-001", "target_ref": null, "method_ref": null, "lens": "handoff:inputs", "status": "assessed", "reason": "All five caller-named specifications and the caller scope statement were inventoried; unavailable implementation and technology-pack inputs are explicit."},
+      {"id": "COV-002", "target_ref": null, "method_ref": null, "lens": "handoff:attachments", "status": "assessed", "reason": "No prior model, rubric or method fragment was supplied."},
+      {"id": "COV-003", "target_ref": null, "method_ref": null, "lens": "handoff:system", "status": "not_assessed", "reason": "Stage 00 does not reconstruct the system; stage 01 will consume this context."},
+      {"id": "COV-004", "target_ref": null, "method_ref": null, "lens": "handoff:methods", "status": "not_applicable", "reason": "No optional branded method was requested or executed."},
+      {"id": "COV-005", "target_ref": null, "method_ref": null, "lens": "handoff:threats", "status": "not_assessed", "reason": "Threat analysis belongs to stage 02."},
+      {"id": "COV-006", "target_ref": null, "method_ref": null, "lens": "handoff:controls", "status": "not_assessed", "reason": "Control modeling belongs to stages 01 through 04."},
+      {"id": "COV-007", "target_ref": null, "method_ref": null, "lens": "handoff:requirements", "status": "not_assessed", "reason": "Requirement mapping belongs to later stages."},
+      {"id": "COV-008", "target_ref": null, "method_ref": null, "lens": "handoff:risks", "status": "not_assessed", "reason": "No caller risk rubric was supplied and rating belongs to later stages."},
+      {"id": "COV-009", "target_ref": null, "method_ref": null, "lens": "handoff:attack_trees", "status": "not_assessed", "reason": "Attack structures belong to stage 02 when evidence supports them."},
+      {"id": "COV-010", "target_ref": null, "method_ref": null, "lens": "handoff:attack_paths", "status": "not_assessed", "reason": "Attack paths belong to stage 02 when evidence supports them."},
+      {"id": "COV-011", "target_ref": null, "method_ref": null, "lens": "handoff:visualizations", "status": "not_assessed", "reason": "Visualizations belong to stage 01 or later."},
+      {"id": "COV-012", "target_ref": null, "method_ref": null, "lens": "handoff:conflicts", "status": "assessed", "reason": "No conflicting source revisions were supplied; proposed versus required status is preserved as evidence limitations."},
+      {"id": "COV-013", "target_ref": null, "method_ref": null, "lens": "handoff:gaps", "status": "assessed", "reason": "Evidence, topology, decision and technology gaps needed by later stages are recorded."},
+      {"id": "COV-014", "target_ref": null, "method_ref": null, "lens": "handoff:treatments", "status": "not_assessed", "reason": "Treatment planning belongs to stage 04."},
+      {"id": "COV-015", "target_ref": null, "method_ref": null, "lens": "handoff:verification", "status": "not_assessed", "reason": "Verification planning belongs to stage 04; no tests ran."},
+      {"id": "COV-016", "target_ref": null, "method_ref": null, "lens": "handoff:decisions", "status": "not_assessed", "reason": "Open decision subjects will be modeled in stage 04 without inventing owners or outcomes."},
+      {"id": "COV-017", "target_ref": null, "method_ref": null, "lens": "handoff:changes", "status": "assessed", "reason": "Stage 00 has no usable prior envelope, so no baseline delta declarations apply."},
+      {"id": "COV-018", "target_ref": null, "method_ref": null, "lens": "handoff:identity_map", "status": "not_applicable", "reason": "No prior model or method fragment identities were imported."},
+      {"id": "COV-019", "target_ref": null, "method_ref": null, "lens": "web:scope-evidence", "status": "assessed", "reason": "Browser, session, rendering, private-response and signout evidence questions were scoped; uploads, service workers and third-party scripts are absent release surfaces."},
+      {"id": "COV-020", "target_ref": null, "method_ref": null, "lens": "api:scope-evidence", "status": "assessed", "reason": "Caller, ownership, export, asynchronous authority, provider-response and destination evidence questions were scoped; inbound callbacks are absent for this release."}
+    ],
+    "conflicts": [],
+    "gaps": [
+      {"id": "G-001", "kind": "evidence", "description": "No implementation, route/schema inventory, database schema, code, tests, runtime configuration, deployment evidence or observations exist.", "needed": "Implementation and verification evidence tied to each specified enforcement point.", "affected_refs": [], "status": "open", "evidence_refs": ["E-006", "E-014"]},
+      {"id": "G-002", "kind": "topology", "description": "The private API's concrete operations, resource/property policy and delayed-work authority handoff are not enumerated.", "needed": "API contract and use-case policy matrix with callers, roles, ownership, readable/writable properties, commitment points and revocation behavior.", "affected_refs": [], "status": "open", "evidence_refs": ["E-002", "E-003"]},
+      {"id": "G-003", "kind": "topology", "description": "The exact browser route and state-changing request inventory is absent.", "needed": "Route inventory mapping every cookie-authenticated mutation to intended authority, CSRF, origin and server operation checks.", "affected_refs": [], "status": "open", "evidence_refs": ["E-002", "E-008"]},
+      {"id": "G-004", "kind": "topology", "description": "Export creation, retained-result authorization, lifecycle and post-revocation retrieval are not fully allocated.", "needed": "End-to-end export lifecycle and component ownership contract for UI, API, worker, storage and download.", "affected_refs": [], "status": "open", "evidence_refs": ["E-004", "E-010"]},
+      {"id": "G-005", "kind": "topology", "description": "Provider response fields and the component authorized to translate each response into business state are not enumerated.", "needed": "Adapter response schemas, authority mapping and negative cases separate from provider acknowledgments.", "affected_refs": [], "status": "open", "evidence_refs": ["E-005", "E-009"]},
+      {"id": "G-006", "kind": "evidence", "description": "Cache headers, browser storage and service-worker absence have no runtime evidence.", "needed": "Deployed response-header and browser-storage tests for private content and logout/session transitions.", "affected_refs": [], "status": "open", "evidence_refs": ["E-010"]},
+      {"id": "G-007", "kind": "coverage", "description": "OD-001 through OD-005 block security-event destination, retention, personal-data, durability and AI digest claims.", "needed": "Recorded decisions and independent verification evidence without inferring destinations or detectors.", "affected_refs": [], "status": "open", "evidence_refs": ["E-011", "E-012"]},
+      {"id": "G-008", "kind": "identity", "description": "DQ-8 does not define an exact typed confirmation target for every high-impact action.", "needed": "Design-owner mapping from each action to its visible exact confirmation value.", "affected_refs": [], "status": "open", "evidence_refs": ["E-013"]},
+      {"id": "G-009", "kind": "technology", "description": "No exact resolved secure-coding technology pack was supplied.", "needed": "Resolver provenance for the selected stack if technology-specific prescriptions beyond the specifications are required.", "affected_refs": [], "status": "open", "evidence_refs": []}
+    ],
+    "treatments": [],
+    "verification": [],
+    "decisions": [],
+    "changes": [],
+    "identity_map": []
+  }
+}
