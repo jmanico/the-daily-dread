@@ -1,0 +1,11 @@
+# Dread Ledger change review — decision pass
+
+Applied prompts/00-shared-instruction.md and prompts/09-change-review.md to the HEAD ledger and current SECURITY_EVENTS.md/SECURITY.md/ARCHITECTURE.md/REQUIREMENTS.md/DESIGN.md changes. No implementation, logger, collectors, manifest or consumer tests exist. Full checklist/runbook reconciliation was not run; this review is bounded to the supplied ledger and changed specification paths.
+
+The change resolves OD-003's collection policy: existing opaque local actor/target references remain mandatory, recipient references stay restricted to declared delivery records, and optional network/device/session data remains omitted. OD-001/002/004/005 remain deferred. Their unresolved destinations, lifecycle, durability and AI representation still block dependent work. No new event name, field, severity, wave, schema version, sampling rule or forwarding destination was introduced. All existing ledger IDs and disposition values were compared with HEAD and preserved.
+
+React remains browser-only. It adds no server event producer or third-party telemetry forwarding, and SEC-7/SEC-9 prohibit private state/bundle leakage. React UI requests still use shared Fastify authorization and event decisions. Actual production bundling/automatic capture must be checked at AR-001/AR-002 implementation; no code-level behavior is inferred.
+
+The 15-minute export lifetime narrows temporary result availability; existing export lifecycle and denied-access events still apply, including expired-reference requests. Confirm expiration, reauthorization and consumer states in V-002 and Wave 0/1. Exact confirmation phrases do not change privileged-action identity, authority or audit atomicity. No prior runtime evidence exists to reuse or downgrade. All unavailable signals retain their IDs, missing producer/access evidence and explicit deferred ownership; no detector is inferred.
+
+Findings: no additional specification drift identified in this bounded comparison. Existing deferred obligations are unresolved blockers, not repaired coverage. Verification: ledger ID/disposition comparison and static diff checks performed; emission, persistence, consumer queries, failure injection, independent silence detection and alert delivery NOT RUN. No row is covered.

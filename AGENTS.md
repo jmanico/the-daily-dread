@@ -27,11 +27,11 @@ Run the applicable checks before calling implementation work done.
 
 | Check | Command |
 | --- | --- |
-| Build | TO BE DECIDED — the architecture does not select a build recipe. |
-| Type-check | TO BE DECIDED — the architecture does not select a type-checking tool. |
+| Build | DEFERRED TOOL-001 — production bundling recipe depends on AR-002. |
+| Type-check | DEFERRED TOOL-002 — checked JSDoc/client contracts; tool pin depends on AR-002. |
 | Test | `node --test` |
 | Dependency audit | `npm audit --audit-level=high` |
-| Runtime audit | TO BE DECIDED — the baseline's `is-my-node-vulnerable` needs an approved, locked dev dependency. |
+| Runtime audit | DEFERRED TOOL-003 — runtime audit tool requires NFR-5 verification and an approved locked dev dependency; no ad-hoc npx execution. |
 
 ## Presentation validation
 
@@ -49,3 +49,7 @@ For missing ledger rows, implement at the named component, resolve applicable OD
 
 - Once `THREAT_MODEL.md` exists, run a Grim Prompter change review against the saved threat-model JSON before merging any change that crosses a trust boundary named in `ARCHITECTURE.md`.
 - For any change that adds, removes, or alters a security event, run a Dread Ledger change review using [`prompts/09-change-review.md`](https://github.com/jmanico/dread-ledger/blob/main/prompts/09-change-review.md) against `SECURITY_EVENTS.md`.
+
+## Deferred toolchain inputs
+
+TOOL-001–TOOL-003 are owned by the release maintainer, tracked by the project lead, and block the corresponding implementation/release checks only. TOOL-004 — DEFERRED: resolve the authoritative `.manicode/secure-coding.md` location before implementation requiring it. The exact file was not found in the searched workspace/skills roots on 2026-11-04; similarly named files in other projects are not substitutes. Owner: project lead. This does not block specification decisions.

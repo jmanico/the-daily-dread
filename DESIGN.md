@@ -348,6 +348,8 @@ Pair every color state with an icon or words. For a failed, incomplete or eviden
 
 Do not add counters, gradients or motion to manufacture urgency. The only permitted motion is the Running chip's progress stripe, which stops under reduced motion. Functional queue counts remain part of the progress component.
 
-## Open design items
+## High-impact confirmation phrases
 
-- **DQ-8 — Typed confirmation targets.** The existing high-impact interaction names exact `owner/name` or issuer text, but also covers source/vendor archives and role-mapping changes without specifying a matching value for each. Retain those confirmation tiers; the design owner must define the missing per-action text before implementing those dialogs. Do not guess a replacement identifier.
+DQ-8 resolved 2026-11-04. The server supplies the exact visible phrase and binds it to the action, stable target ID and revision. Repository archive uses the canonical `owner/name`; source archive uses `ARCHIVE SOURCE <stable source ID>`; vendor archive uses `ARCHIVE VENDOR <stable vendor ID>`; issuer replacement uses the exact new canonical issuer URL; role-mapping change uses `CHANGE ROLES <current canonical issuer URL>`. Angle-bracket notation here describes substituted server values, not literal input placeholders. Show the friendly name beside the stable ID. Compare exact text without case folding; allow paste and assistive input. Changed target/revision requires fresh review and confirmation. The phrase is deliberate confirmation, not authorization or a secret; fresh authentication and server policy still apply. Test every action, stale revisions, duplicate display names and keyboard/screen-reader operation under V-011.
+
+Export status must show the 15-minute download expiry and offer regeneration after expiry without implying that the underlying report was deleted.

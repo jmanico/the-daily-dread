@@ -9,7 +9,7 @@ Status: **partial**
 
 All six deep stages, `00-scope-and-evidence.md` through `05-report-and-handoff.md`, were performed in order for the composed web/API architecture. Partial status does not mean the workflow stopped: it records that the system is specification-only, implementation and runtime evidence do not exist, nine evidence/design gaps remain open, all verification is `not_run`, and no risk rubric was supplied. The 17 threats are design hypotheses, not confirmed vulnerabilities. This report makes no safety, compliance or production-readiness claim.
 
-The cumulative machine-readable baseline is `05-report.json`; earlier stage envelopes remain alongside it. It is the authoritative input for later Grim Prompter change reviews.
+The latest cumulative snapshot is [07 change review](threat-model/2026-11-04-open-items/change-review.json), derived from revision `06-change-review`. Earlier snapshots remain historical evidence and are not rewritten.
 
 ## Scope and evidence
 
@@ -92,7 +92,7 @@ A notification, shared Slack message or public issue could reach an unauthorized
 
 ### T-014 — uninvestigable event or silent pipeline failure
 
-A denied, failed, rolled-back or AI-egress action could lack durable/independent evidence, making silence indistinguishable from health. Evidence: `E-011`, `E-012`. Protective claim: `C-AUDIT`; OD-001 through OD-005 intentionally leave representation, destination, retention and durability unresolved. Gaps: `G-001`, `G-007`. Proposed response/test: `TR-009`, `V-009`.
+A denied, failed, rolled-back or AI-egress action could lack durable/independent evidence, making silence indistinguishable from health. Evidence: `E-011`, `E-012`. Protective claim: `C-AUDIT`; OD-001/002/004/005 defer representation, destination, retention and durability; OD-003 now defines minimal personal attribution. Gaps: `G-001`, `G-007`. Proposed response/test: `TR-009`, `V-009`.
 
 ### T-015 — stale concurrent privileged change
 
@@ -108,47 +108,45 @@ A restore could reactivate obsolete sessions, queued effects or connector creden
 
 ## Action register — treatments and verification
 
-All treatments are `proposed`; all verification is `not_run`. These plans authorize no testing. Owner and date are unknown for every row.
+Treatments remain proposed implementation plans and all verification is `not_run`. The project lead tracks delivery; feature maintainers execute the associated checks before feature merge/release. Dates are gates, not fabricated calendar commitments.
 
 | Treatment | Verification | Threats | Next evidence/action | Owner | Date |
 | --- | --- | --- | --- | --- | --- |
-| `TR-001` | `V-001` | `T-001`–`T-003` | Define the full route/use-case/object/function/property matrix, then compare allowed, cross-object, unintended-request and post-role-loss paths with synthetic accounts. | Unknown | Unknown |
-| `TR-002` | `V-002` | `T-004` | Allocate export job/result ownership, retention and invalidation, then observe generation/status/download across authority and resource-state changes. | Unknown | Unknown |
-| `TR-003` | `V-003` | `T-005`, `T-006` | Inventory rendered fields, interpreters, private response reuse and browser storage; test inert markers and signout/role-loss transitions. | Unknown | Unknown |
-| `TR-004` | `V-004` | `T-007`, `T-013` | Define destination/redirect/data policy per adapter; test only caller-controlled inert receivers and current recipient/source revocation. | Unknown | Unknown |
-| `TR-005` | `V-005` | `T-008` | Define closed adapter result schemas and state-transition owners; vary acknowledgment, unknown, malformed and business-looking fields against provider doubles. | Unknown | Unknown |
-| `TR-006` | `V-006` | `T-009`, `T-010`, `T-015`, `T-017` | Define effect/commit points, revisions, fences, effect identity, reconciliation and restore quarantine; exercise them with isolated sinks. | Unknown | Unknown |
-| `TR-007` | `V-007` | `T-011` | Record finite budgets and capacity criteria, then observe boundary and just-over-limit synthetic workloads in isolation. | Unknown | Unknown |
-| `TR-008` | `V-008` | `T-012` | Implement the approved AI projection, then capture final bytes and test same- versus cross-assessment returned references with a controlled double. | Unknown | Unknown |
-| `TR-009` | `V-009` | `T-014` | Resolve OD-001 through OD-005; then trace synthetic success, denial, rollback, failure and silence through persistence, consumer and independent health paths. | Unknown | Unknown |
-| `TR-010` | `V-010` | `T-016` | Build provenance-preserving evidence fixtures for malformed, ambiguous, contradictory, incomplete and supported states and trace every output. | Unknown | Unknown |
-| `TR-011` | `V-011` | `T-015` | Define exact revision-bound confirmation phrases, then test changed-target/stale-revision conflicts and keyboard/assistive-technology behavior. | Unknown | Unknown |
+| `TR-001` | `V-001` | `T-001`–`T-003` | Define the full route/use-case/object/function/property matrix, then compare allowed, cross-object, unintended-request and post-role-loss paths with synthetic accounts. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-002` | `V-002` | `T-004` | Allocate export job/result ownership, retention and invalidation, then observe generation/status/download across authority and resource-state changes. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-003` | `V-003` | `T-005`, `T-006` | Inventory rendered fields, interpreters, private response reuse and browser storage; test inert markers and signout/role-loss transitions. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-004` | `V-004` | `T-007`, `T-013` | Define destination/redirect/data policy per adapter; test only caller-controlled inert receivers and current recipient/source revocation. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-005` | `V-005` | `T-008` | Define closed adapter result schemas and state-transition owners; vary acknowledgment, unknown, malformed and business-looking fields against provider doubles. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-006` | `V-006` | `T-009`, `T-010`, `T-015`, `T-017` | Define effect/commit points, revisions, fences, effect identity, reconciliation and restore quarantine; exercise them with isolated sinks. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-007` | `V-007` | `T-011` | Record finite budgets and capacity criteria, then observe boundary and just-over-limit synthetic workloads in isolation. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-008` | `V-008` | `T-012` | Implement the approved AI projection, then capture final bytes and test same- versus cross-assessment returned references with a controlled double. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-009` | `V-009` | `T-014` | Resolve deferred OD-001/002/004/005; then trace synthetic success, denial, rollback, failure and silence through persistence, consumer and independent health paths. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-010` | `V-010` | `T-016` | Build provenance-preserving evidence fixtures for malformed, ambiguous, contradictory, incomplete and supported states and trace every output. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `TR-011` | `V-011` | `T-015` | Define exact revision-bound confirmation phrases, then test changed-target/stale-revision conflicts and keyboard/assistive-technology behavior. | Project lead / feature maintainer | Before dependent feature merge/release |
 
 ## Action register — open gaps
 
 | Gap | Status | Next evidence/action | Owner | Date |
 | --- | --- | --- | --- | --- |
-| `G-001` | Open | Supply implementation, schemas, tests, deployment configuration and runtime observations tied to each enforcement point. | Unknown | Unknown |
-| `G-002` | Open | Enumerate the API/use-case policy matrix, properties, commitment points and delayed-work authority handoff. | Unknown | Unknown |
-| `G-003` | Open | Enumerate every browser route and map cookie-authenticated mutation, intended request, origin and server authorization checks. | Unknown | Unknown |
-| `G-004` | Open | Allocate export creation, worker, storage, retention/invalidation, status and download ownership. | Unknown | Unknown |
-| `G-005` | Open | Define per-adapter response schemas, semantic authority, transition owner and negative cases. | Unknown | Unknown |
-| `G-006` | Open | Observe deployed private-response headers, browser storage and signout/role-change behavior. | Unknown | Unknown |
-| `G-007` | Open | Resolve OD-001 through OD-005 and independently verify event representation, durability, consumer and silence monitoring. | Unknown | Unknown |
-| `G-008` | Open | Record the visible exact confirmation phrase for every high-impact action and bind it to the current target/revision. | Unknown | Unknown |
-| `G-009` | Open | Supply resolver provenance for an exact secure-coding pack only if later work needs technology-specific prescriptions beyond the project specs. | Unknown | Unknown |
+| `G-001` | DEFERRED | Supply implementation, schemas, tests, deployment configuration and runtime observations tied to each enforcement point. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-002` | DEFERRED | Enumerate the API/use-case policy matrix, properties, commitment points and delayed-work authority handoff. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-003` | DEFERRED | Enumerate every browser route and map cookie-authenticated mutation, intended request, origin and server authorization checks. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-004` | DEFERRED | Implement the export ownership and temporary-output lifecycle now allocated in ARCHITECTURE.md; verify status/download authorization. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-005` | DEFERRED | Define per-adapter response schemas, semantic authority, transition owner and negative cases. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-006` | DEFERRED | Observe deployed private-response headers, browser storage and signout/role-change behavior. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-007` | DEFERRED | Resolve deferred OD-001/002/004/005 and independently verify event representation, durability, consumer and silence monitoring. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-008` | Resolved design decision; verification not run | Record the visible exact confirmation phrase for every high-impact action and bind it to the current target/revision. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-009` | DEFERRED | Supply resolver provenance for an exact secure-coding pack only if later work needs technology-specific prescriptions beyond the project specs. | Project lead / feature maintainer | Before dependent feature merge/release |
 
 ## Decisions
 
-Caller-supplied decisions were limited to scope and evidence handling: use deep web and API composition, use the five named specifications, treat the system as unimplemented, and treat missing detail as a gap rather than proof of a vulnerability.
+Decision authority: on 2026-11-04 the user delegated the remaining choices to the assistant's best advice, after explicitly approving queue order, Linux, browser React, one service, PostgreSQL persistence and 30-second recovery.
 
-The following are suggestions awaiting a real decision, with no owner or date:
+- **DEC-001 — DEFERRED:** quantitative/ordinal risk ratings until implementation and deployment evidence supports likelihood and business impact. Owner: project lead. Keep all 17 risks unrated; prioritize authorization, disclosure, audit and recovery verification by dependency rather than inventing numeric confidence. Blocks risk-rating claims only.
+- **DEC-002 — Accepted:** preserve the full event-pipeline gate; OD-003 collection policy is resolved, while OD-001/002/004/005 remain explicitly deferred. No event becomes covered without V-009 evidence.
+- **DEC-003 — Accepted:** adopt DESIGN.md's complete per-action, revision-bound confirmation phrase mapping (resolved DQ-8/G-008). V-011 still must verify enforcement and accessibility.
 
-- `DEC-001`: approve a named risk rubric and inputs before any rating.
-- `DEC-002`: resolve OD-001 through OD-005 before claiming or testing full event-pipeline coverage.
-- `DEC-003`: adopt and enumerate server-supplied exact confirmation phrases bound to target and revision.
-
-No risk was accepted, rejected or deferred by this run.
+G-001–G-007 and G-009 are deferred evidence work with existing IDs, not accepted risks. Their table states the needed evidence; only the dependent features/claims are blocked. G-009 follows TOOL-004. All treatments retain their implementation/verification gates, and all historical proposed decisions in prior snapshots remain historical.
 
 ## Coverage and handoff integrity
 
@@ -158,7 +156,7 @@ Web coverage included intended state change, session/role transitions, object/fu
 
 The final JSON was parsed with duplicate-key and non-finite-number rejection, typed-ID uniqueness and live-reference checks. No formal schema validator was available. The report and cumulative attachments were reviewed for sensitive detail: no credentials, tokens, secrets or unnecessary personal/operational values were present; only specification identifiers, abstract architecture and sanitized provenance are retained.
 
-## Specification foldback
+## Historical specification foldback (revision 06)
 
 After stage 05 closed the read-only modeling run, supported outcomes were folded into their owning specifications without changing any threat, control, risk, treatment or verification status:
 
@@ -169,3 +167,7 @@ After stage 05 closed the read-only modeling run, supported outcomes were folded
 - `SECURITY_EVENTS.md` retains the closed event catalog while refining existing ledger rows for export stages, revision conflicts, job/effect authority, evidence uncertainty, provider-result rejection, audit silence and restore quarantine.
 
 These are specification requirements and proposals only. They are not implementation or verification evidence; `G-001` and every `not_run` verification remain unchanged.
+
+## Decision-pass delta — 2026-11-04
+
+React introduces a browser library dependency at TB-1/TB-9/TB-10, not a server-rendering or Server Function surface. SEC-7/SEC-9/SEC-10 now cover JSX/prop/URL boundaries, minimal component state, production bundles, strict CSP and stale asynchronous responses. T-005/T-006/T-011 retain their existing identities and require React-boundary verification; no threat is resolved by adopting these rules. DQ-8/G-008 closes a design gap only. The older counts and foldback narrative above describe their dated snapshots, not current completion evidence.

@@ -46,7 +46,7 @@ String limits count **UTF-8 bytes after JSON escaping, excluding the surrounding
 | `trace_id` | Validated hexadecimal string, 32 bytes | Optional trace context; separate from trusted request identity and never authorization evidence. |
 | `context_status` | Enum `optional_context_omitted`, `optional_context_invalid` | Serializer-owned marker; otherwise absent. |
 
-Every row inherits applicable envelope fields. Identity provenance and reference handling are enforced by [SEC-11](SECURITY.md#sec-11--security-event-enforcement); additional collection remains subject to [OD-003](SECURITY.md#od-003).
+Every row inherits applicable envelope fields. Identity provenance and reference handling are enforced by [SEC-11](SECURITY.md#sec-11--security-event-enforcement); additional collection remains subject to [resolved personal-data policy](SECURITY.md#personal-data-policy-resolved-od-003-2026-11-04).
 
 Required audit records MUST retain the applicable configuration revision and job/operation references for correlation. Use the event's declared fields and trusted context; if a required reference cannot be represented by that contract, resolve it under [OD-004](SECURITY.md#od-004) before instrumentation rather than omitting it or adding an undeclared field.
 
@@ -54,7 +54,7 @@ Required audit records MUST retain the applicable configuration revision and job
 
 | Fields | Type and maximum | Source |
 | --- | --- | --- |
-| `provider_ref`, `config_ref`, `revision_ref`, `previous_revision_ref`, `approval_ref`, `destination_ref`, `recipient_ref`, `report_ref`, `delivery_ref`, `evidence_ref`, `credential_record_ref`, `key_record_ref`, `backup_ref` | Opaque string, 128 bytes each | Authorized internal owner records; recipient is a personal reference subject to OD-003. Credential/key references are independently allocated, non-authenticating audit surrogates, subject to SEC-11 approval/exclusion controls. |
+| `provider_ref`, `config_ref`, `revision_ref`, `previous_revision_ref`, `approval_ref`, `destination_ref`, `recipient_ref`, `report_ref`, `delivery_ref`, `evidence_ref`, `credential_record_ref`, `key_record_ref`, `backup_ref` | Opaque string, 128 bytes each | Authorized internal owner records; recipient is a personal reference subject to the resolved SEC-11 personal-data policy. Credential/key references are independently allocated, non-authenticating audit surrogates, subject to SEC-11 approval/exclusion controls. |
 | `resource_kind`, `auth_method`, `stage`, `state`, `previous_state`, `role`, `channel`, `format`, `data_category`, `limit_kind`, `error_code`, `change_kind`, `disclosure_class`, `boundary` | Catalog enum string, 64 bytes each | Typed owner/control result. Each event's implementation must close its enum to its documented subcases; no arbitrary input accepted as a category. |
 | `count`, `attempt`, `limit`, `observed`, `duration_ms`, `dropped_count`, `lag_ms` | Integer, 0 through 9,007,199,254,740,991 | Bounded server counters, with no coercion or rounding. Limit/observed units follow `limit_kind`; duration/lag are milliseconds. |
 | `retryable` | Boolean | Typed adapter/domain decision. |
@@ -77,7 +77,7 @@ Privacy, audit durability, deduplication, bounded failure handling and destinati
 
 **Disposition:** `missing` means the specifications make a subcase applicable but no code has passed verification. `unavailable_signal` means applicability, detector, provider/platform evidence, or access is unresolved. `not_applicable` requires an absent feature. Compound rows use missing before unavailable evidence; residual unavailable subcases remain explicit. No row is covered. Shared names represent one emission mapped to several checklist IDs, not duplicate events.
 
-**Consumers:** **A** = specified restricted audit history; **H** = specified admin operational dashboard/health projection; **P** = authorized product status/history view; **U** = consumer/query and access assignment unresolved under OD-001. These are logical consumers, not new destinations or named owners. A/H/P do not authorize forwarding full events or granting every user audit access. Unless already identified in the specifications (for example company IT for backups), accountable assignments remain unassigned; resolve them before claiming coverage.
+**Consumers:** **A** = specified restricted audit history; **H** = specified admin operational dashboard/health projection; **P** = authorized product status/history view; **U** = consumer/query and access assignment unresolved under OD-001. These are logical consumers, not new destinations or named owners. A/H/P do not authorize forwarding full events or granting every user audit access. Unless already identified in the specifications (for example company IT for backups), the project lead tracks application ownership and company IT owns deployment evidence; actual operator/access assignments remain deferred under OD-001 before claiming coverage.
 
 **Waves:** **0** foundation, pipeline safety and health; **1** privileged changes, identity, company/owner boundaries and disclosure (promoted because one admitted account can read all company repositories); **2** credential lifecycle and integration trust; **3** validation, resource and workflow enforcement; **4** contextual/platform evidence. An unavailable row's wave is a review priority, not permission to build a detector. Implementation steps are in [AGENTS.md](AGENTS.md#security-event-implementation-workflow).
 
@@ -197,6 +197,11 @@ Runtime checks are **NOT RUN**: no application, collectors or deployment evidenc
 
 - [OD-001](SECURITY.md#od-001)
 - [OD-002](SECURITY.md#od-002)
-- [OD-003](SECURITY.md#od-003)
 - [OD-004](SECURITY.md#od-004)
 - [OD-005](SECURITY.md#od-005)
+
+## Deferred signal decisions
+
+Each unavailable row below retains its ledger ID as its decision ID and is **DEFERRED** as of 2026-11-04. Its existing row states the missing authoritative signal. Owner: project lead for application detector scope; deploying company IT for IdP, host, database, clock, CI and provider audit access. Before its wave, supply the signal contract, producer authority, minimum permitted fields, consumer/access policy and observed test evidence, or explicitly exclude the feature after scope review. No new detector, collection or endpoint is authorized. These decisions block only the dependent row; SEC-087 additionally blocks complete independent Wave-0 clock/health acceptance. No unavailable row becomes covered by this decision pass.
+
+SEC-002, SEC-003, SEC-005, SEC-006, SEC-007, SEC-008, SEC-009, SEC-010, SEC-011, SEC-012, SEC-013, SEC-014, SEC-020, SEC-022, SEC-032, SEC-035, SEC-039, SEC-046, SEC-048, SEC-059, SEC-063, SEC-064, SEC-066, SEC-067, SEC-069, SEC-070, SEC-071, SEC-072, SEC-075, SEC-079, SEC-087.
