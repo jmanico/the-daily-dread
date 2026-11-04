@@ -52,7 +52,6 @@
 
 - **FR-6.1** The system MUST provide a web user interface.
 - **FR-6.2** The system MUST provide an API.
-- **FR-6.3** The system MUST NOT provide a mobile application in the current scope.
 
 ### Company Access
 
