@@ -72,6 +72,7 @@ The visual system is built around one idea: **hatching means unknown.** Solid fi
 | [REQUIREMENTS.md](REQUIREMENTS.md) | Functional and non-functional requirements |
 | [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) | Approved source catalog and source approval policy |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Components, stack, ownership, trust boundaries and data flows |
+| [SECURITY.md](SECURITY.md) | Secure coding rules, security controls and verification requirements |
 | [docs/DEPENDENCY_REVIEW.md](docs/DEPENDENCY_REVIEW.md) | Proposed dependency review and release gates |
 | [DESIGN.md](DESIGN.md) | Design system in the `@google/design.md` format |
 | [design/preview.html](design/preview.html) | Static design preview |
