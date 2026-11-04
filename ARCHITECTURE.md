@@ -86,13 +86,15 @@ Logical components below share the application service. **SUPPORTED** means requ
 
 ### Queue contract
 
+Repository checks MUST use a durable queue; persistence and restart behavior follow [FR-3.21](REQUIREMENTS.md#repository-registration-and-exposure-checks) and [NFR-1.3](REQUIREMENTS.md#source-access-and-reliability). The queue mechanism below remains proposed.
+
 **PROPOSED:** PostgreSQL work rows have unique logical keys, atomic claims and renewable leases. Logical check identity is company + originating risk event/revision + repository; attempts reference the same logical check. Findings, reports and send intents have owner-specific uniqueness keys. The event batch owns a fixed membership with stable per-repository entries (FR-3.22).
 
 A post-commit wake-up asks consumers to drain due work; database notification is only a hint. Startup reconciliation and **PROPOSED 30-second recovery wake-ups** re-read due persisted work, bounding detection of a lost wake-up. Expired leases return the same job/event to recovery. HTTP and lightweight ingestion/delivery handling have admission paths separate from repository slots. Scheduling behavior is in FR-3.23; fencing and transaction controls are in [SEC-8](SECURITY.md#sec-8--durable-jobs-errors-and-audit).
 
 ### Local inspection and integration contracts
 
-**PROPOSED GitHub inspection:** paginated branch, commit, tree and blob APIs expose immutable content without a local checkout. Preserve API truncation indicators and recurse through accessible tree segments. Read endpoint coverage includes metadata, contents, security advisories, Dependabot alerts and security settings. Public global-advisory ingestion uses a separate adapter from installation repository access; its initial collection includes reviewed, unreviewed and malware records with withdrawal reconciliation. Permission controls are in [SEC-5](SECURITY.md#sec-5--repository-inspection-and-resource-budgets); source configuration follows the [catalog](docs/DATA_SOURCES.md).
+**PROPOSED GitHub inspection:** paginated branch, commit, tree and blob APIs expose immutable content without a local checkout. Preserve API truncation indicators and recurse through accessible tree segments. Read endpoint coverage includes metadata, contents, security advisories, Dependabot alerts and security settings. Public global-advisory ingestion uses a separate adapter from installation repository access; collection coverage is defined in [FR-2.5](REQUIREMENTS.md#risk-information). Permission controls are in [SEC-5](SECURITY.md#sec-5--repository-inspection-and-resource-budgets); source configuration follows the [catalog](docs/DATA_SOURCES.md).
 
 **PROPOSED parsing boundary:** native JSON, selected XML/YAML/TOML parsers and narrow local readers for line-oriented lockfiles produce syntax records. Versioned ecosystem policy modules separately interpret identity, qualifiers, ordering, revisions, dependency paths and advisory ranges. The [ecosystem contract](REQUIREMENTS.md#ecosystem-matching-contract) defines the required semantics; comparator conformance and execution controls are in [SEC-5](SECURITY.md#sec-5--repository-inspection-and-resource-budgets).
 

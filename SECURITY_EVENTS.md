@@ -48,6 +48,8 @@ String limits count **UTF-8 bytes after JSON escaping, excluding the surrounding
 
 Every row inherits applicable envelope fields. Identity provenance and reference handling are enforced by [SEC-11](SECURITY.md#sec-11--security-event-enforcement); additional collection remains subject to [OD-003](SECURITY.md#od-003).
 
+Required audit records MUST retain the applicable configuration revision and job/operation references for correlation. Use the event's declared fields and trusted context; if a required reference cannot be represented by that contract, resolve it under [OD-004](SECURITY.md#od-004) before instrumentation rather than omitting it or adding an undeclared field.
+
 **Extra-field dictionary:** each field is allowed only in rows naming it. Reference fields identify approved local records, never credentials or raw provider IDs; denied input is never promoted to a reference.
 
 | Fields | Type and maximum | Source |
