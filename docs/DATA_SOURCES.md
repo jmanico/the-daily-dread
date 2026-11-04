@@ -1,59 +1,73 @@
-# External source research
+# Approved news sources for internal ingestion
 
-Research date: 2026-11-04. Scope: a private company cybersecurity system. This document records evidence and design considerations; [REQUIREMENTS.md](../REQUIREMENTS.md) owns required behavior.
+Reviewed: 2026-11-04. This file owns the approved news-source list and source-specific reuse conditions. [REQUIREMENTS.md](../REQUIREMENTS.md) defines system behavior; FR-2.2 refers to this file.
 
-## Decision: links and company-written notes
+## Scope and selection
 
-The requested model is a curated collection of outbound links. Articles, feed bodies, advisory datasets, and publisher images stay at their sources. The system does not scrape pages, import RSS bodies, generate summaries from publisher content, or create automatic previews. An admin can add a source name, URL, and company-written note. Reports and alerts can cite those links.
+The system may ingest eligible publisher-owned news text for a private company risk feed. Internal use includes storage, display to company-authorized users, and authorized internal API responses, reports, and alerts. Public publication is excluded by the product requirements.
 
-The source list below is a list of destinations, not permission to ingest their data. Public availability, an RSS endpoint, and a free API do not by themselves establish reuse rights. Linking reduces copying, but does not provide a blanket exemption from access terms or other applicable law. Automated discovery remains an open question, rather than an assumed right to fetch every feed.
+Selection is based on published permission for reuse, not an assumption that private business use is noncommercial. Each entry below permits the selected textual use subject to attribution, item-specific restrictions, and access conditions. Approval applies only to the stated news collection and eligible text, not every resource on a publisher's domain. Copyright permission does not guarantee endpoint availability or authorize bypassing access controls.
 
-Company-authorized GitHub repository data is a separate integration. It supports internal exposure checks; it does not authorize copying third-party advisory text. A link alone does not provide machine-readable affected versions. Requirements therefore leave the source of company-provided exposure criteria open.
+The selected sources are public-sector cybersecurity news and editorial briefings. They do not provide complete or immediate coverage of vendor breaches. Vulnerability databases, exploit scores, incident datasets, and regulatory filings are outside the news-source list. Company-authorized GitHub repository access remains a separate integration.
 
-## Sources selected for link support
+## Approved source list
 
-| Source | Useful destination | Coverage and limits | Published reuse evidence if copying is considered later |
+| ID | Publisher and eligible news collection | Reuse basis for internal company ingestion | Conditions |
 | --- | --- | --- | --- |
-| Cloudflare Zero Wire | [Zero Wire briefings](https://radar.cloudflare.com/security/zero-wire) | Curated vulnerability and threat context, including uncertainty and remediation. No documented Zero Wire-specific ingestion API was established in this review. | Radar API/download data generally uses CC BY-NC 4.0; graph/image rights differ. Company use is not automatically noncommercial. Obtain an applicable exception before any future ingestion. [Radar licensing](https://radar.cloudflare.com/about), [API overview](https://developers.cloudflare.com/radar/). |
-| The Register | [Security news](https://www.theregister.com/security/) and individual articles | Journalism about incidents, vendors, and vulnerabilities; reporting can be preliminary. This is theregister.com, as confirmed by the project owner. | Section 2 limits website use to personal, noncommercial use and requires written authorization for copying or distribution. A published feed is not an unrestricted company reuse license. [Terms](https://www.theregister.com/profile/terms_and_conditions_of_use). |
-| CISA Known Exploited Vulnerabilities (KEV) | [Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) and [official records](https://github.com/cisagov/kev-data) | Evidence that a vulnerability has been exploited in the wild; not evidence that this company or its vendor has been compromised. | Dataset is CC0 1.0. Linked third-party material has separate terms; CISA/DHS branding and endorsement are excluded. [Dataset license](https://github.com/cisagov/kev-data/blob/develop/LICENSE). |
-| CVE Program | [CVE records](https://www.cve.org/) and [official CVE List V5](https://github.com/CVEProject/cvelistV5) | Stable vulnerability identifiers, descriptions, and references. Records may be revised or rejected; a CVE is not a breach report. | CVE terms permit copying and derivatives with MITRE's copyright designation and license reproduced in copies. [Terms of use](https://www.cve.org/Legal/TermsOfUse). |
-| GitHub Advisory Database | [Advisories](https://github.com/advisories) and individual GHSA pages | Package ecosystems, affected versions, fixes, and identifiers useful for repository investigations. Reviewed, unreviewed, and malware categories differ. | CC BY 4.0; GitHub identifies a database or individual advisory link as an attribution method. Preserve applicable notices and identify modifications if copying later. [GitHub terms](https://docs.github.com/en/site-policy/github-terms/github-terms-for-additional-products-and-features#advisory-database), [CC BY conditions](https://creativecommons.org/licenses/by/4.0/). |
-| FIRST EPSS | [EPSS](https://www.first.org/epss/) and its [data documentation](https://www.first.org/epss/data) | Estimated exploitation likelihood over 30 days. It is not severity, company-specific risk, or proof of compromise. Scores have dates and model versions. | FIRST permits specified cybersecurity uses, subject to notices and service conditions; its FAQ describes free score access and requests attribution. Do not substitute a guessed Creative Commons license. [Service terms](https://www.first.org/about/policies/terms), [FAQ](https://www.first.org/epss/faq). |
-| VERIS Community Database (VCDB) | [Incident database](https://github.com/vz-risk/VCDB) and individual JSON record pages | Publicly reported incidents; useful historical vendor context. It is incomplete, has selection bias, and has no established timely-alert guarantee. | CC BY-SA 4.0. Redistribution of adaptations can carry ShareAlike obligations. Underlying news sources are separate works. [Dataset license](https://raw.githubusercontent.com/vz-risk/VCDB/master/LICENSE.txt), [license conditions](https://creativecommons.org/licenses/by-sa/4.0/), [coverage explanation](https://verisframework.org/vcdb.html). |
-| SEC EDGAR | [Company filings](https://www.sec.gov/edgar/search/) and specific filing pages | Form 8-K Item 1.05 provides material cybersecurity incident disclosures for covered registrants. This is partial coverage of vendors and incidents, not an immediate global breach feed. | SEC permits copying/distributing public information under its dissemination policy and requests citation. This is not a blanket public-domain claim for third-party exhibits. [SEC policy](https://www.sec.gov/about/privacy-information#website-dissemination), [incident disclosure rule](https://www.sec.gov/files/rules/final/2023/33-11216.pdf). |
-| CERT-EU | [Security advisories](https://cert.europa.eu/publications/security-advisories/) and [threat intelligence publications](https://cert.europa.eu/publications/threat-intelligence/) | Curated advisories and broader cybersecurity reporting. Cyber Briefs are monthly; they cannot provide immediate incident coverage. | The legal notice describes CC BY 4.0 reuse unless otherwise noted, with third-party and other exclusions. Check the specific publication before future copying. TLP:CLEAR alone is not a copyright license. [Legal notice](https://cert.europa.eu/legal-notice). |
-| OSV | [Vulnerability records](https://osv.dev/) | Useful package/version and alias information across ecosystems. Aggregation can duplicate GitHub or other source records. | Upstream licenses differ. The official list includes permissive licenses, ShareAlike, and CC BY-NC-ND material. Do not treat an OSV bulk download as a uniformly licensed dataset or confuse software licensing with data licensing. [Source/license list](https://google.github.io/osv.dev/data/), [data contribution policy](https://google.github.io/osv.dev/data/new). |
-| NIST NVD | [NVD vulnerability records](https://nvd.nist.gov/) | CVE enrichment and severity/product information. Missing enrichment does not establish absence of risk. | Current NVD-specific reuse instructions could not be read from its developer/FAQ pages during this review. No approval for copying is claimed here. [Developer page](https://nvd.nist.gov/developers/start-here), [NIST operational updates](https://www.nist.gov/itl/nvd). |
-| Official vendor notices, including Okta | [Okta Trust](https://trust.okta.com/), [Okta Security](https://sec.okta.com/), and vendor-specific incident notices | Direct statements help distinguish product vulnerabilities, operational outages, and actual incidents. Status pages do not prove that an outage is a breach. | No common license covers all vendors. Okta's current website terms prohibit automated access and copying without permission; a trust-page feed does not resolve that restriction. [Okta website terms](https://www.okta.com/legal/terms-of-service/). |
+| NEWS-1 | UK National Cyber Security Centre (NCSC): publisher-owned news text reached through its news RSS feed | NCSC permits reuse under the Open Government Licence v3.0 unless otherwise stated. The OGL expressly permits copying, adaptation, and commercial use. | Credit NCSC and retain the original link and OGL notice. Exclude separately licensed content, third-party text, images, and logos. Do not imply endorsement. |
+| NEWS-2 | CERT-EU: publisher-owned Cyber Brief text in its threat-intelligence publications | CERT-EU's legal notice permits CC BY 4.0 reuse unless otherwise noted. That license permits commercial reuse. | Credit CERT-EU, retain the original link and license notice, and identify changes. Exclude third-party material and item-specific restrictions. Do not fetch the external news articles cited by a brief. |
+| NEWS-3 | European Union Agency for Cybersecurity (ENISA): publisher-owned news items and press releases | ENISA's legal notice authorizes reproduction with source acknowledgment unless otherwise stated; it does not limit that grant to personal or noncommercial use. | Credit ENISA and retain the original link and reuse notice. Limit this approval to reproduction of eligible text. Exclude stock photography, other third-party material, and items with separate restrictions. Transformation rights require separate verification. |
 
-## Feed access findings, not enabled integrations
+These are the only approved news sources. New sources require an update to this list with primary-source evidence for the intended internal use. Approval of a publisher does not override an item's separate rights notice.
 
-These findings preserve the research for a future scope decision. None authorizes copying under the current requirements.
+## Source evidence and retrieval
 
-- **The Register:** its [official feed directory](https://www.theregister.com/design/page/feeds) links a security RSS endpoint at `https://api.theregister.com/api/v1/article?limit=25&orderBy=published&query=tag%3Asecurity&remapper=rss&site_id=2`. Use individual article links in this project. Company polling, copied titles/descriptions, caching, and downstream delivery would require resolution of the publisher's terms first.
-- **CISA/CVE/GitHub:** the official repositories above expose machine-readable records. GitHub also documents a [global advisories API](https://docs.github.com/en/rest/security-advisories/global-advisories). Its default query returns reviewed advisories and excludes malware; availability of an API does not establish complete risk coverage.
-- **EPSS:** FIRST documents API lookups and daily bulk score files. It directs bulk synchronization to downloads instead of per-CVE API collection. This is a future option only if the company changes the link-only scope. [Access guidance](https://www.first.org/epss/data).
-- **SEC:** its submissions API is `https://data.sec.gov/submissions/CIK##########.json`, with a zero-padded ten-digit CIK. It returns filing history, not a normalized vendor-breach feed. Use filing links; any future automation must respect identification and fair-access rules, including the published aggregate ceiling of ten requests per second. [API documentation](https://www.sec.gov/search-filings/edgar-application-programming-interfaces), [developer rules](https://www.sec.gov/about/developer-resources).
-- **Cloudflare/CERT-EU/vendor sites:** do not invent an RSS or ingestion endpoint. This review established useful public destinations, but did not establish a supported Zero Wire-specific API or a universal vendor feed contract.
-- **NVD:** NIST's operational updates describe API/feed changes and incomplete enrichment. The current developer pages returned no readable licensing content in both browser retrieval and a direct retrieval attempt. Link support is selected; ingestion terms remain unverified. [NIST updates](https://www.nist.gov/itl/nvd).
+### NEWS-1: UK NCSC news
 
-## GitHub repository integration
+The [NCSC terms, Use of website content](https://www.ncsc.gov.uk/section/about-this-website/terms-and-conditions) grant reuse under OGL v3.0, require source acknowledgment, and exclude third-party material and logos. The [OGL v3.0](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/) permits commercial and noncommercial reuse subject to its conditions.
 
-Repository authorization and public advisory licensing are separate matters. Support company-authorized public and private GitHub.com repositories. The company can use its dependency data to investigate risk; copying advisory bodies is outside the current scope.
+The [official RSS directory](https://www.ncsc.gov.uk/information/rss-feeds) publishes a news feed at:
 
-The repository-level [Dependabot endpoint](https://docs.github.com/en/rest/dependabot/alerts#list-dependabot-alerts-for-a-repository) accepts GitHub App installation credentials with read access to Dependabot alerts. Show alert links and retain the distinction between an alert, a package match, and evidence of compromise. Do not change alert states as part of checking exposure.
+`https://www.ncsc.gov.uk/api/1/services/v1/news-rss-feed.xml`
 
-GitHub documents dependency data export through its [SBOM API](https://docs.github.com/en/rest/dependency-graph/sboms), using read access to repository contents. At the research date, the old synchronous export is scheduled to close on November 13, 2026; the documented replacement requests generation and later fetches the report. This belongs in integration design, not in a fixed endpoint requirement.
+The news feed is the selected collection; guidance, threat reports, and other collections are not automatically included. A direct retrieval during this review returned HTTP 500. The endpoint is documented, but successful ingestion was not verified. Treat this as a source failure; do not bypass it or report an empty news result.
 
-Use the provider's [API access guidance](https://docs.github.com/en/rest/using-the-rest-api/best-practices-for-using-the-rest-api) when designing authentication, pagination, retry handling, and request limits. The authentication mechanism is still an open product decision. Lack of permission, disabled features, or unavailable dependency data must produce an incomplete check, not a clean result.
+Suggested credit: “Source: UK National Cyber Security Centre. Contains information licensed under the Open Government Licence v3.0.” Include the original article and license links. Preserve any more specific attribution supplied with an item.
 
-## Remaining decisions
+### NEWS-2: CERT-EU Cyber Briefs
 
-1. Define how new links enter the system. Admin entry is supported; automatic publisher polling is not authorized by the current content policy.
-2. Define the company-provided facts needed for automatic exposure checks. URL-only items do not contain affected-version predicates, deployment context, or evidence of exploitation.
-3. Define vendor identity matching, including subsidiaries and SEC CIKs. A text match is insufficient to establish that an incident affects the registered vendor.
-4. Define treatment of preliminary reports, later corrections, and duplicate links. None of these sources establishes complete or immediate vendor incident coverage.
-5. If copying is requested later, perform a source-specific permission review for the actual fields, transformations, storage, API output, and distribution. Keep software licenses, data licenses, website access terms, and third-party linked material separate.
+The [CERT-EU legal notice](https://cert.europa.eu/legal-notice) gives CC BY 4.0 reuse permission with exceptions for third-party works and other excluded rights. The [license conditions](https://creativecommons.org/licenses/by/4.0/) require attribution and identification of changes. The [threat-intelligence collection](https://cert.europa.eu/publications/threat-intelligence/) describes Cyber Briefs as monthly reports on cybersecurity developments drawn from open sources. Select Cyber Briefs only; the wider collection also contains other document types.
 
-The recommendations above are project decisions based on the cited primary sources. They are not a provider agreement or universal legal clearance. No publisher was contacted, no subscription was purchased, and no production feed was connected during this research.
+The publisher-hosted RSS endpoint is:
+
+`https://cert.europa.eu/publications/threat-intelligence-rss`
+
+The browser retrieval identified an XML response but could not render it; a direct retrieval returned HTTP 403. Successful parsing and a supported automated access path remain unverified. An ingestion implementation must handle access denial without bypassing it. The copyright reuse basis and the operational access problem are separate findings.
+
+Suggested credit: “Source: CERT-EU, [publication title], [original URL], CC BY 4.0.” Preserve supplied copyright and other required notices; identify any modifications. The approval covers CERT-EU's own text, not the articles it cites. Monthly publication also limits alert timeliness.
+
+### NEWS-3: ENISA news
+
+The [ENISA legal notice, sections 1.2 and 2.5](https://www.enisa.europa.eu/about-enisa/legal-notice) permits reproduction with acknowledgment, subject to item-specific exceptions, and separates third-party rights. The approved collection is [ENISA News](https://www.enisa.europa.eu/news), restricted to news items and press releases. Do not extend this approval to stock images, podcasts, videos, datasets, or linked external sites.
+
+The news collection and legal notice were readable during this review. A current supported RSS endpoint was not verified, so none is asserted here. The retrieval method remains an open question; this entry establishes text-reuse permission, not a promise of a working automated feed. Copy eligible text without rewriting under this approval; summaries or translations require a verified permission basis.
+
+Suggested credit: “Source: European Union Agency for Cybersecurity (ENISA), [article title], [original URL]. Reproduced under ENISA's published reuse permission.” Retain the legal-notice link and any item-specific notices.
+
+## Content handling
+
+Ingest only text covered by the applicable grant. Keep source identity, the original URL, the reuse notice, and required attribution with the item. Apply those notices to internal displays and downstream internal outputs. Exclude content when a separate rights notice prohibits the intended use or ownership is unclear. Do not assume that a publisher's permission covers a quoted third-party work.
+
+Do not ingest images, logos, video, audio, or externally linked articles under these approvals. Do not imply that a publisher endorses the system. Preserve the distinction between publisher text, changed text, and company analysis. No paid license or individual permission request is needed for the eligible use covered by the published grants above; unsupported uses are outside this approval.
+
+## Removed from the source list
+
+Cloudflare Zero Wire and The Register are removed. Cloudflare's [Radar licensing policy](https://radar.cloudflare.com/about) puts API/download data under a noncommercial license, and The Register's [website terms](https://www.theregister.com/profile/terms_and_conditions_of_use) limit use to personal, noncommercial use and require authorization for copying. No applicable company-ingestion permission has been established for either.
+
+CISA KEV, CVE, GitHub Advisory Database, EPSS, VERIS, SEC EDGAR, OSV, and NVD are removed because they are structured data or filing sources rather than the selected news collections. Generic vendor notices are also removed because they have no shared reuse grant. Their removal does not make a claim that all use of those sources is unlawful.
+
+## Validation and remaining limits
+
+The review checked official publisher permission notices, the NCSC feed directory, the approved publication collections, and the applicable OGL/CC BY terms. Direct RSS probes found the access failures recorded above; no working ingestion service is claimed. No publisher was contacted, no contract was accepted on the company's behalf, and no production source was enabled.
+
+Implementation still needs a retrieval method for each source, a schedule, content-field selection, handling of corrections, and news-to-exposure criteria. Those decisions remain in REQUIREMENTS.md's open questions. Before production ingestion, confirm that the relevant item and current access conditions still fall within this documented scope.
