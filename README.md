@@ -60,8 +60,8 @@ See [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) for conditions, retrieval detai
 
 The visual system is built around one idea: **hatching means unknown.** Solid fill is observed evidence, and diagonal hatching marks missing evidence, coverage gaps, and unknown values. The same device appears in the logo. Publisher text is set in a serif and the system's own words in a sans, so every reader can tell who said what.
 
-- [DESIGN.md](DESIGN.md) holds the tokens, components, accessibility contrast pairs, trust and safety interactions, and open design questions.
-- [design/preview.html](design/preview.html) is a static, self-contained preview of the palette, type scale, components and their states, and the finding report screen. Open it locally in a browser.
+- [DESIGN.md](DESIGN.md) defines light and dark themes, bundled fonts, basic note formatting, common severity labels, printer-friendly PDFs, name-first identity display, and company-name branding, including tokens and accessibility contrast pairs.
+- [design/preview.html](design/preview.html) is a static, self-contained light-theme reference for the palette, type scale, components and their states, and the finding report screen. It uses installed fonts or fallbacks and predates the full interview decisions; it does not implement the application, theme switching, note editor, or PDF export. Open it locally in a browser.
 
 ## Repository contents
 
@@ -81,4 +81,4 @@ npx @google/design.md lint DESIGN.md
 
 ## License
 
-No license has been chosen yet.
+The Daily Dread is licensed under the [MIT License](LICENSE). Third-party fonts and ingested source content retain their own licenses and reuse conditions.
