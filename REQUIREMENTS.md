@@ -22,7 +22,7 @@
 - **FR-2.1** The system MUST provide news about cybersecurity risks in the internal risk feed.
 - **FR-2.2** The system MUST ingest eligible news text from enabled sources listed in [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) into the internal risk feed.
 - **FR-2.3** The system MUST include reported vendor security incidents from the approved news sources in the risk feed.
-- **FR-2.4** The system MUST NOT ingest external vulnerability databases, exploit scores, incident datasets, or regulatory filings as news sources.
+- **FR-2.4** The system MUST ingest data only when the source's published terms or written permission allow ingestion and internal company use.
 
 ### Repository Registration and Exposure Checks
 
@@ -90,7 +90,7 @@
 - **OQ-3** Beyond source identity, original URL, and reuse notices, what fields must each news item contain? Must the system retain full permitted article text, feed descriptions, or both?
 - **OQ-4** What makes a risk item new, and when must it trigger a repository exposure check?
 - **OQ-5** Are GitHub Enterprise Server or repository providers other than GitHub.com required?
-- **OQ-6** How must news reports become testable exposure criteria? Who verifies extracted package names, affected versions, and other claims when structured vulnerability feeds are excluded?
+- **OQ-6** How must source content become testable exposure criteria? Who verifies extracted package names, affected versions, and other claims?
 - **OQ-7** What information must the admin supply to register a repository? How must the system validate it and respond to invalid, duplicate, or inaccessible repositories?
 - **OQ-8** What information must the user supply to register a vendor? How must the system identify the vendor, validate the registration, and respond to invalid, duplicate, or unknown vendors?
 - **OQ-9** How must the system verify company access through the web user interface and API? How are user and admin roles assigned? Which permissions does each role have for news sources, repository registrations, repository data, exposure checks, reports, vendor registrations, and alerts?
