@@ -8,7 +8,7 @@ The system may ingest eligible publisher-owned news text for a private company r
 
 Selection is based on published permission for reuse, not an assumption that private business use is noncommercial. Each entry below permits the selected textual use subject to attribution, item-specific restrictions, and access conditions. Approval applies only to the stated news collection and eligible text, not every resource on a publisher's domain. Copyright permission does not guarantee endpoint availability or authorize bypassing access controls.
 
-The selected sources are public-sector cybersecurity news and editorial briefings. They do not provide complete or immediate coverage of vendor breaches. Vulnerability databases, exploit scores, incident datasets, and regulatory filings are outside the news-source list. Company-authorized GitHub repository access remains a separate integration.
+The selected sources are public-sector cybersecurity news and editorial briefings. They do not provide complete or immediate coverage of vendor breaches. Other source categories are not prohibited by FR-2.4; their ingestion requires suitable published terms or written permission and inclusion in the approved source list. Company-authorized GitHub repository access remains a separate integration.
 
 ## Approved source list
 
@@ -64,7 +64,7 @@ Do not ingest images, logos, video, audio, or externally linked articles under t
 
 Cloudflare Zero Wire and The Register are removed. Cloudflare's [Radar licensing policy](https://radar.cloudflare.com/about) puts API/download data under a noncommercial license, and The Register's [website terms](https://www.theregister.com/profile/terms_and_conditions_of_use) limit use to personal, noncommercial use and require authorization for copying. No applicable company-ingestion permission has been established for either.
 
-CISA KEV, CVE, GitHub Advisory Database, EPSS, VERIS, SEC EDGAR, OSV, and NVD are removed because they are structured data or filing sources rather than the selected news collections. Generic vendor notices are also removed because they have no shared reuse grant. Their removal does not make a claim that all use of those sources is unlawful.
+CISA KEV, CVE, GitHub Advisory Database, EPSS, VERIS, SEC EDGAR, OSV, and NVD are not in the current approved source list. They may be evaluated for addition based on permission for ingestion and internal company use, rather than excluded by category. Vendor notices also require source-specific permission evidence. Absence from the list does not make a claim that all use of a source is unlawful.
 
 ## Validation and remaining limits
 
