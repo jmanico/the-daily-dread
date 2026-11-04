@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:">
+<title>The Daily Dread design preview</title>
+<style>
+:root{
+  --primary:#3B2D55;--on-primary:#FFFFFF;--ink:#231A33;--secondary:#5B5670;--neutral:#ECEDF1;--surface:#FFFFFF;
+  --mist:#D7D9E0;--line:#77728A;--tertiary:#E8A33D;--dawn-ink:#7A4A00;--dawn-wash:#FBEBD0;
+  --error:#A1203A;--error-wash:#F8E1E5;--verified:#1E6553;--verified-wash:#DCEFE8;
+  --sans:"Atkinson Hyperlegible Next","Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Source Serif 4","Source Serif Pro",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --hatch:repeating-linear-gradient(135deg,var(--secondary) 0 1.5px,var(--mist) 1.5px 6px);
+}
+*{box-sizing:border-box}
+html{background:var(--neutral);color:var(--ink);font:400 16px/1.5 var(--sans)}
+body{margin:0}
+a{color:var(--primary);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+code,.mono{font-family:var(--mono);font-size:13px;line-height:1.45;overflow-wrap:break-word}
+h1,h2,h3,h4{margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+@media (max-width:600px){.wrap{padding:0 16px}}
+
+/* Header */
+.app-header{background:var(--primary);color:var(--on-primary)}
+.app-header .wrap{display:flex;align-items:center;gap:24px;min-height:56px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:var(--on-primary);text-decoration:none}
+.nav{display:flex;gap:4px;flex-wrap:wrap}
+.nav a{color:var(--mist);text-decoration:none;font-weight:700;font-size:14px;padding:16px 10px 13px;border-bottom:3px solid transparent}
+.nav a[aria-current]{color:var(--on-primary);border-bottom-color:var(--tertiary)}
+.app-header a:focus-visible,.app-header button:focus-visible{outline-color:var(--tertiary)}
+.who{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:14px}
+.who .idp{color:var(--mist)}
+.badge-admin{background:var(--tertiary);color:var(--ink);font-weight:700;font-size:12px;padding:2px 8px;border-radius:9999px}
+.btn-signout{background:transparent;color:var(--on-primary);border:1px solid var(--mist);border-radius:6px;font:700 14px var(--sans);padding:6px 12px}
+@media (max-width:760px){.nav{order:3;width:100%;overflow-x:auto;flex-wrap:nowrap}.nav a{padding:10px 10px 9px}.who{gap:8px}.who .idp{display:none}}
+
+/* Type */
+.display{font-size:36px;line-height:1.15;font-weight:700;letter-spacing:-0.01em}
+.h-lg{font-size:24px;line-height:1.25;font-weight:700}
+.h-md{font-size:21px;line-height:1.3;font-weight:700}
+.h-sm{font-size:18px;line-height:1.35;font-weight:700}
+.body-lg{font-size:18px}
+.body-sm{font-size:14px;line-height:1.45}
+.label-md{font-size:14px;font-weight:700;line-height:1.3}
+.label-sm{font-size:12px;font-weight:700;line-height:1.3}
+.muted{color:var(--secondary)}
+@media (max-width:600px){.display{font-size:28px}}
+
+/* Chips and tags */
+.chip{display:inline-flex;align-items:center;gap:6px;font:700 12px/1.3 var(--sans);padding:3px 10px;border:1px solid var(--line);border-radius:9999px;background:var(--surface);color:var(--ink);white-space:nowrap}
+.chip svg{width:12px;height:12px;flex:none}
+.chip.completed{background:var(--verified-wash);color:var(--verified);border-color:var(--verified)}
+.chip.failed{background:var(--error-wash);color:var(--error);border-color:var(--error)}
+.chip.gaps{background:linear-gradient(var(--surface),var(--surface)) padding-box,var(--hatch) border-box;border:3px solid transparent;padding:1px 8px}
+.chip.running{background:repeating-linear-gradient(90deg,var(--surface) 0 10px,var(--neutral) 10px 20px);background-size:40px 100%;animation:run 1.2s linear infinite}
+@keyframes run{to{background-position:40px 0}}
+@media (prefers-reduced-motion:reduce){.chip.running{animation:none}}
+.chip.withdrawn{text-decoration:line-through}
+.flag{display:inline-block;background:var(--tertiary);color:var(--ink);border:1px solid var(--ink);border-radius:2px;font:700 12px/1.3 var(--sans);padding:3px 8px}
+.new{display:inline-block;background:var(--dawn-wash);color:var(--dawn-ink);font:700 12px/1.3 var(--sans);padding:2px 6px;border-radius:2px}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:2px;font:700 12px/1.3 var(--sans);padding:3px 8px;background:var(--surface)}
+.tag.critical{border-color:var(--error);color:var(--error)}
+.unknown{display:inline-block;background:var(--hatch);padding:2px;border-radius:2px}
+.unknown span{display:inline-block;background:var(--surface);padding:1px 6px;font:700 12px/1.3 var(--sans)}
+.row-gap{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+/* Confidence meter */
+.meter{display:grid;grid-template-columns:72px 1fr;gap:4px 16px;align-items:center}
+.meter .score{font-size:24px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;grid-row:span 2}
+.meter .score small{display:block;font-size:12px;color:var(--secondary);margin-top:4px}
+.track{position:relative;height:12px;border-radius:2px;border:1px solid var(--line);background:var(--hatch);overflow:hidden}
+.track .fill{position:absolute;inset:0 auto 0 0;background:var(--primary)}
+.track::before,.track::after{content:"";position:absolute;top:0;bottom:0;width:2px;background:var(--surface);z-index:1}
+.track::before{left:50%}.track::after{left:80%}
+.ticks{display:flex;justify-content:space-between;font-size:12px;color:var(--secondary);position:relative;height:16px}
+.ticks span{position:absolute}
+.rationale{grid-column:1/-1;font-size:14px;margin:4px 0 0}
+
+/* Buttons and inputs */
+.btn{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:10px 16px;border-radius:6px;font:700 14px/1 var(--sans);border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--primary);color:var(--on-primary)}
+.btn-primary.is-hover{background:var(--ink)}
+.btn-secondary{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.btn-secondary.is-hover{background:var(--mist)}
+.btn-destructive{background:var(--error);color:var(--on-primary)}
+.btn-quiet{background:transparent;color:var(--primary);text-decoration:underline;padding:10px 4px}
+.btn:disabled{background:var(--mist);color:var(--secondary);border-color:var(--mist);cursor:not-allowed}
+.is-focus{outline:2px solid var(--ink);outline-offset:2px}
+.field{display:grid;gap:6px;max-width:360px}
+.field label{font-weight:700;font-size:14px}
+.field input{height:40px;border:1px solid var(--line);border-radius:6px;padding:0 12px;font:400 16px var(--sans);color:var(--ink);background:var(--surface)}
+.field input:disabled{background:var(--mist);color:var(--secondary)}
+.field .help{font-size:14px;color:var(--secondary);margin:0}
+.field.error input{background:var(--error-wash);border:2px solid var(--error)}
+.field .err{font-size:14px;color:var(--error);font-weight:700;margin:0;display:flex;gap:6px;align-items:flex-start}
+
+/* Panels */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:24px}
+.prov{font:700 12px/1.3 var(--sans);color:var(--secondary);margin:0 0 6px}
+.quote{font-family:var(--serif);font-size:17px;line-height:1.65;border-left:3px solid var(--secondary);padding:0 0 0 16px;margin:0;max-width:68ch}
+.attrib{font-size:14px;color:var(--secondary);margin:8px 0 0 19px}
+.gap{background:var(--hatch);padding:6px;border-radius:2px}
+.gap > div{background:var(--surface);padding:10px 12px;font-size:14px}
+.gap strong{display:block}
+.redact{display:inline-block;background:var(--ink);color:var(--on-primary);font-family:var(--mono);font-size:13px;padding:2px 8px;border-radius:2px}
+.errpanel{background:var(--error-wash);border:1px solid var(--error);border-radius:2px;padding:16px;font-size:14px}
+.errpanel h3{font-size:16px;margin-bottom:4px}
+.errpanel dl{display:grid;grid-template-columns:auto 1fr;gap:2px 12px;margin:8px 0 0}
+.errpanel dt{font-weight:700}.errpanel dd{margin:0}
+.banner{background:var(--dawn-wash);border:1px solid var(--dawn-ink);border-radius:2px;padding:12px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;font-size:14px}
+.ext::after{content:"";display:inline-block;width:.75em;height:.75em;margin-left:3px;vertical-align:-1px;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M7 1h4v4M11 1 5.5 6.5M9 7v4H1V3h4' fill='none' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") center/contain no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M7 1h4v4M11 1 5.5 6.5M9 7v4H1V3h4' fill='none' stroke='black' stroke-width='1.5'/%3E%3C/svg%3E") center/contain no-repeat}
+.seg{white-space:nowrap}
+dl.kv{display:grid;grid-template-columns:minmax(96px,auto) 1fr;gap:6px 16px;margin:0;font-size:14px}
+dl.kv dt{color:var(--secondary)}dl.kv dd{margin:0;min-width:0}
+
+/* Dialog (static) */
+.dialog-stage{background:rgba(35,26,51,.6);padding:32px 16px;border-radius:2px}
+.dialog{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:24px;max-width:480px;margin:0 auto;box-shadow:0 16px 40px rgba(35,26,51,.28)}
+.dialog h3{font-size:21px;line-height:1.3;margin-bottom:8px}
+.dialog ul{padding-left:20px;font-size:14px;margin:8px 0 16px}
+.dialog .actions{display:flex;gap:12px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
+
+/* Feed rows */
+.feed{list-style:none;margin:0;padding:0;border:1px solid var(--line);border-radius:2px;background:var(--surface)}
+.feed li{padding:16px;border-top:1px solid var(--mist)}
+.feed li:first-child{border-top:0}
+.feed li.is-hover{background:var(--neutral)}
+.feed h3{font-size:18px;line-height:1.35}
+.feed h3 a{color:var(--ink);text-decoration:none}
+.feed .meta{font-size:14px;color:var(--secondary);margin:4px 0 8px;display:flex;flex-wrap:wrap;gap:4px 16px}
+.feed .why{font-size:14px;margin:8px 0 0}
+
+/* Report */
+.crumbs{font-size:14px;margin:24px 0 8px}
+.report{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px 56px;align-items:start;padding-bottom:64px}
+.report .main{display:grid;gap:24px;min-width:0}
+.report .rail{display:grid;gap:16px;grid-column:2;grid-row:1 / span 3;min-width:0}
+.report section h2{font-size:21px;line-height:1.3;margin-bottom:8px}
+.report p{margin:0 0 8px;max-width:68ch}
+.report .verdict h1{max-width:30ch}
+.steps{margin:0;padding-left:24px;display:grid;gap:16px}
+.steps li::marker{font-weight:700}
+.steps dl{margin:6px 0 0;display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:14px}
+.steps dt{font-weight:700}.steps dd{margin:0}
+.protect{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.protect li{display:flex;gap:10px;align-items:flex-start}
+.branches{width:100%;border-collapse:collapse;font-size:14px}
+.branches th{text-align:left;font-weight:700;color:var(--secondary);padding:4px 8px 4px 0;border-bottom:1px solid var(--line)}
+.branches td{padding:6px 8px 6px 0;border-bottom:1px solid var(--mist);vertical-align:top}
+.history{list-style:none;margin:0;padding:0;font-size:14px;display:grid;gap:8px}
+@media (max-width:960px){
+  .report{grid-template-columns:minmax(0,1fr)}
+  .report .rail{grid-column:1;grid-row:auto}
+  .report .verdict{order:1;max-width:none}.report .rail{order:2}.report .rest{order:3}
+  .report .main{display:contents}
+}
+
+/* Spec sheet */
+.sheet{padding-top:40px;padding-bottom:24px;display:grid;gap:40px}
+.sheet > section > h2{font-size:24px;line-height:1.25;margin-bottom:16px}
+.sheet .note{font-size:14px;color:var(--secondary);max-width:68ch;margin:0 0 16px}
+.logos{display:flex;gap:32px;align-items:flex-end;flex-wrap:wrap}
+.logos figure{margin:0;display:grid;gap:8px;justify-items:start;font-size:14px;color:var(--secondary)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{border:1px solid var(--line);border-radius:2px;background:var(--surface);font-size:14px}
+.sw i{display:block;height:56px;border-bottom:1px solid var(--line)}
+.sw div{padding:8px 10px}
+.sw code{display:block;color:var(--secondary)}
+.scale{display:grid;gap:12px}
+.scale > div{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;border-top:1px solid var(--mist);padding-top:8px}
+.scale code{color:var(--secondary)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+.gallery .panel h3{font-size:16px;margin-bottom:12px}
+.stack{display:grid;gap:12px}
+.screen-label{border-top:1px solid var(--line);padding:24px 0 0}
+@media (max-width:600px){.scale > div{grid-template-columns:1fr;gap:2px}}
+</style>
+</head>
+<body>
+
+<div class="wrap sheet">
+  <header>
+    <div class="logos">
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="160" height="160" role="img" aria-labelledby="title-a">
+  <title id="title-a">The Daily Dread</title>
+  <desc id="desc-a">A dawn sun rising inside a confidence dial. The dial marks the low, medium, and high confidence bands, the needle rests in the medium band, and the ground below the horizon is hatched to show what is still unknown.</desc>
+  <defs>
+    <clipPath id="ground-a"><path d="M15 38A17 17 0 0 0 49 38Z"/></clipPath>
+  </defs>
+  <rect width="64" height="64" rx="13" fill="#3B2D55"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="10.5" fill="none" stroke="#231A33" stroke-width="1.5"/>
+  <g fill="none" stroke="#ECEDF1" stroke-linecap="round">
+    <path d="M4.50 38.00A27.5 27.5 0 0 1 31.14 10.51" stroke-width="1" stroke-dasharray="1.2 2.4"/>
+    <path d="M32.00 10.50A27.5 27.5 0 0 1 53.73 21.15" stroke-width="1.2"/>
+    <path d="M54.25 21.84A27.5 27.5 0 0 1 59.50 38.00" stroke-width="2.4"/>
+  </g>
+  <g stroke="#ECEDF1" stroke-linecap="round">
+    <line x1="12.50" y1="38.00" x2="6.50" y2="38.00" stroke-width="2.2"/><line x1="12.50" y1="31.67" x2="9.65" y2="30.74" stroke-width="1.2"/><line x1="15.42" y1="25.95" x2="12.99" y2="24.19" stroke-width="1.2"/><line x1="19.95" y1="21.42" x2="18.19" y2="18.99" stroke-width="1.2"/><line x1="25.67" y1="18.50" x2="24.74" y2="15.65" stroke-width="1.2"/><line x1="32.00" y1="18.50" x2="32.00" y2="12.50" stroke-width="2.2"/><line x1="38.33" y1="18.50" x2="39.26" y2="15.65" stroke-width="1.2"/><line x1="44.05" y1="21.42" x2="45.81" y2="18.99" stroke-width="1.2"/><line x1="47.78" y1="26.54" x2="52.63" y2="23.01" stroke-width="2.2"/><line x1="51.50" y1="31.67" x2="54.35" y2="30.74" stroke-width="1.2"/><line x1="51.50" y1="38.00" x2="57.50" y2="38.00" stroke-width="2.2"/>
+  </g>
+  <path d="M15 38A17 17 0 0 1 49 38Z" fill="#E8A33D"/>
+  <g clip-path="url(#ground-a)" stroke="#E8A33D" stroke-width="1.5" stroke-linecap="square">
+    <line x1="-24" y1="38" x2="-7" y2="55"/><line x1="-20" y1="38" x2="-3" y2="55"/><line x1="-16" y1="38" x2="1" y2="55"/><line x1="-12" y1="38" x2="5" y2="55"/><line x1="-8" y1="38" x2="9" y2="55"/><line x1="-4" y1="38" x2="13" y2="55"/><line x1="0" y1="38" x2="17" y2="55"/><line x1="4" y1="38" x2="21" y2="55"/><line x1="8" y1="38" x2="25" y2="55"/><line x1="12" y1="38" x2="29" y2="55"/><line x1="16" y1="38" x2="33" y2="55"/><line x1="20" y1="38" x2="37" y2="55"/><line x1="24" y1="38" x2="41" y2="55"/><line x1="28" y1="38" x2="45" y2="55"/><line x1="32" y1="38" x2="49" y2="55"/><line x1="36" y1="38" x2="53" y2="55"/><line x1="40" y1="38" x2="57" y2="55"/><line x1="44" y1="38" x2="61" y2="55"/><line x1="48" y1="38" x2="65" y2="55"/><line x1="52" y1="38" x2="69" y2="55"/><line x1="56" y1="38" x2="73" y2="55"/><line x1="60" y1="38" x2="77" y2="55"/>
+  </g>
+  <path d="M15 38A17 17 0 0 0 49 38" fill="none" stroke="#E8A33D" stroke-width="1.5"/>
+  <line x1="32" y1="38" x2="41.24" y2="26.83" stroke="#231A33" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="32" cy="38" r="3" fill="#231A33"/>
+  <line x1="7" y1="38" x2="57" y2="38" stroke="#ECEDF1" stroke-width="2.2" stroke-linecap="round"/>
+</svg><figcaption>Full size</figcaption></figure>
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-labelledby="title-b">
+  <title id="title-b">The Daily Dread</title>
+  <desc id="desc-b">A dawn sun rising inside a confidence dial. The dial marks the low, medium, and high confidence bands, the needle rests in the medium band, and the ground below the horizon is hatched to show what is still unknown.</desc>
+  <defs>
+    <clipPath id="ground-b"><path d="M15 38A17 17 0 0 0 49 38Z"/></clipPath>
+  </defs>
+  <rect width="64" height="64" rx="13" fill="#3B2D55"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="10.5" fill="none" stroke="#231A33" stroke-width="1.5"/>
+  <g fill="none" stroke="#ECEDF1" stroke-linecap="round">
+    <path d="M4.50 38.00A27.5 27.5 0 0 1 31.14 10.51" stroke-width="1" stroke-dasharray="1.2 2.4"/>
+    <path d="M32.00 10.50A27.5 27.5 0 0 1 53.73 21.15" stroke-width="1.2"/>
+    <path d="M54.25 21.84A27.5 27.5 0 0 1 59.50 38.00" stroke-width="2.4"/>
+  </g>
+  <g stroke="#ECEDF1" stroke-linecap="round">
+    <line x1="12.50" y1="38.00" x2="6.50" y2="38.00" stroke-width="2.2"/><line x1="12.50" y1="31.67" x2="9.65" y2="30.74" stroke-width="1.2"/><line x1="15.42" y1="25.95" x2="12.99" y2="24.19" stroke-width="1.2"/><line x1="19.95" y1="21.42" x2="18.19" y2="18.99" stroke-width="1.2"/><line x1="25.67" y1="18.50" x2="24.74" y2="15.65" stroke-width="1.2"/><line x1="32.00" y1="18.50" x2="32.00" y2="12.50" stroke-width="2.2"/><line x1="38.33" y1="18.50" x2="39.26" y2="15.65" stroke-width="1.2"/><line x1="44.05" y1="21.42" x2="45.81" y2="18.99" stroke-width="1.2"/><line x1="47.78" y1="26.54" x2="52.63" y2="23.01" stroke-width="2.2"/><line x1="51.50" y1="31.67" x2="54.35" y2="30.74" stroke-width="1.2"/><line x1="51.50" y1="38.00" x2="57.50" y2="38.00" stroke-width="2.2"/>
+  </g>
+  <path d="M15 38A17 17 0 0 1 49 38Z" fill="#E8A33D"/>
+  <g clip-path="url(#ground-b)" stroke="#E8A33D" stroke-width="1.5" stroke-linecap="square">
+    <line x1="-24" y1="38" x2="-7" y2="55"/><line x1="-20" y1="38" x2="-3" y2="55"/><line x1="-16" y1="38" x2="1" y2="55"/><line x1="-12" y1="38" x2="5" y2="55"/><line x1="-8" y1="38" x2="9" y2="55"/><line x1="-4" y1="38" x2="13" y2="55"/><line x1="0" y1="38" x2="17" y2="55"/><line x1="4" y1="38" x2="21" y2="55"/><line x1="8" y1="38" x2="25" y2="55"/><line x1="12" y1="38" x2="29" y2="55"/><line x1="16" y1="38" x2="33" y2="55"/><line x1="20" y1="38" x2="37" y2="55"/><line x1="24" y1="38" x2="41" y2="55"/><line x1="28" y1="38" x2="45" y2="55"/><line x1="32" y1="38" x2="49" y2="55"/><line x1="36" y1="38" x2="53" y2="55"/><line x1="40" y1="38" x2="57" y2="55"/><line x1="44" y1="38" x2="61" y2="55"/><line x1="48" y1="38" x2="65" y2="55"/><line x1="52" y1="38" x2="69" y2="55"/><line x1="56" y1="38" x2="73" y2="55"/><line x1="60" y1="38" x2="77" y2="55"/>
+  </g>
+  <path d="M15 38A17 17 0 0 0 49 38" fill="none" stroke="#E8A33D" stroke-width="1.5"/>
+  <line x1="32" y1="38" x2="41.24" y2="26.83" stroke="#231A33" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="32" cy="38" r="3" fill="#231A33"/>
+  <line x1="7" y1="38" x2="57" y2="38" stroke="#ECEDF1" stroke-width="2.2" stroke-linecap="round"/>
+</svg><figcaption>64 px</figcaption></figure>
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="32" height="32" role="img" aria-labelledby="title-c">
+  <title id="title-c">The Daily Dread</title>
+  <desc id="desc-c">A dawn sun rising inside a confidence dial. The dial marks the low, medium, and high confidence bands, the needle rests in the medium band, and the ground below the horizon is hatched to show what is still unknown.</desc>
+  <defs>
+    <clipPath id="ground-c"><path d="M15 38A17 17 0 0 0 49 38Z"/></clipPath>
+  </defs>
+  <rect width="64" height="64" rx="13" fill="#3B2D55"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="10.5" fill="none" stroke="#231A33" stroke-width="1.5"/>
+  <g fill="none" stroke="#ECEDF1" stroke-linecap="round">
+    <path d="M4.50 38.00A27.5 27.5 0 0 1 31.14 10.51" stroke-width="1" stroke-dasharray="1.2 2.4"/>
+    <path d="M32.00 10.50A27.5 27.5 0 0 1 53.73 21.15" stroke-width="1.2"/>
+    <path d="M54.25 21.84A27.5 27.5 0 0 1 59.50 38.00" stroke-width="2.4"/>
+  </g>
+  <g stroke="#ECEDF1" stroke-linecap="round">
+    <line x1="12.50" y1="38.00" x2="6.50" y2="38.00" stroke-width="2.2"/><line x1="12.50" y1="31.67" x2="9.65" y2="30.74" stroke-width="1.2"/><line x1="15.42" y1="25.95" x2="12.99" y2="24.19" stroke-width="1.2"/><line x1="19.95" y1="21.42" x2="18.19" y2="18.99" stroke-width="1.2"/><line x1="25.67" y1="18.50" x2="24.74" y2="15.65" stroke-width="1.2"/><line x1="32.00" y1="18.50" x2="32.00" y2="12.50" stroke-width="2.2"/><line x1="38.33" y1="18.50" x2="39.26" y2="15.65" stroke-width="1.2"/><line x1="44.05" y1="21.42" x2="45.81" y2="18.99" stroke-width="1.2"/><line x1="47.78" y1="26.54" x2="52.63" y2="23.01" stroke-width="2.2"/><line x1="51.50" y1="31.67" x2="54.35" y2="30.74" stroke-width="1.2"/><line x1="51.50" y1="38.00" x2="57.50" y2="38.00" stroke-width="2.2"/>
+  </g>
+  <path d="M15 38A17 17 0 0 1 49 38Z" fill="#E8A33D"/>
+  <g clip-path="url(#ground-c)" stroke="#E8A33D" stroke-width="1.5" stroke-linecap="square">
+    <line x1="-24" y1="38" x2="-7" y2="55"/><line x1="-20" y1="38" x2="-3" y2="55"/><line x1="-16" y1="38" x2="1" y2="55"/><line x1="-12" y1="38" x2="5" y2="55"/><line x1="-8" y1="38" x2="9" y2="55"/><line x1="-4" y1="38" x2="13" y2="55"/><line x1="0" y1="38" x2="17" y2="55"/><line x1="4" y1="38" x2="21" y2="55"/><line x1="8" y1="38" x2="25" y2="55"/><line x1="12" y1="38" x2="29" y2="55"/><line x1="16" y1="38" x2="33" y2="55"/><line x1="20" y1="38" x2="37" y2="55"/><line x1="24" y1="38" x2="41" y2="55"/><line x1="28" y1="38" x2="45" y2="55"/><line x1="32" y1="38" x2="49" y2="55"/><line x1="36" y1="38" x2="53" y2="55"/><line x1="40" y1="38" x2="57" y2="55"/><line x1="44" y1="38" x2="61" y2="55"/><line x1="48" y1="38" x2="65" y2="55"/><line x1="52" y1="38" x2="69" y2="55"/><line x1="56" y1="38" x2="73" y2="55"/><line x1="60" y1="38" x2="77" y2="55"/>
+  </g>
+  <path d="M15 38A17 17 0 0 0 49 38" fill="none" stroke="#E8A33D" stroke-width="1.5"/>
+  <line x1="32" y1="38" x2="41.24" y2="26.83" stroke="#231A33" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="32" cy="38" r="3" fill="#231A33"/>
+  <line x1="7" y1="38" x2="57" y2="38" stroke="#ECEDF1" stroke-width="2.2" stroke-linecap="round"/>
+</svg><figcaption>32 px</figcaption></figure>
+      <figure><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="16" height="16" role="img" aria-labelledby="title-d">
+  <title id="title-d">The Daily Dread</title>
+  <desc id="desc-d">A dawn sun rising inside a confidence dial. The dial marks the low, medium, and high confidence bands, the needle rests in the medium band, and the ground below the horizon is hatched to show what is still unknown.</desc>
+  <defs>
+    <clipPath id="ground-d"><path d="M15 38A17 17 0 0 0 49 38Z"/></clipPath>
+  </defs>
+  <rect width="64" height="64" rx="13" fill="#3B2D55"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="10.5" fill="none" stroke="#231A33" stroke-width="1.5"/>
+  <g fill="none" stroke="#ECEDF1" stroke-linecap="round">
+    <path d="M4.50 38.00A27.5 27.5 0 0 1 31.14 10.51" stroke-width="1" stroke-dasharray="1.2 2.4"/>
+    <path d="M32.00 10.50A27.5 27.5 0 0 1 53.73 21.15" stroke-width="1.2"/>
+    <path d="M54.25 21.84A27.5 27.5 0 0 1 59.50 38.00" stroke-width="2.4"/>
+  </g>
+  <g stroke="#ECEDF1" stroke-linecap="round">
+    <line x1="12.50" y1="38.00" x2="6.50" y2="38.00" stroke-width="2.2"/><line x1="12.50" y1="31.67" x2="9.65" y2="30.74" stroke-width="1.2"/><line x1="15.42" y1="25.95" x2="12.99" y2="24.19" stroke-width="1.2"/><line x1="19.95" y1="21.42" x2="18.19" y2="18.99" stroke-width="1.2"/><line x1="25.67" y1="18.50" x2="24.74" y2="15.65" stroke-width="1.2"/><line x1="32.00" y1="18.50" x2="32.00" y2="12.50" stroke-width="2.2"/><line x1="38.33" y1="18.50" x2="39.26" y2="15.65" stroke-width="1.2"/><line x1="44.05" y1="21.42" x2="45.81" y2="18.99" stroke-width="1.2"/><line x1="47.78" y1="26.54" x2="52.63" y2="23.01" stroke-width="2.2"/><line x1="51.50" y1="31.67" x2="54.35" y2="30.74" stroke-width="1.2"/><line x1="51.50" y1="38.00" x2="57.50" y2="38.00" stroke-width="2.2"/>
+  </g>
+  <path d="M15 38A17 17 0 0 1 49 38Z" fill="#E8A33D"/>
+  <g clip-path="url(#ground-d)" stroke="#E8A33D" stroke-width="1.5" stroke-linecap="square">
+    <line x1="-24" y1="38" x2="-7" y2="55"/><line x1="-20" y1="38" x2="-3" y2="55"/><line x1="-16" y1="38" x2="1" y2="55"/><line x1="-12" y1="38" x2="5" y2="55"/><line x1="-8" y1="38" x2="9" y2="55"/><line x1="-4" y1="38" x2="13" y2="55"/><line x1="0" y1="38" x2="17" y2="55"/><line x1="4" y1="38" x2="21" y2="55"/><line x1="8" y1="38" x2="25" y2="55"/><line x1="12" y1="38" x2="29" y2="55"/><line x1="16" y1="38" x2="33" y2="55"/><line x1="20" y1="38" x2="37" y2="55"/><line x1="24" y1="38" x2="41" y2="55"/><line x1="28" y1="38" x2="45" y2="55"/><line x1="32" y1="38" x2="49" y2="55"/><line x1="36" y1="38" x2="53" y2="55"/><line x1="40" y1="38" x2="57" y2="55"/><line x1="44" y1="38" x2="61" y2="55"/><line x1="48" y1="38" x2="65" y2="55"/><line x1="52" y1="38" x2="69" y2="55"/><line x1="56" y1="38" x2="73" y2="55"/><line x1="60" y1="38" x2="77" y2="55"/>
+  </g>
+  <path d="M15 38A17 17 0 0 0 49 38" fill="none" stroke="#E8A33D" stroke-width="1.5"/>
+  <line x1="32" y1="38" x2="41.24" y2="26.83" stroke="#231A33" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="32" cy="38" r="3" fill="#231A33"/>
+  <line x1="7" y1="38" x2="57" y2="38" stroke="#ECEDF1" stroke-width="2.2" stroke-linecap="round"/>
+</svg><figcaption>16 px</figcaption></figure>
+    </div>
+    <h1 class="display" style="margin-top:24px">The Daily Dread design preview</h1>
+    <p class="note" style="margin-top:8px">Static reference for <code>DESIGN.md</code>. Repositories, packages, advisories, and people below are illustrative samples, not real data. Fonts render with local fallbacks until hosting is decided (DQ-1).</p>
+  </header>
+
+  <section aria-labelledby="pal">
+    <h2 id="pal">Palette</h2>
+    <div class="swatches">
+      <div class="sw"><i style="background:#3B2D55"></i><div>Plum <code>primary #3B2D55</code></div></div>
+      <div class="sw"><i style="background:#231A33"></i><div>Ink <code>ink #231A33</code></div></div>
+      <div class="sw"><i style="background:#5B5670"></i><div>Slate <code>secondary #5B5670</code></div></div>
+      <div class="sw"><i style="background:#ECEDF1"></i><div>Fog <code>neutral #ECEDF1</code></div></div>
+      <div class="sw"><i style="background:#FFFFFF"></i><div>Surface <code>surface #FFFFFF</code></div></div>
+      <div class="sw"><i style="background:#D7D9E0"></i><div>Mist <code>mist #D7D9E0</code></div></div>
+      <div class="sw"><i style="background:#77728A"></i><div>Line <code>line #77728A</code></div></div>
+      <div class="sw"><i style="background:#E8A33D"></i><div>Dawn <code>tertiary #E8A33D</code></div></div>
+      <div class="sw"><i style="background:#7A4A00"></i><div>Dawn ink <code>dawn-ink #7A4A00</code></div></div>
+      <div class="sw"><i style="background:#FBEBD0"></i><div>Dawn wash <code>dawn-wash #FBEBD0</code></div></div>
+      <div class="sw"><i style="background:#A1203A"></i><div>Error <code>error #A1203A</code></div></div>
+      <div class="sw"><i style="background:#F8E1E5"></i><div>Error wash <code>error-wash #F8E1E5</code></div></div>
+      <div class="sw"><i style="background:#1E6553"></i><div>Verified <code>verified #1E6553</code></div></div>
+      <div class="sw"><i style="background:#DCEFE8"></i><div>Verified wash <code>verified-wash #DCEFE8</code></div></div>
+      <div class="sw"><i style="background:repeating-linear-gradient(135deg,#5B5670 0 1.5px,#D7D9E0 1.5px 6px)"></i><div>Hatching <code>unknown, gap, missing</code></div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="type">
+    <h2 id="type">Type scale</h2>
+    <div class="scale">
+      <div><code>display 36</code><span class="display">Exposure report</span></div>
+      <div><code>headline-lg 24</code><span class="h-lg">What to do next</span></div>
+      <div><code>headline-md 21</code><span class="h-md">Protections that may reduce risk</span></div>
+      <div><code>headline-sm 18</code><span class="h-sm">Vendor incident reported by Okta</span></div>
+      <div><code>body-lg 18</code><span class="body-lg">Incomplete evidence never proves safety.</span></div>
+      <div><code>body-md 16</code><span>The lockfile pins a version inside the affected range.</span></div>
+      <div><code>body-sm 14</code><span class="body-sm">Retrieved 08:02, published 07:41</span></div>
+      <div><code>label-md 14</code><span class="label-md">Dependency path</span></div>
+      <div><code>label-sm 12</code><span class="label-sm">Publisher statement</span></div>
+      <div><code>score 24</code><span style="font-size:24px;font-weight:700;font-variant-numeric:tabular-nums">62</span></div>
+      <div><code>source-md 17</code><span style="font-family:var(--serif);font-size:17px;line-height:1.65">A crafted document can cause the parser to resolve external entities.</span></div>
+      <div><code>source-sm 15</code><span style="font-family:var(--serif);font-size:15px;line-height:1.6">Feed description only. Full text is not permitted for this source.</span></div>
+      <div><code>code-sm 13</code><code style="color:var(--ink)">example-org/payments-api@4f9c2e1</code></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="comp">
+    <h2 id="comp">Components and states</h2>
+    <div class="gallery">
+      <div class="panel">
+        <h3>Buttons</h3>
+        <div class="stack">
+          <div class="row-gap"><button class="btn btn-primary">Export PDF</button><button class="btn btn-primary is-hover">Hover</button><button class="btn btn-primary is-focus">Focus</button><button class="btn btn-primary" disabled>Disabled</button></div>
+          <div class="row-gap"><button class="btn btn-secondary">Export CSV</button><button class="btn btn-secondary is-hover">Hover</button><button class="btn btn-secondary is-focus">Focus</button><button class="btn btn-secondary" disabled>Disabled</button></div>
+          <div class="row-gap"><button class="btn btn-destructive">Archive repository</button><button class="btn btn-destructive is-focus">Focus</button><button class="btn btn-quiet">View report history</button></div>
+          <p class="body-sm muted" style="margin:0">Disabled buttons sit next to their reason, for example "Needs issue-write permission."</p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Inputs</h3>
+        <div class="stack">
+          <div class="field"><label for="i1">Repository</label><input id="i1" value="example-org/payments-api"><p class="help">A GitHub.com URL or owner/name.</p></div>
+          <div class="field error"><label for="i2">Official domain</label><input id="i2" value="okta" aria-invalid="true" aria-describedby="e2"><p class="err" id="e2"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 3v3.5M6 8.2v.8" stroke="currentColor" stroke-width="1.6"/></svg>Enter a domain like okta.com.</p></div>
+          <div class="field"><label for="i3">Source endpoint</label><input id="i3" value="Set by deployment" disabled></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Status chips</h3>
+        <div class="stack">
+          <div class="row-gap"><span class="chip"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 3v3l2 1.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Queued</span><span class="chip running"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><path d="M3 2v8l7-4z" fill="currentColor"/></svg>Running</span><span class="chip completed"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="currentColor" stroke-width="2"/></svg>Completed</span><span class="chip gaps"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><rect x="1" y="1" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1 7 7 1M5 11 11 5M1 11 11 1" stroke="currentColor" stroke-width="1.2"/></svg>Completed with gaps</span><span class="chip failed"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M6 3v3.5M6 8.2v.8" stroke="currentColor" stroke-width="1.6"/></svg>Failed</span><span class="chip"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><circle cx="6" cy="6" r="5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6 3v3l2 1.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Awaiting next advisory</span></div>
+          <div class="row-gap"><span class="chip">Pending</span><span class="chip completed">Accepted by provider</span><span class="chip">Retrying 2 of 3</span><span class="chip failed">Delivery failed</span></div>
+          <div class="row-gap"><span class="chip completed">Active</span><span class="chip">Retrying</span><span class="chip gaps">Degraded</span><span class="chip">Paused</span><span class="chip gaps">Stale</span></div>
+          <div class="row-gap"><span class="chip">Confirmed</span><span class="chip">Suspected</span><span class="chip">Disputed</span><span class="chip withdrawn">Withdrawn</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Confidence, severity, impact, exploitation</h3>
+        <div class="stack">
+          <div class="meter" role="group" aria-label="Confidence 91 of 100, high"><div class="score">91<small>High</small></div><div class="track" aria-hidden="true"><div class="fill" style="width:91%"></div></div><div class="ticks" aria-hidden="true"><span style="left:0">0</span><span style="left:calc(50% - 8px)">50</span><span style="left:calc(80% - 8px)">80</span><span style="right:0">100</span></div><p class="rationale">Lockfile and advisory agree on package identity and range on every selected branch.</p></div>
+          <div class="meter" role="group" aria-label="Confidence 62 of 100, medium"><div class="score">62<small>Medium</small></div><div class="track" aria-hidden="true"><div class="fill" style="width:62%"></div></div><div class="ticks" aria-hidden="true"><span style="left:0">0</span><span style="left:calc(50% - 8px)">50</span><span style="left:calc(80% - 8px)">80</span><span style="right:0">100</span></div><p class="rationale">The lockfile pins 2.4.1, inside the affected range. Reachability and deployment are not established, and Dependabot alerts could not be read.</p></div>
+          <div class="meter" role="group" aria-label="Confidence 28 of 100, low"><div class="score">28<small>Low</small></div><div class="track" aria-hidden="true"><div class="fill" style="width:28%"></div></div><div class="ticks" aria-hidden="true"><span style="left:0">0</span><span style="left:calc(50% - 8px)">50</span><span style="left:calc(80% - 8px)">80</span><span style="right:0">100</span></div><p class="rationale">Only a product name in prose links this incident to a configured service. Ownership is ambiguous.</p></div>
+          <div class="row-gap"><span class="tag critical">Critical, source CVSS 3.1</span><span class="tag">Severity not provided</span><span class="unknown"><span>Business impact unknown</span></span><span class="flag">Exploitation reported</span><span class="new">New since 08:00</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Source quote and provenance</h3>
+        <p class="prov">Publisher statement</p>
+        <blockquote class="quote">Versions before 2.4.3 resolve external entities by default when parsing untrusted documents.</blockquote>
+        <p class="attrib">GitHub Advisory Database, <a class="ext" href="#">github.com</a>, revision <code>r3</code>, retrieved 08:02</p>
+        <p class="prov" style="margin-top:16px">Analysis</p>
+        <p class="body-sm" style="margin:0">Matched by package identity and version range. Reachability was not established.</p>
+      </div>
+
+      <div class="panel">
+        <h3>Coverage gap and redaction</h3>
+        <div class="stack">
+          <div class="gap"><div><strong>Dependabot alerts not read</strong>The GitHub App lacks the Dependabot alerts permission. An admin can grant it in the installation settings.</div></div>
+          <p class="body-sm" style="margin:0"><span class="redact">secret redacted</span> in <code>deploy/staging.env</code>, line 12</p>
+          <p class="body-sm" style="margin:0">Control characters shown: <code>if (isAdmin) <span class="redact">U+202E</span> { … }</code></p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Error message</h3>
+        <div class="errpanel" role="alert">
+          <h3>GitHub access for example-org/payments-api was revoked</h3>
+          <p style="margin:0">New checks for this repository are paused. Reports keep the last successful read from 3 Nov, 22:14. Ask an admin to restore the installation.</p>
+          <dl><dt>Code</dt><dd><code>github_access_revoked</code></dd><dt>Request</dt><dd><code>req_7f3a91c2</code></dd></dl>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Signed-in state and session</h3>
+        <div class="stack">
+          <div class="app-header" style="border-radius:2px"><div class="wrap" style="padding:0 12px"><span class="who" style="margin-left:0">R. Patel <span class="idp">via Okta</span><span class="badge-admin">Admin</span><button class="btn-signout">Sign out</button></span></div></div>
+          <div class="app-header" style="border-radius:2px"><div class="wrap" style="padding:0 12px"><span class="who" style="margin-left:0">M. Chen <span class="idp">via Microsoft Entra</span><button class="btn-signout">Sign out</button></span></div></div>
+          <div class="banner"><span>Your session ended at 09:15. Company data is hidden until you sign in again.</span><button class="btn btn-primary">Sign in with Okta</button></div>
+        </div>
+      </div>
+
+      <div class="panel" style="grid-column:1/-1">
+        <h3>Confirmation for a high-impact admin action</h3>
+        <div class="dialog-stage">
+          <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-t">
+            <h3 id="dlg-t">Archive example-org/payments-api?</h3>
+            <ul>
+              <li>New analysis and issue updates stop, and queued checks are canceled.</li>
+              <li>Findings and report history are kept and stay visible in the archive.</li>
+              <li>This is recorded in audit history under your name.</li>
+            </ul>
+            <div class="field" style="max-width:none"><label for="cf">Type <code>example-org/payments-api</code> to confirm</label><input id="cf" value="example-org/payments"></div>
+            <div class="actions"><button class="btn btn-secondary is-focus">Cancel</button><button class="btn btn-destructive" disabled>Archive repository</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="grid-column:1/-1;padding:0;border:0;background:none">
+        <h3 style="margin-bottom:8px">Feed rows</h3>
+        <ul class="feed">
+          <li>
+            <div class="row-gap"><span class="new">New since 08:00</span><span class="flag">Exploitation reported</span><span class="chip">Suspected</span></div>
+            <h3 style="margin-top:8px"><a href="#">Ivanti reports unauthorized access to a remote access appliance</a></h3>
+            <p class="meta"><span>Vendor advisory</span><span>Published 07:41</span><span>Retrieved 08:02</span><span>You follow Ivanti</span></p>
+            <p class="why"><strong>Why this is here:</strong> exploitation is reported and you follow this vendor. Severity was not published yet.</p>
+          </li>
+          <li class="is-hover">
+            <div class="row-gap"><span class="tag critical">Critical, source CVSS 3.1</span><span class="chip gaps">Checks completed with gaps</span></div>
+            <h3 style="margin-top:8px"><a href="#">XML external entity flaw in example-xml-parser before 2.4.3</a></h3>
+            <p class="meta"><span>GitHub Advisory Database</span><span>Published 06:10</span><span>Retrieved 07:02</span><span>2 repositories possibly exposed</span></p>
+            <p class="why"><strong>Why this is here:</strong> a registered repository uses the affected package. Inclusion is likely, not certain.</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <h2 class="h-lg screen-label">Key screen: finding report</h2>
+</div>
+
+<header class="app-header">
+  <div class="wrap">
+    <a class="brand" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="28" height="28" aria-hidden="true">
+  <title id="title-e">The Daily Dread</title>
+  <desc id="desc-e">A dawn sun rising inside a confidence dial. The dial marks the low, medium, and high confidence bands, the needle rests in the medium band, and the ground below the horizon is hatched to show what is still unknown.</desc>
+  <defs>
+    <clipPath id="ground-e"><path d="M15 38A17 17 0 0 0 49 38Z"/></clipPath>
+  </defs>
+  <rect width="64" height="64" rx="13" fill="#3B2D55"/>
+  <rect x="2.5" y="2.5" width="59" height="59" rx="10.5" fill="none" stroke="#231A33" stroke-width="1.5"/>
+  <g fill="none" stroke="#ECEDF1" stroke-linecap="round">
+    <path d="M4.50 38.00A27.5 27.5 0 0 1 31.14 10.51" stroke-width="1" stroke-dasharray="1.2 2.4"/>
+    <path d="M32.00 10.50A27.5 27.5 0 0 1 53.73 21.15" stroke-width="1.2"/>
+    <path d="M54.25 21.84A27.5 27.5 0 0 1 59.50 38.00" stroke-width="2.4"/>
+  </g>
+  <g stroke="#ECEDF1" stroke-linecap="round">
+    <line x1="12.50" y1="38.00" x2="6.50" y2="38.00" stroke-width="2.2"/><line x1="12.50" y1="31.67" x2="9.65" y2="30.74" stroke-width="1.2"/><line x1="15.42" y1="25.95" x2="12.99" y2="24.19" stroke-width="1.2"/><line x1="19.95" y1="21.42" x2="18.19" y2="18.99" stroke-width="1.2"/><line x1="25.67" y1="18.50" x2="24.74" y2="15.65" stroke-width="1.2"/><line x1="32.00" y1="18.50" x2="32.00" y2="12.50" stroke-width="2.2"/><line x1="38.33" y1="18.50" x2="39.26" y2="15.65" stroke-width="1.2"/><line x1="44.05" y1="21.42" x2="45.81" y2="18.99" stroke-width="1.2"/><line x1="47.78" y1="26.54" x2="52.63" y2="23.01" stroke-width="2.2"/><line x1="51.50" y1="31.67" x2="54.35" y2="30.74" stroke-width="1.2"/><line x1="51.50" y1="38.00" x2="57.50" y2="38.00" stroke-width="2.2"/>
+  </g>
+  <path d="M15 38A17 17 0 0 1 49 38Z" fill="#E8A33D"/>
+  <g clip-path="url(#ground-e)" stroke="#E8A33D" stroke-width="1.5" stroke-linecap="square">
+    <line x1="-24" y1="38" x2="-7" y2="55"/><line x1="-20" y1="38" x2="-3" y2="55"/><line x1="-16" y1="38" x2="1" y2="55"/><line x1="-12" y1="38" x2="5" y2="55"/><line x1="-8" y1="38" x2="9" y2="55"/><line x1="-4" y1="38" x2="13" y2="55"/><line x1="0" y1="38" x2="17" y2="55"/><line x1="4" y1="38" x2="21" y2="55"/><line x1="8" y1="38" x2="25" y2="55"/><line x1="12" y1="38" x2="29" y2="55"/><line x1="16" y1="38" x2="33" y2="55"/><line x1="20" y1="38" x2="37" y2="55"/><line x1="24" y1="38" x2="41" y2="55"/><line x1="28" y1="38" x2="45" y2="55"/><line x1="32" y1="38" x2="49" y2="55"/><line x1="36" y1="38" x2="53" y2="55"/><line x1="40" y1="38" x2="57" y2="55"/><line x1="44" y1="38" x2="61" y2="55"/><line x1="48" y1="38" x2="65" y2="55"/><line x1="52" y1="38" x2="69" y2="55"/><line x1="56" y1="38" x2="73" y2="55"/><line x1="60" y1="38" x2="77" y2="55"/>
+  </g>
+  <path d="M15 38A17 17 0 0 0 49 38" fill="none" stroke="#E8A33D" stroke-width="1.5"/>
+  <line x1="32" y1="38" x2="41.24" y2="26.83" stroke="#231A33" stroke-width="2.8" stroke-linecap="round"/>
+  <circle cx="32" cy="38" r="3" fill="#231A33"/>
+  <line x1="7" y1="38" x2="57" y2="38" stroke="#ECEDF1" stroke-width="2.2" stroke-linecap="round"/>
+</svg>The Daily Dread</a>
+    <nav class="nav" aria-label="Main"><a href="#">Feed</a><a href="#" aria-current="page">Findings</a><a href="#">Vendors</a><a href="#">Alerts</a><a href="#">Admin</a></nav>
+    <div class="who">R. Patel <span class="idp">via Okta</span><span class="badge-admin">Admin</span><button class="btn-signout">Sign out</button></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <p class="crumbs"><a href="#">Findings</a> / <code>example-org/payments-api</code></p>
+  <div class="report">
+    <div class="main">
+      <section class="verdict" aria-labelledby="t">
+        <h1 id="t" class="display">payments-api may use a vulnerable version of example-xml-parser</h1>
+        <div class="row-gap" style="margin:16px 0">
+          <span class="chip gaps"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><rect x="1" y="1" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1 7 7 1M5 11 11 5M1 11 11 1" stroke="currentColor" stroke-width="1.2"/></svg>Completed with gaps</span>
+          <span class="tag critical">Critical, source CVSS 3.1</span>
+          <span class="flag">Exploitation reported</span>
+          <span class="unknown"><span>Business impact unknown</span></span>
+        </div>
+        <div class="panel">
+          <div class="meter" role="group" aria-label="Confidence 62 of 100, medium"><div class="score">62<small>Medium</small></div><div class="track" aria-hidden="true"><div class="fill" style="width:62%"></div></div><div class="ticks" aria-hidden="true"><span style="left:0">0</span><span style="left:calc(50% - 8px)">50</span><span style="left:calc(80% - 8px)">80</span><span style="right:0">100</span></div><p class="rationale">The lockfile pins 2.4.1, inside the affected range. Reachability and deployment are not established, and Dependabot alerts could not be read.</p></div>
+        </div>
+        <p class="body-sm muted" style="margin-top:8px">A version match is not proof of exploitation or compromise. Analyzed 4 Nov, 07:06, report version 3.</p>
+      </section>
+
+      <div class="rest" style="display:grid;gap:24px">
+        <section aria-labelledby="s1">
+          <h2 id="s1">What could go wrong</h2>
+          <p class="prov">Analysis</p>
+          <p>If payments-api parses XML from outside the company with this library, an attacker could make it read local files or reach internal services.</p>
+        </section>
+
+        <section aria-labelledby="s2">
+          <h2 id="s2">Protections that may reduce risk</h2>
+          <ul class="protect">
+            <li><span class="chip completed"><svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" focusable="false"><path d="M2 6.5 5 9.5 10 3" fill="none" stroke="currentColor" stroke-width="2"/></svg>Verified in config</span><span>The service reads XML only in <code>src/import/statement.ts</code>, behind an admin-only route.</span></li>
+            <li><span class="chip">Inferred</span><span>The deployment manifest declares no outbound network access. Repository configuration does not prove the live deployment matches.</span></li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="s3">
+          <h2 id="s3">What to do next</h2>
+          <ol class="steps">
+            <li><strong>Upgrade example-xml-parser to 2.4.3 or later.</strong>
+              <dl><dt>Why</dt><dd>2.4.3 disables external entities by default, per the advisory.</dd><dt>Needs</dt><dd>http-kit must accept 2.4.3. Its own range allows it.</dd><dt>Verify</dt><dd>The lockfile shows 2.4.3 or later on every listed branch.</dd></dl></li>
+            <li><strong>Confirm who can reach the statement import route.</strong>
+              <dl><dt>Why</dt><dd>Reachability decides whether this is exploitable at all.</dd><dt>Needs</dt><dd>Access to the live route configuration.</dd><dt>Verify</dt><dd>Record the result as a company note. Confidence updates on the next advisory event.</dd></dl></li>
+          </ol>
+        </section>
+
+        <section aria-labelledby="s4">
+          <h2 id="s4">Report history</h2>
+          <ul class="history">
+            <li><strong>Version 3</strong>, 4 Nov 07:06. Advisory revision r3 narrowed the affected range.</li>
+            <li><strong>Version 2</strong>, 3 Nov 19:40. Branch release/2.8 added.</li>
+            <li><strong>Version 1</strong>, 3 Nov 18:12. First assessment.</li>
+          </ul>
+          <div class="row-gap" style="margin-top:16px"><button class="btn btn-primary">Export PDF</button><button class="btn btn-secondary">Export CSV</button><button class="btn btn-secondary">Export JSON</button></div>
+        </section>
+      </div>
+    </div>
+
+    <aside class="rail" aria-label="Evidence">
+      <div class="panel">
+        <h2 class="h-sm" style="margin-bottom:12px">Source</h2>
+        <p class="prov">Publisher statement</p>
+        <blockquote class="quote" style="font-size:15px;line-height:1.6">Versions before 2.4.3 resolve external entities by default when parsing untrusted documents.</blockquote>
+        <p class="attrib">GitHub Advisory Database, revision <code>r3</code>, retrieved 4 Nov 07:02. <a class="ext" href="#">Original on github.com</a></p>
+      </div>
+      <div class="panel">
+        <h2 class="h-sm" style="margin-bottom:12px">Repository snapshot</h2>
+        <table class="branches">
+          <thead><tr><th>Branch</th><th>Commit</th><th>Version</th></tr></thead>
+          <tbody>
+            <tr><td>main</td><td><code>4f9c2e1</code></td><td><code>2.4.1</code></td></tr>
+            <tr><td>release/2.8</td><td><code>b07d5aa</code></td><td><code>2.4.1</code></td></tr>
+          </tbody>
+        </table>
+        <dl class="kv" style="margin-top:12px">
+          <dt>Path</dt><dd><code><span class="seg">payments-api</span> › <span class="seg">http-kit@5.2.0</span> › <span class="seg">example-xml-parser@2.4.1</span></code></dd>
+          <dt>Scope</dt><dd>Runtime, transitive</dd>
+          <dt>Criteria</dt><dd><code>&lt; 2.4.3</code>, npm</dd>
+          <dt>Analysis</dt><dd><code>analyzer 0.9</code></dd>
+        </dl>
+      </div>
+      <div class="gap"><div><strong>Dependabot alerts not read</strong>Missing permission on the GitHub App installation.</div></div>
+      <div class="gap"><div><strong>Deployment unknown</strong>No company context says where payments-api runs.</div></div>
+    </aside>
+  </div>
+</main>
+
+<div class="wrap" style="padding-bottom:40px">
+  <section class="panel" aria-labelledby="crit">
+    <h2 id="crit" class="h-md" style="margin-bottom:8px">Critique notes</h2>
+    <p class="body-sm" style="margin:0 0 8px">Screenshots were taken at 390 px and 1440 px and reviewed against the brief: does the screen say how sure we are, and what is missing?</p>
+<ul class="body-sm" style="margin:0;padding-left:20px;display:grid;gap:4px">
+  <li>At 1440 px the report stopped at 1080 px while the header ran to 1280 px. The narrative column now fills the page and the evidence rail grew to 380 px. Prose keeps its 68-character measure.</li>
+  <li>Confidence tracks started at different x positions depending on the score width. The score column is now fixed, so meters line up.</li>
+  <li>Coverage gaps were framed with 3 px of hatching, which read as a dashed border, not as "unknown". The frame is now 6 px, so the signature reads as hatching.</li>
+  <li>At 390 px the spec sheet lost its gutters because the sheet's padding overrode the page wrapper. It now sets only vertical padding.</li>
+  <li>The verdict headline broke inside the package name. It is now capped at 30 characters, so it wraps between words.</li>
+  <li>Dependency paths broke mid-name in the narrow rail. Identifiers now wrap at spaces first.</li>
+  <li>One decoration removed: the 4 px left stripe on error panels. The heading, wash, and border already identify the error.</li>
+</ul>
+
+  </section>
+</div>
+</body>
+</html>
