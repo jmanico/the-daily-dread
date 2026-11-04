@@ -8,17 +8,17 @@
   A private cybersecurity feed for your company, plus evidence-backed exposure analysis of your GitHub repositories.
 </p>
 
-> **Status:** requirements and design only. Nothing is built yet. [REQUIREMENTS.md](REQUIREMENTS.md) owns behavior and workflows, and [DESIGN.md](DESIGN.md) owns the visual system.
+> **Status:** requirements, design and architecture only. Nothing is built yet. [REQUIREMENTS.md](REQUIREMENTS.md) owns behavior and workflows, [DESIGN.md](DESIGN.md) owns the visual system, and [ARCHITECTURE.md](ARCHITECTURE.md) owns components, technology and data flow.
 
 ## What it does
 
-Every hour, The Daily Dread collects approved security news, structured vulnerability advisories, and vendor incident reports. When a new or materially changed risk arrives, it immediately checks your registered repositories for exposure and tells the people who care.
+Every hour, The Daily Dread collects approved security news, structured vulnerability advisories, and vendor incident reports. When a new or materially changed risk arrives, it immediately queues checks of your registered repositories for exposure and tells the people who care.
 
 - **A curated feed.** Major zero-days and vendor security incidents are collected automatically, with each publisher's original text, links, timestamps, and correction or withdrawal status. When relevance is uncertain the feed includes the item and labels the uncertainty.
 - **Repository exposure checks.** A company-installed GitHub App reads the default branch and every branch active in the last 30 days, including the full file tree, dependency graphs, GitHub Actions, and container and infrastructure components. Package matching covers npm, PyPI, Maven, NuGet, Go, RubyGems, Composer, Cargo, Hex, Pub, Swift, and GitHub Actions.
 - **Findings you can act on.** Each finding explains the affected asset, what could go wrong, the possible impact, protections that may reduce risk, and prioritized next steps, each with a way to verify the result. Confidence (0–100) is kept separate from severity, business impact, and exploitation evidence.
 - **Vendor watchlists.** New users follow 30 major vendors (Microsoft, AWS, Google, Okta, Cloudflare, Ivanti, and others), and each user customizes their own list. Matches cover products, former names, and subsidiaries only where a recorded relationship supports it.
-- **Alerts on your channels.** Email, SMS, Signal, WhatsApp, and Slack through company-configured connectors, with fallback order, bounded retries, and deduplication. Admins can also enable one GitHub issue per repository and risk.
+- **Alerts on your channels.** Company SMTP email, Twilio SMS/WhatsApp, and admin-managed Slack direct messages and shared channels, with fallback order, bounded retries, and deduplication. Admins can also enable one GitHub issue per repository and risk.
 - **Exports.** PDF, CSV, and JSON reports that keep confidence, status, evidence references, and attribution.
 
 ## Principles
@@ -34,10 +34,12 @@ Every hour, The Daily Dread collects approved security news, structured vulnerab
 
 | Role | Can do |
 | --- | --- |
-| `DAILY-DREAD-USER` | Read the feed, findings, company notes, and reports for every active repository; export reports; manage their own watchlist, notification preferences, and alert history. |
+| `DAILY-DREAD-USER` | Read the feed, findings, company notes, and reports for every active repository; export reports; manage their own watchlist, personal non-Slack notification preferences, and alert history. |
 | `DAILY-DREAD-ADMIN` | Everything a user can do, plus manage sources, repositories, the shared vendor catalog, company context, notification connectors, OIDC configuration, ingestion and delivery failures, and archives. |
 
-Sign-in uses OIDC through company-configured Google, Okta, Microsoft Entra, or PingOne. Roles come from mapped group or role claims. There are no local passwords.
+Each company runs its own private Docker installation, targeting 1,000 repositories and about 100 concurrent users; capacity is an implementation validation target. Repository checks use a persistent queue, one at a time by default, with admin-adjustable concurrency and visible progress refreshed every 30 seconds. The company’s IT team owns backups.
+
+Sign-in uses one company-configured OIDC provider at a time: Google, Okta, Microsoft Entra, or PingOne. Roles come from mapped group or role claims. There are no local passwords. Admins can enable one external AI provider at a time—OpenAI, Anthropic, or Google—subject to the required local redaction and disclosure checks. Signal is outside the first release.
 
 ## Scope of this release
 
@@ -69,6 +71,8 @@ The visual system is built around one idea: **hatching means unknown.** Solid fi
 | --- | --- |
 | [REQUIREMENTS.md](REQUIREMENTS.md) | Functional and non-functional requirements |
 | [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) | Approved source catalog and source approval policy |
+| [ARCHITECTURE.md](ARCHITECTURE.md) | Components, stack, ownership, trust boundaries and data flows |
+| [docs/DEPENDENCY_REVIEW.md](docs/DEPENDENCY_REVIEW.md) | Proposed dependency review and release gates |
 | [DESIGN.md](DESIGN.md) | Design system in the `@google/design.md` format |
 | [design/preview.html](design/preview.html) | Static design preview |
 | [logo.svg](logo.svg) | Product mark |
