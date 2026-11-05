@@ -45,6 +45,8 @@ jobs:
           node scripts/check-artifact.mjs
       - name: Positive and negative tests
         run: node --test
+      - name: Bounded parser saturation and RSS evidence
+        run: node integration/parser-capacity.mjs
       - name: Native DNS on the selected runtime
         run: node --test integration/outbound-dns.mjs
       - name: Controlled outbound sockets in an isolated network

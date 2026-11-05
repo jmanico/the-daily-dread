@@ -65,7 +65,7 @@ export async function checkRuntime(root, policy = runtimePolicy) {
           if (ast.isImportDeclaration(node) || ast.isExportDeclaration(node)) {
             const specifier = node.moduleSpecifier;
             if (specifier && (!ast.isStringLiteral(specifier) || !permitted?.includes(specifier.text))) report(node,'unapproved-import');
-            if (name === 'src/http/parse-body.js' && ast.isImportDeclaration(node) &&
+            if (name === 'src/workers/json-tasks.js' && ast.isImportDeclaration(node) &&
               specifier && ast.isStringLiteral(specifier) && specifier.text === 'node:worker_threads') {
               const bindings = node.importClause?.namedBindings;
               if (bindings && ast.isNamedImports(bindings)) for (const binding of bindings.elements) {
