@@ -49,8 +49,8 @@ Development-tool additions approved by AR-002 (NFR-5 revalidation still applies)
 
 | Tool | Exact pin | Requirement and reason |
 | --- | --- | --- |
-| `esbuild` | 0.28.2 | NFR-5 / SEC-9: compile browser JSX and bundle/minify local production assets without a framework or development server. |
-| `typescript` | 7.0.2 | SEC-1 / SEC-9: check JavaScript/JSDoc and client contracts through the stable CLI; no runtime dependency or source-language migration. |
+| `esbuild` | 0.28.2 | FR-6.1 / NFR-5.1 / SEC-9: compile browser JSX and bundle/minify local production assets without a framework or development server. |
+| `typescript` | 7.0.2 | FR-6.2 / NFR-5.1 / SEC-1 / SEC-9: check JavaScript/JSDoc and client contracts through the stable CLI; no runtime dependency or source-language migration. |
 
 ### Service and persistence organization
 

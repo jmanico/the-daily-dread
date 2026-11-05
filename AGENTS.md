@@ -28,7 +28,7 @@ Run the applicable checks before calling implementation work done.
 | Check | Command |
 | --- | --- |
 | Build | TOOL-001 selected: `node scripts/build.mjs` using esbuild 0.28.2; command implementation belongs to REQ-PLATFORM-022. Not yet runnable in this specification-only checkout. |
-| Type-check | TOOL-002 selected: `tsc --project jsconfig.json --noEmit` using TypeScript 7.0.2 with checked JavaScript/JSDoc and client contracts; configuration belongs to REQ-PLATFORM-022. No TypeScript-source migration is selected. |
+| Type-check | TOOL-002 selected: `node_modules/.bin/tsc --project jsconfig.json --noEmit` using TypeScript 7.0.2 with checked JavaScript/JSDoc and client contracts; configuration belongs to REQ-PLATFORM-022. No TypeScript-source migration is selected. |
 | Test | `node --test` |
 | Dependency audit | `npm audit --audit-level=high` |
 | Runtime audit | DEFERRED TOOL-003 — runtime audit tool requires NFR-5 verification and an approved locked dev dependency; no ad-hoc npx execution. |
