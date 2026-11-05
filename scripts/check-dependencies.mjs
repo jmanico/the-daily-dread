@@ -4,12 +4,12 @@ import { resolve, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 
 // Actual reviewed demo graph. Changes require NFR-5 evidence, not an automatic update.
-const reviewedGraph = '6d70d5af747950e5a20a72bec9cad66691332a81dcf67d84d39457a748dd9095';
+const reviewedGraph = 'ef89dee0f22be42d0d0448daff5a52d2c801a2ffbfa6173dcbda971d6f038d29';
 const approved = new Map([
   ['react','19.3.1'],['react-dom','19.3.1'],['@types/node','26.6.6'],
   ['@types/react','19.3.0'],['@types/react-dom','19.3.0'],
   ['esbuild','0.28.2'],['typescript','7.0.2'],
-  ['fastify','5.12.8'],['jsonc-parser','3.3.1'],['semver','7.8.6'],
+  ['fastify','5.12.8'],['jsonc-parser','3.3.1'],['semver','7.8.6'],['postgres','4.0.0'],
 ]);
 
 /** @param {unknown} value @returns {value is Record<string,unknown>} */

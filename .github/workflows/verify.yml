@@ -46,6 +46,8 @@ jobs:
           node scripts/check-artifact.mjs
       - name: Positive and negative tests
         run: node --test
+      - name: PostgreSQL 18.6 transactions, TLS and failure injection
+        run: node --test integration/postgres-transactions.mjs
       - name: Bounded parser saturation and RSS evidence
         run: node integration/parser-capacity.mjs
       - name: Native DNS on the selected runtime
