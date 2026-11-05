@@ -3,20 +3,10 @@ import { createServer } from 'node:http';
 import { randomUUID } from 'node:crypto';
 import { InputFailure, parseQuery } from './input.js';
 import { parseBody, ParserUnavailable } from './parse-body.js';
+import { errorProjection as projection, errorSchema, errorStatuses, isErrorStatus } from '../contracts/http-results.js';
 
 /** @typedef {'allowed' | 'unauthenticated' | 'forbidden' | 'unavailable' | 'conflict'} Access */
 /** @typedef {import('fastify').FastifyRequest} Request */
-const errors = new Map([
-  [400, ['malformed_request', 'The request is malformed.']],
-  [401, ['authentication_required', 'Authentication is required.']],
-  [403, ['access_denied', 'This operation is not permitted.']],
-  [404, ['unavailable_resource', 'The resource is unavailable.']],
-  [409, ['revision_conflict', 'Reload the resource before retrying.']],
-  [413, ['body_limit', 'The request exceeds the permitted body size.']],
-  [415, ['unsupported_media', 'The request media type or encoding is unsupported.']],
-  [422, ['invalid_fields', 'The submitted fields are invalid.']],
-  [503, ['service_unavailable', 'The operation could not be completed.']],
-]);
 const invalidQuery = Object.freeze({});
 /** @type {WeakMap<Request, {controller: AbortController, deadline: number}>} */
 const operations = new WeakMap();
@@ -30,12 +20,7 @@ export function operationSignal(request) {
 }
 export class HttpFailure extends Error {
   /** @param {number} status */
-  constructor(status) { super('Request rejected'); this.status = errors.has(status) ? status : 503; }
-}
-/** @param {number} status @param {string} requestId */
-function projection(status, requestId) {
-  const [code, message] = errors.get(status) ?? errors.get(503) ?? [];
-  return { code, message, requestId };
+  constructor(status) { super('Request rejected'); this.status = isErrorStatus(status) ? status : 503; }
 }
 /** Native framing failures never serialize the parser's rawPacket or error. @param {import('node:stream').Duplex} socket */
 function rejectSocket(socket) {
@@ -88,6 +73,12 @@ export function createApplication(authorize) {
     // The selected Fastify request.signal/handlerTimeout path has upstream bugs #7047/#7069.
     // The application owns the same mandatory deadline below; enabling that path is forbidden.
     if (route.handlerTimeout !== undefined) throw new Error('Use the application operation deadline');
+    const configured = route.schema?.response;
+    if (configured !== undefined && (typeof configured !== 'object' || configured === null || Array.isArray(configured))) throw new Error('Invalid response schemas');
+    /** @type {Record<string, unknown>} */
+    const responses = { ...configured }; // Code-owned route configuration, never request fields.
+    for (const status of errorStatuses) responses[String(status)] = structuredClone(errorSchema);
+    route.schema = { ...route.schema, response: responses };
   });
   app.removeAllContentTypeParsers();
   app.addContentTypeParser('application/json', { parseAs: 'buffer', bodyLimit: 65536 },
@@ -144,8 +135,7 @@ export function createApplication(authorize) {
       error instanceof ParserUnavailable ? 503 : validation ? 422 :
       code === 'FST_ERR_CTP_BODY_TOO_LARGE' ? 413 : code === 'FST_ERR_CTP_INVALID_MEDIA_TYPE' ? 415 :
       code === 'FST_ERR_CTP_EMPTY_JSON_BODY' || code === 'FST_ERR_CTP_INVALID_CONTENT_LENGTH' ? 400 : 503;
-    const body = projection(status, request.id);
-    return reply.code(status).send(validation ? { ...body, fieldErrors: [{ field, code: 'invalid' }] } : body);
+    return reply.code(status).send(projection(status, request.id, validation ? [field] : []));
   });
   app.setNotFoundHandler((request, reply) => reply.code(404).send(projection(404, request.id)));
   return app;

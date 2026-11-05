@@ -1,10 +1,12 @@
 // SEC-1/SEC-9: new runtime modules and imports require an explicit review here.
 // This is a review guard, not a JavaScript capability sandbox.
 export const runtimePolicy = new Map([
+  ['src/contracts/http-results.js', []],
+  ['src/http/outcomes.js', ['../contracts/http-results.js', './application.js']],
   ['src/http/input.js', ['jsonc-parser']],
   ['src/http/json-worker.js', ['node:worker_threads', './input.js']],
   ['src/http/parse-body.js', ['node:worker_threads', './input.js']],
-  ['src/http/application.js', ['fastify', 'node:http', 'node:crypto', './input.js', './parse-body.js']],
+  ['src/http/application.js', ['fastify', 'node:http', 'node:crypto', './input.js', './parse-body.js', '../contracts/http-results.js']],
   ['src/adapters/outbound/retrieve.js', ['node:http', './connect-destination.js', './destination-policy.js', './retrieval-budget.js', './read-body.js']],
   ['src/adapters/outbound/read-body.js', ['node:stream', 'node:stream/promises', 'node:zlib']],
   ['src/adapters/outbound/retrieval-budget.js', ['./destination-policy.js']],
