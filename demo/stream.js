@@ -19,6 +19,7 @@ export function subscribeFeed(receive,unavailable) {
       while(!signal.aborted) {
         const chunk=await reader.read();if(signal.aborted)return;
         if(chunk.done)throw Error('Feed disconnected');
+        if(chunk.value.byteLength>1048600)throw Error('Feed chunk limit');
         clearTimeout(timeout);timeout=setTimeout(()=>connection.abort(),30000);
         pending+=decoder.decode(chunk.value,{stream:true});
         if(pending.length>1048600 || new TextEncoder().encode(pending).length>1048600)throw Error('Feed frame limit');

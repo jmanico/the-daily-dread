@@ -90,3 +90,29 @@ test('real loopback stream rejects cross-site/credentials/methods and bounds con
   const received=new Promise(resolve=>{const req=request({hostname:'127.0.0.1',port:address.port,path:'/demo/feed-events'},res=>{let text='';res.setEncoding('utf8');res.on('data',chunk=>{text+=chunk;if(text.includes('"state":"live"')){req.destroy();resolve(text);}});});req.end();});
   feed.start();const bytes=await received;assert.match(String(bytes),/text|data:/);assert.match(String(bytes),/"omitted":0/);assert.equal(calls,1);
 });
+
+test('browser stream rejects response and decoding failures and fences a late fetch',async t=>{
+  t.mock.timers.enable({apis:['setTimeout']});const original=globalThis.fetch;
+  try {
+    for(const response of [new Response('private',{status:503}),new Response('private',{headers:{'content-type':'text/html'}}),new Response(null,{status:200,headers:{'content-type':'text/event-stream; charset=utf-8'}}),...['data: {bad}\n\n','data: {"state":"forged"}\n\n',new Uint8Array([255])].map(body=>new Response(body,{headers:{'content-type':'text/event-stream; charset=utf-8'}}))]) {
+      let received=0,failed=0;globalThis.fetch=async()=>response;
+      const stop=subscribeFeed(()=>received++,()=>failed++);await turn();stop();assert.equal(received,0);assert.equal(failed,1);
+    }
+    let received=0,failed=0;
+    /** @type {(response:Response)=>void} */let complete=()=>{};
+    globalThis.fetch=()=>new Promise(resolve=>{complete=resolve;});
+    const stop=subscribeFeed(()=>received++,()=>failed++);stop();complete(new Response('data: '+JSON.stringify(state())+'\n\n',{headers:{'content-type':'text/event-stream; charset=utf-8'}}));await turn();t.mock.timers.tick(60000);await turn();assert.equal(received,0);assert.equal(failed,0);
+  }finally{globalThis.fetch=original;}
+});
+
+test('real stream closes a consumer with queued writes and rejects oversized projections', {timeout:5000},async t=>{
+  /** @type {((json:string)=>void)|undefined} */let send;
+  let unsubscribed=0,initial='{}';
+  const server=createDemoServer(new Map(),{current:()=>initial,subscribe:listener=>{send=listener;return ()=>{unsubscribed++;};}});
+  server.listen(0,'127.0.0.1');await once(server,'listening');const address=server.address();assert.ok(address && typeof address==='object');
+  t.after(async()=>{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));});
+  const connect=()=>new Promise(resolve=>{const req=request({hostname:'127.0.0.1',port:address.port,path:'/demo/feed-events'},res=>{res.on('error',()=>{});resolve({req,res});});req.on('error',()=>resolve({req,res:null}));req.end();});
+  const first=await connect();assert.ok(first.res);first.res.pause();assert.ok(send);
+  const closed=new Promise(resolve=>first.res.once('close',resolve));send('x'.repeat(1048576));send('{}');first.res.resume();await closed;assert.equal(unsubscribed,1);first.req.destroy();
+  initial='x'.repeat(1048577);const second=await connect();assert.equal(second.res,null);await turn();assert.equal(unsubscribed,2);second.req.destroy();
+});

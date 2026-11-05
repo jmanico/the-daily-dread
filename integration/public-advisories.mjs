@@ -30,6 +30,7 @@ test('fixed public advisory adapter crosses real TLS, parser and projection boun
       let body=Buffer.from(JSON.stringify([record])),status=200,headers='Content-Type: application/json\r\n';
       if(mode==='duplicate')body=Buffer.from(JSON.stringify([record,record]));
       if(mode==='extra')body=Buffer.from(JSON.stringify([{...record,secret:'PRIVATE_CANARY'}]));
+      if(mode==='partial')body=Buffer.from(JSON.stringify([record,{...record,secret:'PRIVATE_CANARY'}]));
       if(mode==='oversize')body=gzipSync(Buffer.from(' '.repeat(2097153)));
       if(mode==='oversize')headers+='Content-Encoding: gzip\r\n';
       if(mode==='bad_json')body=Buffer.from('[{"x":1,"x":2}]');
@@ -56,6 +57,10 @@ test('fixed public advisory adapter crosses real TLS, parser and projection boun
   });
   for(const scenario of ['duplicate','extra','oversize','bad_json','deep','count','mime','error','redirect','denied','rate','poll','bad_poll'])await t.test(`provider ${scenario} fails closed without raw payload or destination expansion`,async()=>{
     mode=scenario;const before=calls,result=await source.read(new AbortController().signal);assert.equal(result.kind,['denied','rate','poll','bad_poll'].includes(scenario)?'paused':'unavailable');assert.doesNotMatch(JSON.stringify(result),/PRIVATE_CANARY|127\.0\.0\.1/);assert.ok(calls-before<=3);if(scenario==='redirect')assert.equal(calls-before,1);
+  });
+  await t.test('invalid records are omitted and counted while valid source evidence survives',async()=>{
+    mode='partial';const result=await source.read(new AbortController().signal);assert.equal(result.kind,'updated');if(result.kind!=='updated')return;
+    assert.equal(result.omitted,3);assert.equal(result.data.items.length,3);assert.doesNotMatch(JSON.stringify(result),/PRIVATE_CANARY/);
   });
   await t.test('cancellation destroys a stalled actual provider socket',async()=>{
     mode='stalled';const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),100);try{assert.equal((await source.read(controller.signal)).kind,'unavailable');}finally{clearTimeout(timer);}
