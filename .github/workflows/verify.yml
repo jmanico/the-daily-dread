@@ -46,6 +46,10 @@ jobs:
           node scripts/check-artifact.mjs
       - name: Positive and negative tests
         run: node --test
+      - name: Native DNS on the selected runtime
+        run: node --test integration/outbound-dns.mjs
+      - name: Controlled outbound sockets in an isolated network
+        run: sudo unshare --net -- bash test-support/outbound-net.sh "$(command -v node)"
       - name: Dependency advisories
         run: npm audit --audit-level=high
       - name: Registry signatures and provenance
