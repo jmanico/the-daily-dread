@@ -8,7 +8,9 @@
   A private cybersecurity feed for your company, plus evidence-backed exposure analysis of your GitHub repositories.
 </p>
 
-> **Status:** requirements, design and architecture only. Nothing is built yet. [REQUIREMENTS.md](REQUIREMENTS.md) owns behavior and workflows, [DESIGN.md](DESIGN.md) owns the visual system, and [ARCHITECTURE.md](ARCHITECTURE.md) owns components, technology and data flow.
+> **Status:** a [local presentation demo](docs/DEMO.md) is available with a real public advisory snapshot and clearly labeled fictional repository analysis. The production application is not implemented. [REQUIREMENTS.md](REQUIREMENTS.md) owns behavior and workflows, [DESIGN.md](DESIGN.md) owns the visual system, and [ARCHITECTURE.md](ARCHITECTURE.md) owns components, technology and data flow.
+
+Run `npm ci --ignore-scripts`, `npm run build`, then `npm run demo` and open http://127.0.0.1:4173. This is a local demonstration, with no company credentials or production services. The feed snapshot is dated; it does not refresh automatically. See the [verification record](docs/DEMO_EVIDENCE.md) and [issue disposition](docs/BUILD_DISPOSITION.md).
 
 ## What it does
 
