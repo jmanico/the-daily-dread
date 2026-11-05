@@ -1,5 +1,7 @@
 # Build disposition — 2026-11-05
 
+**Current delivery target:** the project lead has now explicitly selected a single-user local Mac application, with no hosting. [AR-006](decisions/LOCAL_WORKSTATION.md) and the [local decision register](decisions/LOCAL_DECISION_REGISTER.md) supersede company-installation assumptions for this target. The 139-row table below preserves the original production backlog and historical implementation state; its #23 company-profile and #31 optional-AI dependency reasons do not define the new local critical path. No leaf is closed or test promoted by this scope change.
+
 The project lead redirected this build to a demonstrable UI, then explicitly requested real feed data. Demo issues #232 and #249 were added under the web workstream. No original production leaf is closed by the demo. States below were read from GitHub in this build session.
 
 An open decision blocks dependent work transitively. The overnight build resumed foundation work after the requested demo milestone. Eligible leaves below are distinguished from decision-blocked leaves. Production implementation remains incomplete.
