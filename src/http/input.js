@@ -1,8 +1,10 @@
 import { visit } from 'jsonc-parser';
+import { parserLimits } from '../workers/limits.js';
 
 const forbidden = new Set(['__proto__', 'prototype', 'constructor']);
 export class InputFailure extends Error {
-  constructor() { super('Malformed request'); }
+  /** @param {'malformed'|'bytes'|'depth'|'entries'|'timeout'} [reason] */
+  constructor(reason = 'malformed') { super('Malformed request'); this.reason = reason; }
 }
 /** Decimal equivalence without silently losing submitted precision. Grammar is validated by the visitor.
  * @param {string} token */
@@ -21,15 +23,23 @@ function decimal(token) {
 }
 
 /** Worker-only untrusted JSON boundary. @param {Uint8Array} bytes @returns {unknown} */
-export function parseCommand(bytes) {
-  if (!(bytes instanceof Uint8Array) || bytes.byteLength > 65536) throw new InputFailure();
+export function parseCommand(bytes) { return parseSyntax(bytes, { bytes: 65536 }); }
+
+/** Fixed worker entry: configuration is code-owned, never read from document fields.
+ * @param {Uint8Array} bytes @param {unknown} configuration @returns {unknown} */
+export function parseSyntax(bytes, configuration) {
+  const limits = parserLimits(configuration);
+  if (!(bytes instanceof Uint8Array) || bytes.byteLength > limits.bytes) throw new InputFailure('bytes');
   const text = new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes);
   /** @type {(Set<string> | null)[]} */ const stack = [];
   let entries = 0;
-  const deadline = performance.now() + 2000;
-  function tick() { if (++entries > 100000 || performance.now() >= deadline) throw new InputFailure(); }
+  const deadline = performance.now() + limits.timeMs;
+  function tick() {
+    if (++entries > limits.entries) throw new InputFailure('entries');
+    if (performance.now() >= deadline) throw new InputFailure('timeout');
+  }
   /** @param {Set<string> | null} keys */
-  function begin(keys) { tick(); if (stack.length >= 64) throw new InputFailure(); stack.push(keys); }
+  function begin(keys) { tick(); if (stack.length >= limits.depth) throw new InputFailure('depth'); stack.push(keys); }
   visit(text, {
     onObjectBegin() { begin(new Set()); }, onArrayBegin() { begin(null); },
     onObjectEnd() { stack.pop(); }, onArrayEnd() { stack.pop(); },
@@ -48,7 +58,7 @@ export function parseCommand(bytes) {
     onError() { throw new InputFailure(); },
   }, { disallowComments: true, allowTrailingComma: false, allowEmptyContent: false });
   const value = JSON.parse(text);
-  if (performance.now() >= deadline) throw new InputFailure();
+  if (performance.now() >= deadline) throw new InputFailure('timeout');
   return value;
 }
 
