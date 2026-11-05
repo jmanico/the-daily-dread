@@ -2,23 +2,23 @@
 
 The project lead redirected this build to a demonstrable UI, then explicitly requested real feed data. Demo issue #232 was added under the web workstream. No original production leaf is closed by the demo. States below were read from GitHub in this build session.
 
-An open decision blocks dependent work transitively. Eligible foundation issues are deferred for the requested demo milestone, not mislabeled as decision-blocked. Production implementation remains incomplete.
+An open decision blocks dependent work transitively. The overnight build resumed foundation work after the requested demo milestone. Eligible leaves below are distinguished from decision-blocked leaves. Production implementation remains incomplete.
 
 | Issue | Requirement | Disposition / reason |
 | --- | --- | --- |
-| [#92](https://github.com/jmanico/the-daily-dread/issues/92) | REQ-PLATFORM-010 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#93](https://github.com/jmanico/the-daily-dread/issues/93) | REQ-PLATFORM-011 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#94](https://github.com/jmanico/the-daily-dread/issues/94) | REQ-PLATFORM-012 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#95](https://github.com/jmanico/the-daily-dread/issues/95) | REQ-PLATFORM-013 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#96](https://github.com/jmanico/the-daily-dread/issues/96) | REQ-PLATFORM-014 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#97](https://github.com/jmanico/the-daily-dread/issues/97) | REQ-PLATFORM-015 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#98](https://github.com/jmanico/the-daily-dread/issues/98) | REQ-PLATFORM-016 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#99](https://github.com/jmanico/the-daily-dread/issues/99) | REQ-PLATFORM-017 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#100](https://github.com/jmanico/the-daily-dread/issues/100) | REQ-PLATFORM-018 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#101](https://github.com/jmanico/the-daily-dread/issues/101) | REQ-PLATFORM-019 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
-| [#102](https://github.com/jmanico/the-daily-dread/issues/102) | REQ-PLATFORM-020 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
+| [#92](https://github.com/jmanico/the-daily-dread/issues/92) | REQ-PLATFORM-010 | Deferred at NFR-5 revalidation: selected pg 8.23.1 accepts an invalid startup handshake; reproduced locally, upstream fix pending. See [build security evidence](BUILD_SECURITY_EVIDENCE.md). No driver added. |
+| [#93](https://github.com/jmanico/the-daily-dread/issues/93) | REQ-PLATFORM-011 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#94](https://github.com/jmanico/the-daily-dread/issues/94) | REQ-PLATFORM-012 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#95](https://github.com/jmanico/the-daily-dread/issues/95) | REQ-PLATFORM-013 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#96](https://github.com/jmanico/the-daily-dread/issues/96) | REQ-PLATFORM-014 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#97](https://github.com/jmanico/the-daily-dread/issues/97) | REQ-PLATFORM-015 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#98](https://github.com/jmanico/the-daily-dread/issues/98) | REQ-PLATFORM-016 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#99](https://github.com/jmanico/the-daily-dread/issues/99) | REQ-PLATFORM-017 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#100](https://github.com/jmanico/the-daily-dread/issues/100) | REQ-PLATFORM-018 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#101](https://github.com/jmanico/the-daily-dread/issues/101) | REQ-PLATFORM-019 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#102](https://github.com/jmanico/the-daily-dread/issues/102) | REQ-PLATFORM-020 | Pending: eligible foundation work in the resumed build; not yet implemented. |
 | [#103](https://github.com/jmanico/the-daily-dread/issues/103) | REQ-PLATFORM-021 | Skipped: open decision prerequisites [#23](https://github.com/jmanico/the-daily-dread/issues/23) |
-| [#104](https://github.com/jmanico/the-daily-dread/issues/104) | REQ-PLATFORM-022 | Deferred: eligible foundation work; project lead prioritized the demo. Not implemented. |
+| [#104](https://github.com/jmanico/the-daily-dread/issues/104) | REQ-PLATFORM-022 | In progress: reviewed-graph, runtime import/security, artifact and failure-preserving build checks plus confined CI. Draft; TOOL-003 (#26), human/change review and production acceptance remain unmet. |
 | [#105](https://github.com/jmanico/the-daily-dread/issues/105) | REQ-PLATFORM-023 | Skipped: open decision prerequisites [#28](https://github.com/jmanico/the-daily-dread/issues/28), [#29](https://github.com/jmanico/the-daily-dread/issues/29), [#30](https://github.com/jmanico/the-daily-dread/issues/30) |
 | [#106](https://github.com/jmanico/the-daily-dread/issues/106) | REQ-AUDIT-010 | Skipped: open decision prerequisites [#28](https://github.com/jmanico/the-daily-dread/issues/28), [#29](https://github.com/jmanico/the-daily-dread/issues/29), [#30](https://github.com/jmanico/the-daily-dread/issues/30) |
 | [#107](https://github.com/jmanico/the-daily-dread/issues/107) | REQ-AUDIT-011 | Skipped: open decision prerequisites [#28](https://github.com/jmanico/the-daily-dread/issues/28), [#29](https://github.com/jmanico/the-daily-dread/issues/29), [#30](https://github.com/jmanico/the-daily-dread/issues/30) |

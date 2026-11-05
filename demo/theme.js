@@ -20,6 +20,10 @@ window.addEventListener('dread-demo-theme', event => {
   if (!(event instanceof CustomEvent)) return;
   preference = themeValue(event.detail);
   try { localStorage.setItem('dread-demo-theme', preference); }
-  catch { /* Selection still applies for this page when storage is unavailable. */ }
+  catch {
+    // Storage denial keeps this page usable without claiming the choice was saved.
+    apply();
+    return;
+  }
   apply();
 });

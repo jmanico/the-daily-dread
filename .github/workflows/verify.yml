@@ -1,0 +1,68 @@
+name: Verify implementation
+
+on:
+  pull_request:
+  push:
+    branches: [main, 'build/**', 'demo/**']
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  implementation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          submodules: false
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26.13.0'
+          package-manager-cache: false
+      - name: Check selected runtime and package manager
+        run: |
+          node -e "if (process.version !== 'v26.13.0') process.exit(1)"
+          test "$(npm --version)" = '11.20.0'
+      - name: Check reviewed dependency and installation policy
+        run: node scripts/check-dependencies.mjs
+      - name: Reproducible installation without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Strict checked contracts
+        run: node_modules/.bin/tsc --project jsconfig.json --noEmit
+      - name: Runtime security and import boundaries
+        run: node scripts/check-runtime.mjs
+      - name: Build and inspect every emitted artifact
+        env:
+          DREAD_SECRET_CANARY: synthetic-ci-secret-must-not-ship-8481275
+        run: |
+          node scripts/build.mjs
+          node scripts/check-artifact.mjs
+      - name: Positive and negative tests
+        run: node --test
+      - name: Dependency advisories
+        run: npm audit --audit-level=high
+      - name: Registry signatures and provenance
+        run: npm audit signatures
+      - name: Whitespace errors
+        env:
+          DREAD_DIFF_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: node scripts/check-whitespace.mjs "$DREAD_DIFF_BASE"
+
+  runtime-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions: {}
+    steps:
+      # Deliberately fail until #26 supplies a reviewed, locked runtime auditor.
+      # Do not install the rejected candidate, use npx, or turn this into a skip.
+      - name: Unresolved TOOL-003 release gate
+        run: |
+          echo 'Runtime audit is blocked by REQ-DECISION-015 (#26).'
+          exit 1
