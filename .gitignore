@@ -1,3 +1,5 @@
 node_modules/
 dist-demo/
+.build-lock/
+.build-stage-*/
 .DS_Store
