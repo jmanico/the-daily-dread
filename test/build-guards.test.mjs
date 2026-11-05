@@ -75,6 +75,23 @@ test('missing checked configuration fails closed', async t => {
   await assert.rejects(checkRuntime(root));
 });
 
+test('process capability is limited to direct lifecycle calls and fixed signal registration',async t=>{
+  const root=await fixture(t);
+  await mkdir(join(root,'src/lifecycle'),{recursive:true});
+  await writeFile(join(root,'jsconfig.json'),JSON.stringify({compilerOptions:{allowJs:true,checkJs:true,noEmit:true,target:'ES2023',module:'ESNext'},include:['src/**/*','demo/**/*']}));
+  const owner='src/lifecycle/process-boundary.js';
+  const policy=new Map([[owner,[]],['demo/case.js',[]]]);
+  await writeFile(join(root,owner),'export {};process.on("SIGTERM",()=>{});process.exit(70);process.listenerCount("SIGTERM");process.hasUncaughtExceptionCaptureCallback();');
+  assert.deepEqual(await checkRuntime(root,policy),[]);
+  for(const source of ['process.env.SECRET;','process.stdout.write("unsafe");','const exit=process.exit;', 'process["exit"](70);','process.on("message",()=>{});','const event="SIGTERM";process.on(event,()=>{});']){
+    await writeFile(join(root,owner),`export {};${source}`);
+    assert.ok((await checkRuntime(root,policy)).some(finding=>finding.rule==='runtime-process-access'));
+  }
+  await writeFile(join(root,owner),'export {};');
+  await writeFile(join(root,'demo/case.js'),'export {};process.exit(70);');
+  assert.ok((await checkRuntime(root,policy)).some(finding=>finding.rule==='runtime-process-access'));
+});
+
 test('manifest, exact pins, reviewed graph and disabled lifecycle scripts are enforced', async () => {
   const originalManifest = JSON.parse(await readFile('package.json','utf8'));
   const originalLock = JSON.parse(await readFile('package-lock.json','utf8'));

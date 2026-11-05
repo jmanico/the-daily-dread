@@ -77,12 +77,22 @@ export async function checkRuntime(root, policy = runtimePolicy) {
           if (ast.isIdentifier(node) && forbiddenProperties.has(node.text)) report(node,'html-or-code-sink');
           if (ast.isElementAccessExpression(node)) {
             const argument = node.argumentExpression;
+            if(ast.isIdentifier(node.expression) && node.expression.text==='process')report(node,'runtime-process-access');
             if (!ast.isStringLiteral(argument)) {
               if (ast.isIdentifier(node.expression) && ['window','globalThis','self','global','process'].includes(node.expression.text)) report(node,'computed-capability-access');
             }
             else if (forbiddenNames.has(argument.text) || forbiddenProperties.has(argument.text)) report(node,'prohibited-runtime-capability');
           }
-          if (ast.isPropertyAccessExpression(node) && ast.isIdentifier(node.expression) && node.expression.text === 'process' && !(name === 'scripts/serve-demo.mjs' && ['on','exitCode'].includes(node.name.text))) report(node,'runtime-process-access');
+          if (ast.isPropertyAccessExpression(node) && ast.isIdentifier(node.expression) && node.expression.text === 'process') {
+            const call=node.parent;
+            // SEC-8/REQ-PLATFORM-023: only direct lifecycle calls at this owner.
+            // Environment, filesystem/stdio, dynamic properties and aliases stay forbidden.
+            const lifecycle=name==='src/lifecycle/process-boundary.js' && ast.isCallExpression(call) && call.expression===node &&
+              (['exit','listenerCount','hasUncaughtExceptionCaptureCallback'].includes(node.name.text) ||
+                node.name.text==='on' && call.arguments[0] && ast.isStringLiteral(call.arguments[0]) &&
+                ['SIGTERM','SIGINT','uncaughtException','unhandledRejection'].includes(call.arguments[0].text));
+            if(!lifecycle && !(name === 'scripts/serve-demo.mjs' && ['on','exitCode'].includes(node.name.text))) report(node,'runtime-process-access');
+          }
           if (ast.isCallExpression(node)) {
             if (node.expression.kind === ast.SyntaxKind.ImportKeyword) report(node,'dynamic-runtime-import');
             if (ast.isIdentifier(node.expression) && ['setTimeout','setInterval'].includes(node.expression.text) && node.arguments[0] && ast.isStringLiteral(node.arguments[0])) report(node,'string-timer');

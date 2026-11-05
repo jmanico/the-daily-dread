@@ -12,5 +12,5 @@
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "types": ["node", "react", "react-dom"]
   },
-  "include": ["src/**/*.js", "integration/**/*.mjs", "demo/**/*.js", "demo/**/*.jsx", "scripts/**/*.mjs", "test/**/*.mjs"]
+  "include": ["src/**/*.js", "integration/**/*.mjs", "demo/**/*.js", "demo/**/*.jsx", "scripts/**/*.mjs", "test/**/*.mjs", "test-support/**/*.mjs"]
 }
