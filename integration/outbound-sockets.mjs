@@ -7,6 +7,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { setTimeout as delay } from 'node:timers/promises';
 import { createDestinationConnector } from '../src/adapters/outbound/connect-destination.js';
 
 // Run inside the isolated Linux namespace prepared by test-support/outbound-net.sh.
@@ -152,4 +153,16 @@ test('caller cancellation destroys an established TLS stream and allows a fresh 
   if(second.kind==='connected'){const ended=once(second.socket,'close');second.socket.destroy();await ended;}
   assert.equal(f.connections(),2);
   assert.equal(f.bytes(),0);
+});
+
+test('overdue DNS cannot start a real socket while the timeout callback is delayed',async t=>{
+  const f=await fixture(t);
+  const connector=createDestinationConnector(f.config,()=> 'allowed',{ca:f.ca,resolve:async()=>{
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,5050);
+    return [address];
+  }});
+  t.after(()=>connector.retire());
+  assert.deepEqual(await connector.connect(f.command),{kind:'failed',reason:'timeout'});
+  await delay(50);
+  assert.equal(f.connections(),0);assert.equal(f.bytes(),0);
 });

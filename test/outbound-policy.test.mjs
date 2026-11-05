@@ -86,3 +86,11 @@ test('connection admission stays bounded during pending resolution and releases 
   assert.ok((await Promise.all(calls)).every(result=>result.kind === 'failed' && result.reason === 'address'));
   assert.deepEqual(await connector.connect(command),{kind:'failed',reason:'address'});
 });
+
+test('DNS completion after the real connect deadline cannot beat a delayed timer callback',async()=>{
+  const connector=createDestinationConnector(config(),()=> 'allowed',{resolve:async()=>{
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,5050);
+    return ['127.0.0.1'];
+  }});
+  assert.deepEqual(await connector.connect({url:'https://feed.example/feed',context:{},signal:signal()}),{kind:'failed',reason:'timeout'});
+});

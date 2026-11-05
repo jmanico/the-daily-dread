@@ -52,6 +52,7 @@ export function createDestinationConnector(configuration,authorize,ports={}) {
       /** @type {import('node:net').Socket | undefined} */ let tcp;
       /** @type {import('node:tls').TLSSocket | undefined} */ let tls;
       let connected=false;
+      const started=performance.now();
       const deadline = setTimeout(()=>{reason='timeout';controller.abort();},5000);
       const total = setTimeout(()=>{reason='timeout';controller.abort();},30000);
       const externalSignal=input.signal;
@@ -63,11 +64,15 @@ export function createDestinationConnector(configuration,authorize,ports={}) {
       };
       const destroy = () => { tls?.destroy(); tcp?.destroy(); };
       controller.signal.addEventListener('abort',destroy,{once:true});
+      const checkDeadline = () => {
+        if (performance.now()-started>=5000) {reason='timeout';controller.abort();}
+        controller.signal.throwIfAborted();
+      };
       try {
         const hostname=url.hostname.startsWith('[') ? url.hostname.slice(1,-1) : url.hostname;
         reason='dns';
         const addresses=await resolve(hostname,controller.signal);
-        controller.signal.throwIfAborted();
+        checkDeadline();
         reason='address';
         if (!Array.isArray(addresses) || addresses.length === 0 || addresses.length>16 || !addresses.every(isPublicAddress)) return {kind:'failed',reason};
         // Copy only one validated literal. No second DNS lookup, fallback address,
@@ -76,20 +81,24 @@ export function createDestinationConnector(configuration,authorize,ports={}) {
         if (!allowed(input.context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
         const port=url.port ? Number(url.port) : 443;
         reason='connection';
+        checkDeadline();
         tcp=createConnection({host:address,port,family:isIP(address),autoSelectFamily:false,signal:controller.signal});
         tcp.on('error',()=>{ reason='connection'; });
         await socketReady(tcp,'connect',controller.signal);
+        checkDeadline();
         reason='address';
         if (!samePublicAddress(address,tcp.remoteAddress) || tcp.remotePort !== port) return {kind:'failed',reason};
         if (!allowed(input.context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
         reason='tls';
+        checkDeadline();
         tls=connectTLS({socket:tcp,servername:isIP(hostname) ? undefined : hostname,rejectUnauthorized:true,minVersion:'TLSv1.2',ca,
           checkServerIdentity:(_name,certificate)=>checkServerIdentity(hostname,certificate)});
         tls.on('error',()=>{ reason='tls'; });
         await socketReady(tls,'secureConnect',controller.signal);
-        controller.signal.throwIfAborted();
+        checkDeadline();
         if (!tls.authorized || !samePublicAddress(address,tls.remoteAddress) || tls.remotePort !== port) return {kind:'failed',reason:'tls'};
         if (!allowed(input.context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
+        checkDeadline();
         clearTimeout(deadline);
         tls.setTimeout(10000,()=>tls?.destroy());
         tls.once('close',cleanup);
