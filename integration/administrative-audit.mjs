@@ -47,7 +47,7 @@ const command=()=>({configRef:'audit_config',revision:1,value:true});
 test('administrative changes, revisions, append-only audit and work commit atomically',{timeout:90000},async t=>{
   const fixture=await startPostgres();t.after(()=>fixture.close());
   const admin=postgres({...fixture.config,ssl:{ca:fixture.config.ca,rejectUnauthorized:true},channel_binding:'require',max:2,fetch_types:false,onnotice:false});t.after(()=>admin.end({timeout:0}));
-  await admin.unsafe(await readFile(new URL('../db/002-administrative-audit.sql',import.meta.url),'utf8')).raw();
+  for(const migration of ['002-administrative-audit.sql','003-audit-pipeline.sql'])await admin.unsafe(await readFile(new URL(`../db/${migration}`,import.meta.url),'utf8')).raw();
   await admin.unsafe(`create role dread_audit_app login password 'synthetic-audit-fixture' nosuperuser nocreatedb nocreaterole noinherit;
     create schema fixture;
     create table fixture.principals(company_id text,actor_id text,role text,enabled boolean,primary key(company_id,actor_id));
@@ -62,7 +62,7 @@ test('administrative changes, revisions, append-only audit and work commit atomi
   const config={...fixture.config,user:'dread_audit_app',password:'synthetic-audit-fixture'};
   const boundary=createTransactionBoundary(config,statements);t.after(()=>boundary.close());
   const owner=createAdministrativeAudit(boundary,configuration,policy());
-  t.beforeEach(async()=>{await admin.unsafe('truncate dread_audit.mutation_receipts,dread_audit.events,fixture.work; update fixture.settings set revision=1,value=false; update fixture.principals set enabled=true').raw();});
+  t.beforeEach(async()=>{await admin.unsafe('truncate dread_audit.conflicts,dread_audit.mutation_receipts,dread_audit.events,fixture.work; update fixture.settings set revision=1,value=false; update fixture.principals set enabled=true').raw();});
   async function counts(){return (await admin`select (select count(*) from dread_audit.events)::text,(select count(*) from dread_audit.mutation_receipts)::text,(select count(*) from fixture.work)::text,(select revision from fixture.settings where company_id='company_a')::text`.raw())[0].map(x=>x?.toString());}
 
   await t.test('current admin commits one immutable attributed event, revision and work intent; receipt is scoped',async()=>{
@@ -154,7 +154,7 @@ test('administrative changes, revisions, append-only audit and work commit atomi
     const conflict=JSON.parse(encoded);conflict.revision_ref='revision_3';
     await assert.rejects(admin`insert into dread_audit.events(company_id,producer_ref,event_id,operation_ref,encoded) values('company_a',${producer},${eventId}::uuid,'immutable',${JSON.stringify(conflict)})`.raw(),{code:'23505'});
     for(const bad of ['{}',encoded.replace('"tenant_ref":"company_a"','"tenant_ref":"company_b"'),encoded.replace('"operation_ref":"immutable"','"operation_ref":"different"')])await assert.rejects(admin`insert into dread_audit.events(company_id,producer_ref,event_id,operation_ref,encoded) values('company_a',${producer},${eventId}::uuid,'immutable',${bad})`.raw(),{code:'23514'});
-    await assert.rejects(admin`insert into dread_audit.mutation_receipts values('company_a',${producer},'mismatched_operation',${eventId}::uuid)`.raw(),{code:'23503'});
+    await assert.rejects(admin`insert into dread_audit.mutation_receipts(company_id,producer_ref,operation_ref,event_id) values('company_a',${producer},'mismatched_operation',${eventId}::uuid)`.raw(),{code:'23503'});
     assert.equal((await admin`select encoded from dread_audit.events`.raw())[0][0]?.toString(),encoded);assert.deepEqual(await counts(),['1','1','1','2']);
     assert.deepEqual(Object.keys(owner).sort(),['change','reconcile']);
   });

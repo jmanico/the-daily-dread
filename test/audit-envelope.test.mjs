@@ -71,3 +71,15 @@ test('validation health stays nonrecursive and uses only closed diagnostic codes
   assert.equal(serializeFoundationEvent('dread.audit.validation_failure',{...c,actor_ref:'forged'},d).status,'rejected');
   assert.equal(serializeFoundationEvent('dread.audit.validation_failure',c,{...d,stage:'SECRET_CANARY'}).status,'rejected');
 });
+
+test('independent health uses SEC-086 fields, trusted service attribution and nonrecursive outcomes',async()=>{
+  const {serializeMonitorHealth}=await import('../src/audit/envelope.js');
+  const c={...context(),actor_kind:'service',actor_provenance:'authenticated_service'};
+  for(const [status,errorCode,outcome,severity] of [['healthy','healthy','success','info'],['unknown','restart','unknown','error'],['unhealthy','heartbeat_silence','failure','error']]) {
+    const value=accepted(serializeMonitorHealth(c,{status,errorCode,droppedCount:2,lagMs:30000}));
+    assert.equal(value.record.event,'dread.audit.health');assert.equal(value.record.outcome,outcome);assert.equal(value.record.severity,severity);assert.equal(value.record.audit_required,false);assert.equal(value.record.dropped_count,2);assert.equal(value.record.lag_ms,30000);assert.equal(value.record.stage,'monitor');assert.equal('count' in value.record,false);
+  }
+  const valid={status:'unhealthy',errorCode:'queue_full',droppedCount:0,lagMs:0};
+  for(const o of [{...valid,raw:'SECRET_CANARY'},{...valid,status:'healthy'},{...valid,errorCode:'SECRET_CANARY'},{...valid,droppedCount:-1},{...valid,lagMs:Infinity},{...valid,lagMs:Number.MAX_SAFE_INTEGER+1},Object.create(valid)])assert.equal(serializeMonitorHealth(c,o).status,'rejected');
+  assert.equal(serializeMonitorHealth(context(),valid).status,'rejected');
+});
