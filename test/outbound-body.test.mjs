@@ -47,3 +47,12 @@ test('actual idle deadline and cancellation destroy stalled streams without a la
   assert.deepEqual(await readBoundedBody(source,'identity',canceled),{kind:'failed',reason:'canceled'});
   assert.equal(source.destroyed,true);
 });
+
+test('decoded limits also accumulate across individually small compressed attempts',async()=>{
+  const budget=createRetrievalBudget({decodedBytes:500},new AbortController().signal);
+  const compressed=gzipSync(Buffer.alloc(300,65));
+  assert.equal((await readBoundedBody(Readable.from([compressed]),'gzip',budget)).kind,'body');
+  assert.deepEqual(await readBoundedBody(Readable.from([compressed]),'gzip',budget),{kind:'failed',reason:'decoded_limit'});
+  assert.equal(budget.snapshot().wireBytes,compressed.length*2);
+  assert.equal(budget.snapshot().decodedBytes,600);budget.close();
+});

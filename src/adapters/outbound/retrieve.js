@@ -50,8 +50,8 @@ export function createRetrievalTransport(configuration,authorize,limitsInput={},
         snapshot(){return budget.snapshot();},
         /** @param {unknown} initialURL @returns {Promise<Retrieval>} */
         async read(initialURL) {
-          if (busy) return {kind:'failed',reason:'busy'};
           if (!allowed(context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
+          if (busy) return {kind:'failed',reason:'busy'};
           if (budget.signal.aborted) return {kind:'failed',reason:budget.snapshot().failure ?? 'canceled'};
           if (pendingWait && (pendingWait.notBeforeMs===null || Date.now()<pendingWait.notBeforeMs)) return {kind:'wait',status:pendingWait.status,notBeforeMs:pendingWait.notBeforeMs};
           pendingWait=undefined;
@@ -65,9 +65,10 @@ export function createRetrievalTransport(configuration,authorize,limitsInput={},
                 if (!allowed(context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
                 budget.signal.throwIfAborted();
                 const response=await readResponse(connected,budget);
-                if (response.kind==='failed') {pendingWait=response.wait;return response;}
                 pendingWait=response.wait;
                 if (!allowed(context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
+                if (response.kind==='failed') return response;
+                budget.signal.throwIfAborted();
                 if ([301,302,303,307,308].includes(response.status)) {
                   if (!budget.consumeRedirect()) return {kind:'failed',reason:budget.snapshot().failure ?? 'redirect_limit'};
                   if (!response.location || Buffer.byteLength(response.location)>4096) return {kind:'failed',reason:'redirect'};
@@ -156,7 +157,7 @@ async function readResponse(connected,budget) {
 function responseHeaders(response) {
   const status=response.statusCode;
   if (!status || status<200 || status>599 || response.rawHeaders.length>200) return;
-  const selected=new Map();
+  /** @type {Map<string,string>} */ const selected=new Map();
   const singletons=['content-length','transfer-encoding','content-encoding','content-type','location','retry-after'];
   for(let i=0;i<response.rawHeaders.length;i+=2) {
     const name=response.rawHeaders[i].toLowerCase(),value=response.rawHeaders[i+1];
@@ -164,5 +165,7 @@ function responseHeaders(response) {
   }
   const contentType=selected.get('content-type') ?? null;
   if (contentType!==null && (Buffer.byteLength(contentType)>256 || /[\u0000-\u001f\u007f]/u.test(contentType))) return;
-  return {status,contentType,encoding:selected.get('content-encoding') ?? 'identity',location:selected.get('location') ?? null,retryAfter:selected.get('retry-after') ?? null};
+  const transfer=selected.get('transfer-encoding');
+  if (transfer!==undefined && transfer.toLowerCase()!=='chunked') return;
+  return {status,contentType,encoding:selected.get('content-encoding')?.toLowerCase() ?? 'identity',location:selected.get('location') ?? null,retryAfter:selected.get('retry-after') ?? null};
 }

@@ -25,3 +25,17 @@ test('invalid or denied operation admission has no DNS effect; abandoned slots r
   assert.equal(lookups,0);assert.equal(operations.length,4);transport.retire();
   assert.deepEqual(transport.begin({context:'current-a',signal:new AbortController().signal}),{kind:'failed',reason:'revoked'});
 });
+
+test('one logical operation cannot race concurrent reads or bypass an authority failure',async()=>{
+  let lookups=0,current=true;
+  const transport=createRetrievalTransport(policy,()=>{if(!current)throw new Error('synthetic-private-canary');return 'allowed';},{},
+    {resolve:async(_host,signal)=>{lookups++;return new Promise(resolve=>signal.addEventListener('abort',()=>resolve([]),{once:true}));}});
+  const op=transport.begin({context:{},signal:new AbortController().signal});assert.equal(op.kind,'operation');
+  if(op.kind!=='operation')return;
+  const pending=op.read('https://feed.example/feed');
+  assert.deepEqual(await op.read('https://feed.example/feed'),{kind:'failed',reason:'busy'});
+  assert.equal(lookups,1);op.close();assert.deepEqual(await pending,{kind:'failed',reason:'closed'});
+  const next=transport.begin({context:{},signal:new AbortController().signal});assert.equal(next.kind,'operation');
+  if(next.kind==='operation'){current=false;assert.deepEqual(await next.read('https://feed.example/feed'),{kind:'failed',reason:'denied'});next.close();}
+  assert.equal(lookups,1);transport.retire();
+});

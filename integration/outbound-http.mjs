@@ -21,6 +21,7 @@ async function fixture(t,respond) {
   /** @type {Set<import('node:net').Socket>} */const sockets=new Set();
   /** @type {string[]} */const requests=[];
   const server=createServer({key,cert:ca},socket=>{
+    socket.on('error',()=>socket.destroy());
     let header='';
     socket.on('data',function receive(data){
       header+=data.toString('latin1');
@@ -50,9 +51,15 @@ function send(socket,body,extra='',status=200) {
 }
 
 test('actual approved TLS HTTP retrieval counts wire and decoded bytes and sends only code-owned GET headers',async t=>{
+  const previousHttp=process.env.HTTP_PROXY,previousHttps=process.env.HTTPS_PROXY;
+  process.env.HTTP_PROXY='http://127.0.0.1:1';process.env.HTTPS_PROXY='http://127.0.0.1:1';
+  t.after(()=>{
+    if(previousHttp===undefined)delete process.env.HTTP_PROXY;else process.env.HTTP_PROXY=previousHttp;
+    if(previousHttps===undefined)delete process.env.HTTPS_PROXY;else process.env.HTTPS_PROXY=previousHttps;
+  });
   const body=Buffer.from('synthetic-public-fact '.repeat(100));
   const f=await fixture(t,(socket,_request,index)=>{
-    if(index===1)send(socket,gzipSync(body),'Content-Encoding: gzip\r\nContent-Type: application/json\r\n');
+    if(index===1)send(socket,gzipSync(body),'Content-Encoding: GZip\r\nContent-Type: application/json\r\n');
     else if(index===2)send(socket,deflateSync(body),'Content-Encoding: deflate\r\n');
     else socket.end(Buffer.concat([Buffer.from('HTTP/1.1 200 Fixture\r\nTransfer-Encoding: chunked\r\nConnection: close\r\n\r\n'+body.length.toString(16)+'\r\n'),body,Buffer.from('\r\n0\r\n\r\n')]));
   });
@@ -87,6 +94,7 @@ test('native HTTP parser and closed header projection reject malformed framing a
     'HTTP/1.1 200 OK\r\nX-Large: '+'a'.repeat(17000)+'\r\n\r\n',
     'HTTP/1.1 200 OK\r\nContent-Length: 0\r\n'+Array.from({length:101},(_,i)=>`X-${i}: a\r\n`).join('')+'\r\n',
     'HTTP/1.1 200 OK\r\nContent-Length: 0\r\nContent-Encoding: gzip\r\nContent-Encoding: identity\r\n\r\n',
+    'HTTP/1.1 200 OK\r\nTransfer-Encoding: gzip, chunked\r\n\r\n0\r\n\r\n',
     'HTTP/1.1 200 OK\r\nContent-Length: 4\r\nContent-Encoding: br\r\n\r\nnope',
     'HTTP/1.1 200 OK\r\nContent-Length: 4\r\nContent-Encoding: gzip\r\n\r\nnope',
     'HTTP/1.1 101 Switching Protocols\r\nConnection: Upgrade\r\nUpgrade: other\r\n\r\n',
@@ -132,6 +140,23 @@ test('caller-owned retries cannot reset bytes or total time',async t=>{
   const timed=createRetrievalTransport(f.policy,()=> 'allowed',{totalMs:250,readMs:100},f.ports);t.after(()=>timed.retire());
   const timedOp=begin(timed);assert.equal((await timedOp.read(f.origin+'/start')).kind,'retrieved');await delay(150);slow=true;
   assert.deepEqual(await timedOp.read(f.origin+'/start'),{kind:'failed',reason:'timeout'});assert.equal(timedOp.snapshot().attempts,2);timedOp.close();
+});
+
+test('cross-origin redirects need explicit policy and never acquire credentials; loops stay bounded',async t=>{
+  const destination=await fixture(t,socket=>send(socket,Buffer.from('public-fact')));
+  let loop=false;
+  const source=await fixture(t,socket=>send(socket,Buffer.from('hop'),`Location: ${loop ? '/start' : destination.origin+'/next'}\r\n`,307));
+  const denied=createRetrievalTransport(source.policy,()=> 'allowed',{redirects:3},source.ports);t.after(()=>denied.retire());
+  const noPolicy=begin(denied);assert.deepEqual(await noPolicy.read(source.origin+'/start'),{kind:'failed',reason:'invalid'});noPolicy.close();assert.equal(destination.requests.length,0);
+  source.policy.endpoints.push(destination.policy.endpoints[0]);
+  const transport=createRetrievalTransport(source.policy,()=> 'allowed',{redirects:3},source.ports);t.after(()=>transport.retire());
+  // Each ephemeral fixture has its own test CA; trust both only in composition.
+  const trusted=createRetrievalTransport(source.policy,()=> 'allowed',{redirects:3},{resolve:source.ports.resolve,ca:Buffer.concat([source.ports.ca,destination.ports.ca])});t.after(()=>trusted.retire());
+  const op=begin(trusted);const result=await op.read(source.origin+'/start');assert.equal(result.kind,'retrieved');op.close();
+  assert.equal(destination.requests.length,1);assert.doesNotMatch(destination.requests[0],/authorization:|cookie:|proxy-authorization:/i);
+  loop=true;const loops=begin(transport);const initialCount=source.requests.length;
+  assert.deepEqual(await loops.read(source.origin+'/start'),{kind:'failed',reason:'redirect_limit'});
+  assert.equal(source.requests.length,initialCount+4);assert.equal(loops.snapshot().wireBytes,12);loops.close();
 });
 
 test('provider waits are typed facts without an automatic retry or response-body disclosure',async t=>{
