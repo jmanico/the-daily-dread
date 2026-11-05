@@ -136,7 +136,7 @@ Treatments remain proposed implementation plans and all verification is `not_run
 | `G-006` | DEFERRED | Observe deployed private-response headers, browser storage and signout/role-change behavior. | Project lead / feature maintainer | Before dependent feature merge/release |
 | `G-007` | DEFERRED | Resolve deferred OD-001/002/004/005 and independently verify event representation, durability, consumer and silence monitoring. | Project lead / feature maintainer | Before dependent feature merge/release |
 | `G-008` | Resolved design decision; verification not run | Record the visible exact confirmation phrase for every high-impact action and bind it to the current target/revision. | Project lead / feature maintainer | Before dependent feature merge/release |
-| `G-009` | DEFERRED | Supply resolver provenance for an exact secure-coding pack only if later work needs technology-specific prescriptions beyond the project specs. | Project lead / feature maintainer | Before dependent feature merge/release |
+| `G-009` | Project-local guide location resolved; external-pack claims remain unverified | Read `.manicode/secure-coding.md` and its owning SEC sections. This is newly established project guidance, not discovery or verification of an external pack; record any further concrete prescription gap before dependent implementation. | Project lead / feature maintainer | Before dependent feature merge/release |
 
 ## Decisions
 
@@ -171,3 +171,7 @@ These are specification requirements and proposals only. They are not implementa
 ## Decision-pass delta — 2026-11-04
 
 React introduces a browser library dependency at TB-1/TB-9/TB-10, not a server-rendering or Server Function surface. SEC-7/SEC-9/SEC-10 now cover JSX/prop/URL boundaries, minimal component state, production bundles, strict CSP and stale asynchronous responses. T-005/T-006/T-011 retain their existing identities and require React-boundary verification; no threat is resolved by adopting these rules. DQ-8/G-008 closes a design gap only. The older counts and foldback narrative above describe their dated snapshots, not current completion evidence.
+
+## Backlog tooling handoff — 2026-11-04
+
+AR-001/AR-002 now record the selected-tree review and development tool choices; TOOL-004 identifies a newly established project-local reading guide. These resolve selection/location work only. No T-* hypothesis is resolved, no V-* application check becomes run, and no external secure-coding pack is claimed verified. TOOL-003, AR-003, OD-001/002/004/005, authoritative unavailable signals and implementation/release evidence remain open under their existing owners and GitHub issues.

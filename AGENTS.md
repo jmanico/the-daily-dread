@@ -8,7 +8,7 @@
 
 ## Implementation and issues
 
-- Before writing code in an area, read the matching sections of `.manicode/secure-coding.md` and every applicable `SEC-*` control section in [SECURITY.md](SECURITY.md) that names the component. Read the secure-coding file on demand; do not import it. That file is not present in this checkout; resolve its location before implementation work that needs it.
+- Before writing code in an area, read the matching sections of `.manicode/secure-coding.md` and every applicable `SEC-*` control section in [SECURITY.md](SECURITY.md) that names the component. Read the secure-coding file on demand; do not import it. The authoritative project-local reading guide is `.manicode/secure-coding.md`; SECURITY.md continues to own the controls.
 - Every leaf implementation issue follows `REQUIREMENT_TEMPLATE.md`. Use the actual `SEC-1`–`SEC-11` control IDs from SECURITY.md for its `SC-*` placeholders; zero-padded `SEC-001`–`SEC-090` and `SEC-APP-*` identify event-ledger entries. Epic, workstream, and decision issues use short, purpose-specific bodies linking the affected spec IDs and issues.
 
 ## Third-party libraries
@@ -27,8 +27,8 @@ Run the applicable checks before calling implementation work done.
 
 | Check | Command |
 | --- | --- |
-| Build | DEFERRED TOOL-001 — production bundling recipe depends on AR-002. |
-| Type-check | DEFERRED TOOL-002 — checked JSDoc/client contracts; tool pin depends on AR-002. |
+| Build | TOOL-001 selected: `node scripts/build.mjs` using esbuild 0.28.2; command implementation belongs to REQ-PLATFORM-022. Not yet runnable in this specification-only checkout. |
+| Type-check | TOOL-002 selected: `node_modules/.bin/tsc --project jsconfig.json --noEmit` using TypeScript 7.0.2 with checked JavaScript/JSDoc and client contracts; configuration belongs to REQ-PLATFORM-022. No TypeScript-source migration is selected. |
 | Test | `node --test` |
 | Dependency audit | `npm audit --audit-level=high` |
 | Runtime audit | DEFERRED TOOL-003 — runtime audit tool requires NFR-5 verification and an approved locked dev dependency; no ad-hoc npx execution. |
@@ -50,6 +50,8 @@ For missing ledger rows, implement at the named component, resolve applicable OD
 - Once `THREAT_MODEL.md` exists, run a Grim Prompter change review against the saved threat-model JSON before merging any change that crosses a trust boundary named in `ARCHITECTURE.md`.
 - For any change that adds, removes, or alters a security event, run a Dread Ledger change review using [`prompts/09-change-review.md`](https://github.com/jmanico/dread-ledger/blob/main/prompts/09-change-review.md) against `SECURITY_EVENTS.md`.
 
-## Deferred toolchain inputs
+## Toolchain handoff
 
-TOOL-001–TOOL-003 are owned by the release maintainer, tracked by the project lead, and block the corresponding implementation/release checks only. TOOL-004 — DEFERRED: resolve the authoritative `.manicode/secure-coding.md` location before implementation requiring it. The exact file was not found in the searched workspace/skills roots on 2026-11-04; similarly named files in other projects are not substitutes. Owner: project lead. This does not block specification decisions.
+TOOL-001 and TOOL-002 have selected commands and reviewed tool pins under AR-002; implementation of the build/check configuration remains in [REQ-PLATFORM-022](https://github.com/jmanico/the-daily-dread/issues/104). A command selection is not a successful application build. TOOL-003 remains deferred: the reviewed `is-my-node-vulnerable` 1.6.1 candidate was rejected because its resolved tree introduces high-severity advisories; see [the dependency review](docs/DEPENDENCY_REVIEW.md#backlog-decision-review--2026-11-04). Do not install that candidate or force a transitive override. The release maintainer owns this remaining runtime-audit gate.
+
+TOOL-004 is resolved to this repository's [.manicode/secure-coding.md](.manicode/secure-coding.md). This newly established project-local guide points to the owning controls; it does not claim discovery of a previously missing external pack. Read it on demand before implementation. G-009's location/provenance handoff is satisfied; additional concrete prescription gaps must still be recorded if encountered.
