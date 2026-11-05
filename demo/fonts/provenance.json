@@ -1,0 +1,62 @@
+[
+  {
+    "file": "Atkinson-Regular.woff2",
+    "source": "https://raw.githubusercontent.com/googlefonts/atkinson-hyperlegible-next/7925f50f649b3813257faf2f4c0b381011f434f1/fonts/webfonts/AtkinsonHyperlegibleNext-Regular.woff2",
+    "sha256": "378aea0f5c1d179f4e0b5382c06bfc87571b98cfcc4fd1352bc979e2e2259c54"
+  },
+  {
+    "file": "Atkinson-Bold.woff2",
+    "source": "https://raw.githubusercontent.com/googlefonts/atkinson-hyperlegible-next/7925f50f649b3813257faf2f4c0b381011f434f1/fonts/webfonts/AtkinsonHyperlegibleNext-Bold.woff2",
+    "sha256": "dda449f0f556a595cffd0a9ce479bb1210beba286cb4c2f5aeca6975f9c85a3b"
+  },
+  {
+    "file": "Atkinson-Italic.woff2",
+    "source": "https://raw.githubusercontent.com/googlefonts/atkinson-hyperlegible-next/7925f50f649b3813257faf2f4c0b381011f434f1/fonts/webfonts/AtkinsonHyperlegibleNext-Italic.woff2",
+    "sha256": "97f9cffe4912f3ceaa41583dca26ae4874b4847243a826c87203071d8ad601ad"
+  },
+  {
+    "file": "Atkinson-BoldItalic.woff2",
+    "source": "https://raw.githubusercontent.com/googlefonts/atkinson-hyperlegible-next/7925f50f649b3813257faf2f4c0b381011f434f1/fonts/webfonts/AtkinsonHyperlegibleNext-BoldItalic.woff2",
+    "sha256": "d73949a5c24b5f91e64185034ea0af96902f27ce84b3b413aab30be5d0cb371e"
+  },
+  {
+    "file": "SourceSerif-Regular.woff2",
+    "source": "https://raw.githubusercontent.com/adobe-fonts/source-serif/4.005R/WOFF2/OTF/SourceSerif4-Regular.otf.woff2",
+    "sha256": "42aa010dbb82d90764a28f6cc7d809a9395999b7390eb3b212028c6975e97402"
+  },
+  {
+    "file": "SourceSerif-Bold.woff2",
+    "source": "https://raw.githubusercontent.com/adobe-fonts/source-serif/4.005R/WOFF2/OTF/SourceSerif4-Bold.otf.woff2",
+    "sha256": "c1c3741a0292062e9694c927cf483fa24d725b4e5a64b5af73f411e2a0a631ce"
+  },
+  {
+    "file": "SourceSerif-Italic.woff2",
+    "source": "https://raw.githubusercontent.com/adobe-fonts/source-serif/4.005R/WOFF2/OTF/SourceSerif4-It.otf.woff2",
+    "sha256": "e65464583be3cb56b9fee2bff0f2f7d11706aba31435144f87f393e62ed316c8"
+  },
+  {
+    "file": "SourceSerif-BoldItalic.woff2",
+    "source": "https://raw.githubusercontent.com/adobe-fonts/source-serif/4.005R/WOFF2/OTF/SourceSerif4-BoldIt.otf.woff2",
+    "sha256": "96e6a14dff163fae4031f5adb582357cdab55c9a3aad0cd7d72ac4181addf312"
+  },
+  {
+    "file": "PlexMono-Regular.woff2",
+    "source": "https://raw.githubusercontent.com/IBM/plex/2f9ba1b25957d958db71a849e85d72e3ecfb845a/packages/plex-mono/fonts/complete/woff2/IBMPlexMono-Regular.woff2",
+    "sha256": "ba204497f16b6d334cee9d1e963a831b73e3a56e1d6300a8489d18df7214b350"
+  },
+  {
+    "file": "PlexMono-Bold.woff2",
+    "source": "https://raw.githubusercontent.com/IBM/plex/2f9ba1b25957d958db71a849e85d72e3ecfb845a/packages/plex-mono/fonts/complete/woff2/IBMPlexMono-Bold.woff2",
+    "sha256": "ea576f38d05cc44cca48c45314984beb8cc1d2b886f58e1dce99f15dc344eb1d"
+  },
+  {
+    "file": "PlexMono-Italic.woff2",
+    "source": "https://raw.githubusercontent.com/IBM/plex/2f9ba1b25957d958db71a849e85d72e3ecfb845a/packages/plex-mono/fonts/complete/woff2/IBMPlexMono-Italic.woff2",
+    "sha256": "2024bf2b08027dcd6d09091385756e327744bbe26b782c411381dffc40ffc622"
+  },
+  {
+    "file": "PlexMono-BoldItalic.woff2",
+    "source": "https://raw.githubusercontent.com/IBM/plex/2f9ba1b25957d958db71a849e85d72e3ecfb845a/packages/plex-mono/fonts/complete/woff2/IBMPlexMono-BoldItalic.woff2",
+    "sha256": "03e97fe28d44cc2bdf18d77284046bc9019ee626bdab1f06e7ea64837680824b"
+  }
+]
