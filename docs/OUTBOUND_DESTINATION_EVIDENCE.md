@@ -1,0 +1,33 @@
+# Outbound destination evidence — REQ-PLATFORM-015 (#97)
+
+Date: 2026-11-05 UTC. Reviewer: Codex. Draft implementation, not production acceptance. Base is build PR #234; this leaf owns destination selection and connection establishment. HTTP requests, redirects, body/decompression budgets and typed provider outcomes remain separate work (#98 and owning provider leaves). There is no public route and no automatic feed refresh in this change.
+
+## Reading and boundary
+
+Read the complete #97 template, `.manicode/secure-coding.md`, applicable SEC-1/3/4/5/6/8/9/10 sections and ARCHITECTURE.md ownership/dependency rules. The leaf cites no new event row: instrumentation remains separately owned and no security event changed. Node security/OWASP sources had been read during this build. Implementation-specific public sections were checked against [Node TLS connect](https://nodejs.org/api/tls.html#tlsconnectoptions-callback), [DNS](https://nodejs.org/api/dns.html#dnspromisesresolver), [net.BlockList](https://nodejs.org/api/net.html#class-netblocklist), and the [IANA IPv4](https://www.iana.org/assignments/iana-ipv4-special-registry) / [IPv6 special-purpose registries](https://www.iana.org/assignments/iana-ipv6-special-registry).
+
+The component belongs to the outbound adapter at TB-3/TB-4/TB-6/TB-7, despite the generated leaf's generic TB-8/TB-10 orchestration labels. No database or secret is accessed. No dependency was added.
+
+## Implemented contract
+
+The composition boundary supplies a reviewed policy and a synchronous current owner authorization decision. The connector accepts only URL, opaque context and AbortSignal; a client cannot provide an agent, proxy, resolver, socket, certificate-validation flag or CA. Production identity/source-rights policy integration is still pending; a synthetic adapter in a test does not establish that integration.
+
+Policies have company, opaque ID, exact string revision, exact HTTPS origins/ports/paths and bounded singleton query-key allowances. They are copied and deeply frozen. Scheme/userinfo/fragment, local/alternate IP forms, unknown fields, invalid revisions and malformed policies fail closed. A trusted composition-only DNS/trust-root port supports controlled integration tests; it is never populated from request input.
+
+Address parsing/subnet matching uses Node's vetted net APIs. IPv4 special-purpose, private, metadata, loopback, multicast and reserved ranges are denied. IPv6 is limited to global-unicast space with special-purpose/documentation/transition ranges denied; mapped IPv4 and scoped addresses are denied. Even globally reachable special-purpose exceptions are not authorized for ordinary providers. This is intentionally conservative. IP classification does not prove routing isolation: independent deployment egress policy remains necessary.
+
+Each connection uses fresh, cancelable A/AAAA resolution. Any invalid/private member rejects the whole answer. Only one validated numeric address is passed to native TCP, with family autoselection disabled; there is no second hostname lookup or fallback. The actual remote IP and port are checked before TLS. TLS retains the original hostname for SNI/certificate validation, explicitly requires certificate verification and TLS >=1.2, and checks the remote address again before releasing the internal stream. Owner authorization is checked before resolution, before connection, before TLS and before returning a connected stream.
+
+There is no reusable connection pool. Each connector is bound to one immutable policy revision, and retiring it aborts all its connections and denies future calls. Admission is capped at 32 outstanding connections. Establishment has a five-second deadline; held streams have ten-second read inactivity and thirty-second total limits. Cancel/retire destroys the underlying sockets and cancels the default resolver. No application bytes or credentials are sent by this layer. The owning HTTP adapter must consume/destroy the internal stream and translate subsequent stream failures without logging raw errors.
+
+## Verification
+
+Local macOS / Node 24.16.0: build, strict checked contracts and runtime policy pass; 22 standard tests pass, including six new destination-policy/admission tests. A real loopback listener receives no connections for private/mixed DNS answers. Synthetic unknown/cross-company/owner/role/revoked contexts are denied by the injected authority owner before resolution. DNS failure, late revocation/cancellation, retired revisions, saturation and invalid input return categorical failures without raw error contents.
+
+A separate integration suite uses real native TCP/TLS in a Linux network namespace with only loopback configured as 11.0.0.1. It creates ephemeral synthetic TLS keys/certificates in a temporary directory and removes them; no credentials are committed. It checks actual remote addresses, SNI, strict certificate/hostname rejection, ignored proxy environment, DNS rebinding, revision retirement, authority revocation during TLS, cancellation and the actual five-second stalled-connect deadline. The namespace has no external route. These tests are required in CI, not silently skipped on macOS.
+
+The macOS native c-ares lookup of the already approved `api.github.com` source failed with ECONNREFUSED; OS `lookup` resolved it. No less constrained fallback was added. A required separate Linux CI check exercises native DNS against that public host. CI results are pending at this draft checkpoint; the local source tests do not prove positive TLS or deployment acceptance.
+
+## Remaining acceptance
+
+Production application/identity/source-rights integration, cumulative retrieval budgets and full typed HTTP behavior remain outstanding. The exact 10-second/30-second held-stream bounds still need dedicated adverse timing evidence. Required Grim Prompter review and human reviews have not run. TOOL-003/#26 remains an explicit failing gate, and all original open-decision skips remain in force. No claim is made that this leaf, a production service, or the entire application is complete or mergeable.

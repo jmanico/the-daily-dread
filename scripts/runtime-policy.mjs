@@ -1,6 +1,10 @@
 // SEC-1/SEC-9: new runtime modules and imports require an explicit review here.
 // This is a review guard, not a JavaScript capability sandbox.
 export const runtimePolicy = new Map([
+  ['src/adapters/outbound/address-policy.js', ['node:net']],
+  ['src/adapters/outbound/destination-policy.js', ['node:net', './address-policy.js']],
+  ['src/adapters/outbound/resolve-destination.js', ['node:dns/promises', 'node:net']],
+  ['src/adapters/outbound/connect-destination.js', ['node:net', 'node:tls', './address-policy.js', './destination-policy.js', './resolve-destination.js']],
   ['demo/app.jsx', ['react', 'react-dom/client', './model.js', './live-feed.jsx', './navigation.js']],
   ['demo/live-feed.jsx', ['react', './live-feed.json', './live-model.js', './navigation.js']],
   ['demo/model.js', []],
