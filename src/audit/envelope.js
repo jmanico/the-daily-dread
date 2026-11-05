@@ -102,3 +102,31 @@ export function serializeFoundationEvent(event, context, details) {
   if (encoder.encode(json).byteLength > 8192) return {status:'rejected',code:'record_limit'};
   return {status:'accepted',json,record:Object.freeze(record)};
 }
+
+/** Independent monitor output uses the existing SEC-086 contract and never
+ * recursively enters required audit storage. Context is the monitor's trusted
+ * installation/service snapshot, not an application event or request body.
+ * @param {unknown} context @param {unknown} observation @returns {Result} */
+export function serializeMonitorHealth(context,observation) {
+  const codes=['healthy','startup','unavailable','invalid_snapshot','queue_full','deadline','conflicting_id','shutdown','canceled','shutdown_timeout',
+    'generation_mismatch','invalid_observation','probe_stalled','heartbeat_silence','pipeline_stalled','unrecorded','restart','probe_unavailable'];
+  const o=fields(observation,['status','errorCode','droppedCount','lagMs']);
+  if(!o || !['healthy','unhealthy','unknown'].includes(/** @type {string} */(o.status)) || !codes.includes(/** @type {string} */(o.errorCode)) ||
+    (o.status==='healthy')!==(o.errorCode==='healthy') || (o.status==='unknown')!==(o.errorCode==='restart') ||
+    ![o.droppedCount,o.lagMs].every(value=>typeof value==='number' && Number.isSafeInteger(value) && value>=0))return {status:'rejected',code:'invalid_details'};
+  // Reuse the same context validation and exclusion rules. This intermediate
+  // projection is data only; it is never emitted or queued as a validation event.
+  const base=serializeFoundationEvent('dread.audit.validation_failure',context,{stage:'consumer',error_code:'required_field',count:0});
+  if(base.status!=='accepted')return base;
+  if(base.record.actor_kind!=='service')return {status:'rejected',code:'invalid_context'};
+  /** @type {Record<string,Primitive>} */
+  const record={schema_version:1,event_id:base.record.event_id,producer_ref:base.record.producer_ref,event:'dread.audit.health',
+    timestamp:base.record.timestamp,service:'daily-dread',environment:base.record.environment,severity:o.status==='healthy'?'info':'error',
+    security_relevant:true,audit_required:false,actor_kind:'service',source:'audit',action:'observe_health',
+    outcome:o.status==='healthy'?'success':o.status==='unknown'?'unknown':'failure',reason_code:/** @type {string} */(o.errorCode),policy_ref:'OD-004-2026-11-05'};
+  for(const key of [...referenceKeys,'actor_provenance','trace_id','context_status'])if(Object.hasOwn(base.record,key))record[key]=base.record[key];
+  if(encoder.encode(JSON.stringify(record)).length>4096)return {status:'rejected',code:'record_limit'};
+  record.stage='monitor';record.error_code=/** @type {string} */(o.errorCode);record.dropped_count=/** @type {number} */(o.droppedCount);record.lag_ms=/** @type {number} */(o.lagMs);
+  const json=JSON.stringify(record);if(encoder.encode(json).length>8192)return {status:'rejected',code:'record_limit'};
+  return {status:'accepted',json,record:Object.freeze(record)};
+}
