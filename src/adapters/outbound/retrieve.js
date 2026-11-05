@@ -52,7 +52,7 @@ export function createRetrievalTransport(configuration,authorize,limitsInput={},
         async read(initialURL) {
           if (!allowed(context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
           if (busy) return {kind:'failed',reason:'busy'};
-          if (budget.signal.aborted) return {kind:'failed',reason:budget.snapshot().failure ?? 'canceled'};
+          if (!budget.check()) return {kind:'failed',reason:budget.snapshot().failure ?? 'canceled'};
           if (pendingWait && (pendingWait.notBeforeMs===null || Date.now()<pendingWait.notBeforeMs)) return {kind:'wait',status:pendingWait.status,notBeforeMs:pendingWait.notBeforeMs};
           pendingWait=undefined;
           busy=true;
@@ -63,12 +63,12 @@ export function createRetrievalTransport(configuration,authorize,limitsInput={},
               if (connected.kind==='failed') return {kind:'failed',reason:budget.snapshot().failure ?? connected.reason};
               try {
                 if (!allowed(context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
-                budget.signal.throwIfAborted();
+                budget.check();budget.signal.throwIfAborted();
                 const response=await readResponse(connected,budget);
                 pendingWait=response.wait;
                 if (!allowed(context)) return {kind:'failed',reason:retired ? 'revoked' : 'denied'};
                 if (response.kind==='failed') return response;
-                budget.signal.throwIfAborted();
+                budget.check();budget.signal.throwIfAborted();
                 if ([301,302,303,307,308].includes(response.status)) {
                   if (!budget.consumeRedirect()) return {kind:'failed',reason:budget.snapshot().failure ?? 'redirect_limit'};
                   if (!response.location || Buffer.byteLength(response.location)>4096) return {kind:'failed',reason:'redirect'};

@@ -56,3 +56,10 @@ test('decoded limits also accumulate across individually small compressed attemp
   assert.equal(budget.snapshot().wireBytes,compressed.length*2);
   assert.equal(budget.snapshot().decodedBytes,600);budget.close();
 });
+
+test('late stream completion cannot turn a delayed deadline callback into success',async()=>{
+  const budget=createRetrievalBudget({totalMs:10},new AbortController().signal);
+  const source=new Readable({read(){Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,25);this.push(Buffer.from('late'));this.push(null);}});
+  assert.deepEqual(await readBoundedBody(source,'identity',budget),{kind:'failed',reason:'timeout'});
+  assert.equal(source.destroyed,true);budget.close();
+});

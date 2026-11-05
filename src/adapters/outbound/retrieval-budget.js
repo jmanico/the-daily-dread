@@ -32,6 +32,7 @@ export function createRetrievalBudget(configuration,externalSignal) {
   let wireBytes=0,decodedBytes=0,redirects=0,attempts=0;
   /** @type {BudgetFailure | undefined} */ let failure;
   /** @type {ReturnType<typeof setTimeout> | undefined} */ let readTimer;
+  /** @type {number|undefined} */ let readDeadline;
   const totalTimer=setTimeout(()=>fail('timeout'),limits.totalMs);
   const cancel=()=>fail('canceled');
   externalSignal.addEventListener('abort',cancel,{once:true});
@@ -46,13 +47,23 @@ export function createRetrievalBudget(configuration,externalSignal) {
     controller.abort();
     return false;
   }
+  // Timers can be delayed by event-loop congestion. Check elapsed time at every
+  // acceptance boundary as well, so overdue work cannot beat its timer callback.
+  function check() {
+    if (failure) return false;
+    const now=performance.now();
+    if (now-start>=limits.totalMs) return fail('timeout');
+    if (readDeadline!==undefined && now>=readDeadline) return fail('read_timeout');
+    return true;
+  }
   if (externalSignal.aborted) fail('canceled');
   return Object.freeze({
     signal:controller.signal,
     limits,
+    check,
     /** @param {'wire'|'decoded'} kind @param {number} bytes */
     charge(kind,bytes) {
-      if (failure) return false;
+      if (!check()) return false;
       if (!['wire','decoded'].includes(kind) || !Number.isSafeInteger(bytes) || bytes<0) return fail('invalid_count');
       const previous=kind==='wire' ? wireBytes : decodedBytes;
       if (bytes>Number.MAX_SAFE_INTEGER-previous) return fail('invalid_count');
@@ -61,24 +72,25 @@ export function createRetrievalBudget(configuration,externalSignal) {
       return true;
     },
     beginAttempt() {
-      if (failure) return false;
+      if (!check()) return false;
       // This is an admission ceiling, not permission or a retry schedule.
       if (++attempts>32) return fail('attempt_limit');
       return true;
     },
     consumeRedirect() {
-      if (failure) return false;
+      if (!check()) return false;
       if (++redirects>limits.redirects) return fail('redirect_limit');
       return true;
     },
     /** Start/reset only while an HTTP response is pending or streaming. */
     touchRead() {
-      if (failure) return false;
+      if (!check()) return false;
       clearTimeout(readTimer);
+      readDeadline=performance.now()+limits.readMs;
       readTimer=setTimeout(()=>fail('read_timeout'),limits.readMs);
       return true;
     },
-    endRead() {clearTimeout(readTimer);},
+    endRead() {clearTimeout(readTimer);readDeadline=undefined;},
     close() {fail('closed');},
     snapshot() {return Object.freeze({wireBytes,decodedBytes,redirects,attempts,remainingMs:Math.max(0,limits.totalMs-(performance.now()-start)),failure});},
   });

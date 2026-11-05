@@ -40,7 +40,9 @@ export async function readBoundedBody(source,encoding,budget) {
     else await pipeline(source,wire,sink,{signal:budget.signal});
     budget.signal.throwIfAborted();
     if (blocks.length) blocks[blocks.length-1]=current.subarray(0,offset);
-    return {kind:'body',body:Buffer.concat(blocks,length)};
+    const body=Buffer.concat(blocks,length);
+    if (!budget.check()) return {kind:'failed',reason:budget.snapshot().failure ?? 'body'};
+    return {kind:'body',body};
   } catch {
     return {kind:'failed',reason:budget.snapshot().failure ?? 'body'};
   } finally {

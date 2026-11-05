@@ -50,3 +50,13 @@ test('actual elapsed deadlines and caller cancellation abort the operation signa
   completed.touchRead();completed.endRead();await delay(50);assert.equal(completed.signal.aborted,false);completed.close();
   assert.equal(completed.beginAttempt(),false);assert.equal(completed.snapshot().failure,'closed');
 });
+
+test('overdue work cannot beat delayed timer callbacks when the event loop is congested',()=>{
+  const total=createRetrievalBudget({totalMs:10},new AbortController().signal);
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,25);
+  assert.equal(total.charge('wire',1),false);assert.equal(total.snapshot().failure,'timeout');
+  assert.equal(total.signal.aborted,true);
+  const idle=createRetrievalBudget({readMs:10},new AbortController().signal);idle.touchRead();
+  Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,25);
+  assert.equal(idle.touchRead(),false);assert.equal(idle.snapshot().failure,'read_timeout');
+});
