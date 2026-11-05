@@ -58,13 +58,22 @@ export async function checkRuntime(root, policy = runtimePolicy) {
         }
         /** @param {import('typescript/unstable/ast').Node} node @param {string} rule */
         const report = (node, rule) => findings.push({file:name,line:source.getLineAndCharacterOfPosition(node.getStart(source)).line+1,rule});
+        // SEC-5: permit only the named import at the fixed JSON worker owner, not a global/browser Worker.
+        const workerImports = new Set();
         /** @param {import('typescript/unstable/ast').Node} node */
         function visit(node) {
           if (ast.isImportDeclaration(node) || ast.isExportDeclaration(node)) {
             const specifier = node.moduleSpecifier;
             if (specifier && (!ast.isStringLiteral(specifier) || !permitted?.includes(specifier.text))) report(node,'unapproved-import');
+            if (name === 'src/http/parse-body.js' && ast.isImportDeclaration(node) &&
+              specifier && ast.isStringLiteral(specifier) && specifier.text === 'node:worker_threads') {
+              const bindings = node.importClause?.namedBindings;
+              if (bindings && ast.isNamedImports(bindings)) for (const binding of bindings.elements) {
+                if (binding.propertyName?.text === 'Worker' && binding.name.text === 'ParserWorker') workerImports.add(binding.propertyName);
+              }
+            }
           }
-          if (ast.isIdentifier(node) && forbiddenNames.has(node.text)) report(node,'prohibited-runtime-capability');
+          if (ast.isIdentifier(node) && forbiddenNames.has(node.text) && !workerImports.has(node)) report(node,'prohibited-runtime-capability');
           if (ast.isIdentifier(node) && forbiddenProperties.has(node.text)) report(node,'html-or-code-sink');
           if (ast.isElementAccessExpression(node)) {
             const argument = node.argumentExpression;
