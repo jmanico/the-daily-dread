@@ -1,6 +1,7 @@
 // SEC-1/SEC-9: new runtime modules and imports require an explicit review here.
 // This is a review guard, not a JavaScript capability sandbox.
 export const runtimePolicy = new Map([
+  ['src/adapters/outbound/retrieve.js', ['node:http', './connect-destination.js', './destination-policy.js', './retrieval-budget.js', './read-body.js']],
   ['src/adapters/outbound/read-body.js', ['node:stream', 'node:stream/promises', 'node:zlib']],
   ['src/adapters/outbound/retrieval-budget.js', ['./destination-policy.js']],
   ['src/adapters/outbound/address-policy.js', ['node:net']],

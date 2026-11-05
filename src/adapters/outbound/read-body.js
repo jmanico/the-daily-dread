@@ -3,11 +3,12 @@ import { pipeline } from 'node:stream/promises';
 import { createGunzip, createInflate } from 'node:zlib';
 
 /** @typedef {ReturnType<typeof import('./retrieval-budget.js').createRetrievalBudget>} Budget */
+/** @typedef {import('./retrieval-budget.js').BudgetFailure|'encoding'|'body'} BodyFailure */
 /** Consume raw HTTP response-body bytes before any syntax parser. One supported
  * decoding stage only; unknown or stacked encodings fail closed. Every stream
  * belongs to this call and is destroyed on failure; streams are never reused.
  * @param {import('node:stream').Readable} source @param {unknown} encoding @param {Budget} budget
- * @returns {Promise<{kind:'body',body:Buffer}|{kind:'failed',reason:string}>}
+ * @returns {Promise<{kind:'body',body:Buffer}|{kind:'failed',reason:BodyFailure}>}
  */
 export async function readBoundedBody(source,encoding,budget) {
   if (!['identity','gzip','deflate'].includes(/** @type {string} */(encoding))) {
