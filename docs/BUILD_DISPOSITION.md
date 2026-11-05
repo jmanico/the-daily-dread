@@ -12,7 +12,7 @@ An open decision blocks dependent work transitively. The overnight build resumed
 | [#95](https://github.com/jmanico/the-daily-dread/issues/95) | REQ-PLATFORM-013 | Pending: eligible foundation work in the resumed build; not yet implemented. |
 | [#96](https://github.com/jmanico/the-daily-dread/issues/96) | REQ-PLATFORM-014 | Pending: eligible foundation work in the resumed build; not yet implemented. |
 | [#97](https://github.com/jmanico/the-daily-dread/issues/97) | REQ-PLATFORM-015 | In progress: draft PR #235; 22 standard, one DNS and eight real socket tests pass on selected Linux runtime. Scoped change review remains partial; production integration, human review and runtime audit remain unmet. See [evidence](OUTBOUND_DESTINATION_EVIDENCE.md). |
-| [#98](https://github.com/jmanico/the-daily-dread/issues/98) | REQ-PLATFORM-016 | Pending: eligible foundation work in the resumed build; not yet implemented. |
+| [#98](https://github.com/jmanico/the-daily-dread/issues/98) | REQ-PLATFORM-016 | In progress on build/platform-016: cumulative budget owner and bounded native stream decoding; real HTTP integration and acceptance pending. See [evidence](OUTBOUND_RETRIEVAL_EVIDENCE.md). |
 | [#99](https://github.com/jmanico/the-daily-dread/issues/99) | REQ-PLATFORM-017 | Pending: eligible foundation work in the resumed build; not yet implemented. |
 | [#100](https://github.com/jmanico/the-daily-dread/issues/100) | REQ-PLATFORM-018 | Pending: eligible foundation work in the resumed build; not yet implemented. |
 | [#101](https://github.com/jmanico/the-daily-dread/issues/101) | REQ-PLATFORM-019 | Pending: eligible foundation work in the resumed build; not yet implemented. |
