@@ -13,7 +13,7 @@ Demo #233 has the scoped keyboard, theme/storage, reduced-motion, two-tab prefer
 | Issue | Requirement | Disposition / reason |
 | --- | --- | --- |
 | [#92](https://github.com/jmanico/the-daily-dread/issues/92) | REQ-PLATFORM-010 | In progress: reviewed Postgres.js 4.0.0 replaces uninstalled pg; bounded scoped transactions pass 113 standard and 12 real PostgreSQL 18.6 tests. Product integration, durable owners, release evidence and reviews remain unmet. See [evidence](POSTGRES_TRANSACTION_EVIDENCE.md). |
-| [#93](https://github.com/jmanico/the-daily-dread/issues/93) | REQ-PLATFORM-011 | Deferred: durable PostgreSQL owner work depends on the incomplete persistence foundation in #92; queue/lease/recovery behavior is not implemented or claimed from pure helper tests. |
+| [#93](https://github.com/jmanico/the-daily-dread/issues/93) | REQ-PLATFORM-011 | In progress: durable claims, original identities, fenced attempts, current authority, preserved budgets and recovery implemented; 115 standard and 12 real PostgreSQL work tests pass. Product worker/identity integration, scheduling/effect owners and release/review gates remain unmet. See [evidence](DURABLE_WORK_EVIDENCE.md). |
 | [#94](https://github.com/jmanico/the-daily-dread/issues/94) | REQ-PLATFORM-012 | Deferred: durable PostgreSQL owner work depends on the incomplete persistence foundation in #92; queue/lease/recovery behavior is not implemented or claimed from pure helper tests. |
 | [#95](https://github.com/jmanico/the-daily-dread/issues/95) | REQ-PLATFORM-013 | Deferred: durable PostgreSQL owner work depends on the incomplete persistence foundation in #92; queue/lease/recovery behavior is not implemented or claimed from pure helper tests. |
 | [#96](https://github.com/jmanico/the-daily-dread/issues/96) | REQ-PLATFORM-014 | In progress ([draft PR #239](https://github.com/jmanico/the-daily-dread/pull/239)): shared two-worker/100-pending admission, bounded JSON tasks and pure cumulative-counter transitions; 69-test combined suite (including later build regressions) and parser RSS/saturation checks pass locally and on selected Linux CI. Durable owner/PostgreSQL fencing, full capacity, review and runtime audit remain unmet. See [evidence](PARSER_WORKER_EVIDENCE.md). |
@@ -152,7 +152,7 @@ Demo #233 has the scoped keyboard, theme/storage, reduced-motion, two-tab prefer
 | [#229](https://github.com/jmanico/the-daily-dread/issues/229) | REQ-PLATFORM-034 | Skipped: open decision prerequisites [#63](https://github.com/jmanico/the-daily-dread/issues/63) |
 | [#230](https://github.com/jmanico/the-daily-dread/issues/230) | REQ-WEB-011 | Skipped: open decision prerequisites [#63](https://github.com/jmanico/the-daily-dread/issues/63) |
 
-Current counts after delegated audit decisions (2026-11-05): 139 original leaves; 76 blocked by open decisions, 9 in-progress draft implementations, and 54 deferred/not yet started. Decision closure does not complete implementation prerequisites or merge gates.
+Current counts after delegated audit decisions (2026-11-05): 139 original leaves; 76 blocked by open decisions, 10 in-progress draft implementations, and 53 deferred/not yet started. Decision closure does not complete implementation prerequisites or merge gates.
 
 Open decision titles:
 
