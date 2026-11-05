@@ -16,6 +16,17 @@ This file owns observable product behavior, including validation, authorization,
 
 The project is licensed under the [MIT License](LICENSE); font licenses are specified in [DESIGN.md](DESIGN.md#typography), and source-use conditions in FR-2.4 and FR-9.
 
+## Active delivery profile — local workstation
+
+The project lead selected **LOCAL-1** on 2026-11-05: run on Jim Manico's Mac without hosting. [The selected profile](docs/decisions/LOCAL_WORKSTATION.md) resolves installation choices and records their limits. This profile is the current build target; the company-server requirements below remain the separate hosted/enterprise profile, not prerequisites for absent local features.
+
+- **LOCAL-1** The app MUST bind only `127.0.0.1:4173`, serve one local workspace/operator, and require local launch authorization before private access. No public/LAN endpoint, tunnel, cloud host or domain is required. SEC-2 defines the explicit local identity profile; it replaces OIDC-only admission for this profile while retaining server-side scope, revision, expiry, revocation and fresh-action authorization.
+- **LOCAL-2** Runtime data MUST stay in owner-only, encrypted local storage outside the source checkout/synchronized folders. Existing PostgreSQL, retention, audit, jobs and restore-quarantine controls remain applicable. Backup/restore instructions and actual recovery evidence are required; no host-loss alert or recovery-time promise is inferred.
+- **LOCAL-3** Public feed collection/history, search, notes/preferences and locally supported analysis MUST operate with external AI, messaging and GitHub repository connectors disabled. Enabling an optional integration requires its own credentials, policies and tests; no ambient credential discovery. Repository findings remain explicit samples until actual authorized analysis exists.
+- **LOCAL-4** Local acceptance MUST cover one operator, eight browser connections and one running repository check, measuring bounded overload/recovery on the actual Mac/runtime. NFR-4.2's 1,000-repository/100-user target applies to the separate company-server profile. No existing check is weakened; absent-profile checks remain separate from required active-feature checks. Existing browser/theme/PDF rules apply to implemented outputs.
+
+FR-7.1/7.3/7.6–7.9 and NFR-4.1–4.3 are interpreted through this explicit profile only where identity, operator ownership, origin and capacity differ. The original Google/OIDC, remote administration, AI and delivery requirements remain optional future work rather than being declared implemented. Local private activation remains blocked until LOCAL-1's real enforcement tests and the applicable SEC-10 gates pass.
+
 ## Functional Requirements
 
 ### News and Articles

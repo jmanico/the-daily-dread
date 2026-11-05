@@ -73,6 +73,12 @@ Producer acceptance, queue admission, database commit, collector acknowledgment,
 
 Privacy, audit durability, deduplication, bounded failure handling and destination enforcement are in [SEC-8](SECURITY.md#sec-8--durable-jobs-errors-and-audit) and [SEC-11](SECURITY.md#sec-11--security-event-enforcement); unresolved policy remains in [OD-001–OD-005](SECURITY.md#open-decisions-for-security-events).
 
+## Local workstation scope selection — 2026-11-05
+
+[AR-006](docs/decisions/LOCAL_WORKSTATION.md) and its [per-issue register](docs/decisions/LOCAL_DECISION_REGISTER.md) exclude the reserved external/heuristic detector integrations in #33–#62 and external residual collectors in #73–#75 from the initial local delivery. This selects scope only: all ledger IDs, names, fields, waves and evidence statuses below remain unchanged, including `unavailable_signal`. Existing underlying prevention, authorization, TLS, CI, audit and recovery controls remain required. Reassess exclusions before introducing those features or claiming their coverage.
+
+Local launch/session authorization introduces real security decision points at TB-1/TB-10. Its implementation must map to the existing authentication/session/access event contracts using catalog-owned local method values and trusted opaque local identity, with producer and authorized consumer verification. Do not invent OIDC provenance, log launch/session credentials or add an unreviewed event field. The Wave-0 gate and pre-merge Dread Ledger review remain required; this specification does not establish event coverage. #72 local backup/restore evidence remains applicable.
+
 ## Ledger
 
 **Disposition:** `missing` means the specifications make a subcase applicable but no code has passed verification. `unavailable_signal` means applicability, detector, provider/platform evidence, or access is unresolved. `not_applicable` requires an absent feature. Compound rows use missing before unavailable evidence; residual unavailable subcases remain explicit. No row is covered. Shared names represent one emission mapped to several checklist IDs, not duplicate events.
