@@ -13,7 +13,7 @@ const bodySchema = { type: 'object', additionalProperties: false, required: ['en
 } };
 /** @param {import('node:test').TestContext} t @param {(request: import('fastify').FastifyRequest) => Promise<import('../src/http/application.js').Access>} [authorize] */
 async function fixture(t, authorize = async () => 'allowed') {
-  const app = createApplication(authorize); let effects = 0;
+  const app = createApplication(authorize); let effects = 0; let delayedStarted = false;
   app.post('/command', { schema: { body: bodySchema, querystring: { type: 'object', additionalProperties: false,
     properties: { page: { type: 'string', maxLength: 3, pattern: '^[1-9][0-9]{0,2}$' } } },
     response: { 200: { type: 'object', additionalProperties: false, required: ['ok'], properties: { ok: { type: 'boolean' } } } } } },
@@ -22,9 +22,12 @@ async function fixture(t, authorize = async () => 'allowed') {
   app.get('/peer', async request => ({ ip: request.ip, protocol: request.protocol, id: request.id }));
   app.get('/parameter/:id', async () => ({ ok: true }));
   app.post('/slow', { schema: { body: bodySchema } }, async request => { await delay(10040); if (!operationSignal(request).aborted) effects++; return { ok: false }; });
+  app.post('/disconnect', { schema: { body: bodySchema } }, async request => {
+    delayedStarted = true; await delay(60); if (!operationSignal(request).aborted) effects++; return { ok: false };
+  });
   t.after(() => app.close());
   await app.ready();
-  return { app, effects: () => effects };
+  return { app, effects: () => effects, delayedStarted: () => delayedStarted };
 }
 /** @param {number} port @param {string | Buffer} request */
 function wire(port, request) {
@@ -154,7 +157,7 @@ test('worker enforces depth and byte boundaries and fences a result after a bloc
   assert.deepEqual(await parseBody(Buffer.from('{}'), undefined), {});
 });
 
-test('actual client disconnect revokes authority before the registered handler can run', async t => {
+test('actual client disconnect cancels before authorization completes and after a complete upload', async t => {
   let started = false;
   const { app, effects } = await fixture(t, async () => { started = true; await delay(60); return 'allowed'; });
   await app.listen({ host: '127.0.0.1', port: 0 });
@@ -165,4 +168,12 @@ test('actual client disconnect revokes authority before the registered handler c
   socket.write('POST /command HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\nContent-Length: 29\r\n\r\n{"enabled":true,"revision":1}');
   for (let i = 0; i < 50 && !started; i++) await delay(2);
   assert.equal(started, true); socket.destroy(); await delay(100); assert.equal(effects(), 0);
+  const later = await fixture(t); await later.app.listen({ host: '127.0.0.1', port: 0 });
+  const peer = later.app.server.address(); assert.ok(peer && typeof peer !== 'string');
+  const connection = connect({ port: peer.port, host: '127.0.0.1' }); t.after(() => connection.destroy());
+  await new Promise((resolve, reject) => { connection.once('connect', resolve); connection.once('error', reject); });
+  const body = '{"enabled":true,"revision":1}';
+  connection.write(`POST /disconnect HTTP/1.1\r\nHost: localhost\r\nContent-Type: application/json\r\nContent-Length: ${body.length}\r\n\r\n${body}`);
+  for (let i = 0; i < 100 && !later.delayedStarted(); i++) await delay(2);
+  assert.equal(later.delayedStarted(), true); connection.destroy(); await delay(100); assert.equal(later.effects(), 0);
 });
