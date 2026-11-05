@@ -158,7 +158,9 @@ export function createWorkOwner(boundary,authority) {
     /** @param {Context} context @param {unknown} input */
     renew:(context,input)=>boundary.run(context,async tx=>{
       const value=await current(tx,input,'renew');
-      return job((await tx.query('work_renew',[value.jobId,value.attemptToken,value.version]))[0]);
+      const renewed=await tx.query('work_renew',[value.jobId,value.attemptToken,value.version]);
+      if(renewed.length!==1)throw new TransactionRejection('conflict');
+      return job(renewed[0]);
     }),
     /** Reserve conservative cost before work; uncertain/crashed work keeps its
      * debit. Neither recovery nor a new attempt resets or refunds counters.
@@ -171,7 +173,9 @@ export function createWorkOwner(boundary,authority) {
         if(result.reason!=='exhausted')throw new TransactionRejection('invalid');
         await finish(tx,value,'failed');return Object.freeze({kind:'exhausted',boundary:result.boundary,limit:result.limit});
       }
-      const next=job((await tx.query('work_debit',[value.jobId,value.attemptToken,value.version,result.record.decodedBytes,result.record.treeEntries,result.record.activeMs]))[0]);
+      const debited=await tx.query('work_debit',[value.jobId,value.attemptToken,value.version,result.record.decodedBytes,result.record.treeEntries,result.record.activeMs]);
+      if(debited.length!==1)throw new TransactionRejection('conflict');
+      const next=job(debited[0]);
       return Object.freeze({kind:'reserved',job:next});
     }),
     /** Commit the owning result in the fenced transaction. External effects do

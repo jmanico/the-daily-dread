@@ -14,7 +14,7 @@ Budget reservations use the existing pure cumulative-counter policy before work.
 
 ## Actual results
 
-Local Node 24.16.0/macOS arm64: **115 standard tests pass**, including startup/abort cases and the actual approximately 30-second periodic tick. **12 PostgreSQL 18.6 durable-work tests pass** (one parent and eleven subtests):
+Local selected Node 26.13.0/npm 11.20.0/macOS arm64: **115 standard tests pass**, including startup/abort cases and the actual approximately 30-second periodic tick. **13 PostgreSQL 18.6 durable-work tests pass** (one parent and twelve subtests):
 
 - Producer event/work rollback and commit, concurrent deduplication and repeat identity.
 - Malformed commands, unknown/prototype fields, wrong company, missing/stale authority and unavailable/throwing/invalid policy results.
@@ -24,10 +24,13 @@ Local Node 24.16.0/macOS arm64: **115 standard tests pass**, including startup/a
 - A real child process commits a claim and budget reservation, then receives SIGKILL with empty stdout/stderr. A fresh owner recovers the same durable job after the fixture advances its lease into the past. Original event/revision and debits persist; the old token cannot commit.
 - Grant revocation/revision, repository revision and source validity are rechecked at renewal, debit, recovery and completion.
 - Eleven expired jobs recover in bounded pages of ten and one; authority failure on a later row leaves the whole page unchanged.
+- Actual lease expiry during authority checks rejects renewal and budget writes as conflicts, with no late debit.
 - Cumulative exact budget boundary, stale versions, terminal exhaustion and no automatic retry after exhaustion.
 - Result rollback after owner failure, final authority change, cancellation and actual elapsed lease expiry; successful completion and denied duplicate completion.
 
-Build, strict checked contracts, runtime/import guard, reviewed dependency graph, artifact, dependency audit and whitespace checks pass. The previous 12-test PostgreSQL transaction suite remains in CI. No dependency or UI changed in this slice. Selected-runtime CI must pass on the submitted revision; the existing local runtime audit failure is not waived.
+Build, strict checked contracts, runtime/import guard, reviewed dependency graph, artifact, dependency audit and whitespace checks pass. The 12-test PostgreSQL transaction suite also passes locally on the selected runtime. No dependency or UI changed in this slice. Selected-runtime CI passed at `c786d6a5a2176ab172d5e8fa3d7f9580b5a5bd57` ([run](https://github.com/jmanico/the-daily-dread/actions/runs/42077746692)); the subsequent lease-expiry regression fix requires a fresh passing run. Registry verification reports 62 signatures and 30 attestations; the dependency audit reports zero vulnerabilities.
+
+The isolated local Node 26.13.0 archive was verified against the official signed manifest using nodejs/release-keys commit `481637f813e912c4aa3622d7964ab426c97b8e8d` and Richard Lau’s release signature (`C82FA3AE1CBEDC6BE46B9360C43CEC45C17AB93C`). Archive SHA-256: `6f5b3187d9df9fc007e881167905bc7d69ad26450ddc377c83d63256a2495b6e`. The actual local runtime audit passed at `2026-11-05T17:51:56.062Z`: 204 advisory records, zero matching advisories. Security-data SHA-256 `f828e1488a638b970e88cc3e9993d34a8fb1fc02bd5e160b8ced2df99016d217`; support-data SHA-256 `50fe35a4df02398f741fdffbc666aceca323fcdb7f46d05af93145bf610d0049`. This dated result does not waive future release-runtime audits or the older system runtime’s failure.
 
 Schema SHA-256: `b7addeab8907536b2efef0fcb7ae71fbd60ffd52c8cbec58938581b9ebef52df`. Tests apply this actual schema to the pinned disposable PostgreSQL 18.6 image documented in POSTGRES_TRANSACTION_EVIDENCE.md. The migration installer, checksum enforcement, deployment grants and production restore quarantine are not implemented by merely storing this SQL file. The fixture's principal/event/repository/grant owner is synthetic; product identity and source/repository integration remain unimplemented.
 

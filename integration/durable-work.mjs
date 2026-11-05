@@ -196,6 +196,17 @@ test('durable repository work survives process loss and fences stale owners on P
     assert.equal((await admin`select count(*)::text from dread_work.jobs where state='queued'`.raw())[0][0]?.toString(),'11');
   });
 
+  await t.test('lease expiry during authorization remains a conflict at renewal and budget commit',async()=>{
+    value(await owner.enqueue(context('enqueue'),command()));const job=await claimed('claim');
+    for(const phase of ['renew','debit']) {
+      await admin`update dread_work.jobs set lease_until=clock_timestamp()+interval '1 second' where company_id='company_a'`.raw();
+      const slow=createWorkOwner(boundary,async(tx,target,currentPhase)=>{if(currentPhase===phase)await delay(1100);return authority(tx,target,currentPhase);});
+      const result=phase==='renew'?await slow.renew(context('late_renew'),fence(job)):await slow.debit(context('late_debit'),fence(job),{decodedBytes:1,treeEntries:1,activeMs:1});
+      assert.equal(result.kind,'conflict');
+    }
+    assert.equal((await admin`select decoded_bytes::text from dread_work.jobs`.raw())[0][0]?.toString(),'0');
+  });
+
   await t.test('budget reservations are cumulative, versioned, immutable across recovery and terminal on exhaustion',async()=>{
     value(await owner.enqueue(context('enqueue'),command()));const job=await claimed('claim');
     const debit=value(await owner.debit(context('reserve'),fence(job),{decodedBytes:268435455,treeEntries:100000,activeMs:900000}));assert.equal(debit.kind,'reserved');
