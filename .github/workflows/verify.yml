@@ -50,6 +50,8 @@ jobs:
         run: node --test integration/postgres-transactions.mjs
       - name: Durable work crash recovery, fencing and current authority
         run: node --test integration/durable-work.mjs
+      - name: Atomic administrative audit and append-only privilege enforcement
+        run: node --test integration/administrative-audit.mjs
       - name: Bounded parser saturation and RSS evidence
         run: node integration/parser-capacity.mjs
       - name: Native DNS on the selected runtime

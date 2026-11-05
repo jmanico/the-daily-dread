@@ -1,6 +1,7 @@
 // SEC-1/SEC-9: new runtime modules and imports require an explicit review here.
 // This is a review guard, not a JavaScript capability sandbox.
 export const runtimePolicy = new Map([
+  ['src/persistence/administrative-audit.js', ['node:crypto', '../contracts/http-results.js', '../audit/envelope.js', './transactions.js']],
   ['src/persistence/durable-work.js', ['node:crypto', '../contracts/http-results.js', './transactions.js', '../jobs/work-budget.js']],
   ['src/persistence/transactions.js', ['postgres', '../contracts/http-results.js']],
   ['src/lifecycle/process-boundary.js', ['node:process']],
