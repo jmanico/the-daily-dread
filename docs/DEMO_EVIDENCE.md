@@ -19,7 +19,8 @@ Environment: macOS arm64, Node 24.16.0, npm 11.16.0; React/React DOM 19.3.1, esb
 | Asset response controls | Fixed public allowlist, no-store, nosniff, no-referrer, restrictive CSP; GET/HEAD parity tested |
 | Live source projection | 16 real records retrieved across all three types; 15 validated; one oversized affected-package array visibly omitted without relaxing the bound |
 | Actual rendered feed | Chrome native accessibility tree showed real CVEs, GHSA links, source labels, retrieval timestamp and omitted-record notice |
-| Screenshots | Dark desktop and 390-pixel-override native captures observed, but framing/zoom was not independently verified; mobile capture showed clipping requiring further inspection. These are partial observations, not a passed responsive check. |
+| Screenshots | 390-pixel override inspected in light and dark through native Chrome captures; feed and advisory titles wrap, filters disclose and source text remains inert. The surrounding blank area is the viewport override, not the page. The 1440-pixel capture clips to the native window, and browser capture/DOM APIs fail; desktop acceptance remains unverified. |
+| Navigation and preferences | Mobile filters now start collapsed. Opening an advisory moves focus into main content; the next Tab reaches its Back control (observed in Chrome). Missing optional claims render “Signed-in user”; Light survives reload; Dark selection renders. System-change and reduced-motion runtime checks remain pending. |
 
 AC-01: built demo and actual rendered public feed observed. Unit tests cover search and record-type separation. AC-02: actual socket and projection negatives pass. AC-03/AC-04: theme/fallback logic and CSS controls have local checks; full interaction and responsive acceptance remains pending.
 

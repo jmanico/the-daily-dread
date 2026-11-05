@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { displayName, feed, themeValue } from './model.js';
 import { LiveFeed } from './live-feed.jsx';
+import { useNavigationFocus } from './navigation.js';
 
 /** @param {{children:import('react').ReactNode, tone?:string}} props */
 function Chip({ children, tone = '' }) { return <span className={`chip ${tone}`}>{children}</span>; }
@@ -16,6 +17,7 @@ function App() {
   const [theme, setTheme] = useState(() => { try { return themeValue(localStorage.getItem('dread-demo-theme')); } catch { return 'system'; } });
   const [ended, setEnded] = useState(false);
   const [missingClaims, setMissingClaims] = useState(false);
+  useNavigationFocus(ended ? 'Ended' : page);
   const [followed, setFollowed] = useState(['Cedar Cloud', 'Willow Identity']);
   useEffect(() => {
     const listener = (/** @type {StorageEvent} */ event) => { if (event.key === 'dread-demo-theme' || event.key === null) setTheme(themeValue(event.newValue)); };
