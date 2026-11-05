@@ -27,7 +27,7 @@ function day(value) {
 }
 /** @param {unknown} value */
 function range(value) {
-  if (typeof value !== 'string' || value.length===0 || value.length>256 || !/^[0-9A-Za-z .<>=|*+~^_-]+$/.test(value) || semver.validRange(value)===null) throw failure('invalid_advisory_range');
+  if (typeof value !== 'string' || value.trim().length===0 || value.length>256 || !/^[0-9A-Za-z .<>=|*+~^_-]+$/.test(value) || semver.validRange(value)===null) throw failure('invalid_advisory_range');
   return value;
 }
 /** Evaluate complete fetched sources conservatively across all platforms.
@@ -74,7 +74,7 @@ export async function fetchAuditSource(url,{requestImpl=httpsRequest,timeoutMs=1
     const fail=error=>{if(done)return;done=true;clearTimeout(timer);response?.destroy();request?.destroy();reject(error);};
     const timer=setTimeout(()=>fail(failure('transport_deadline')),timeoutMs);
     try {
-      request=requestImpl(url,{method:'GET',agent:false,headers:{Accept:'application/json','Accept-Encoding':'identity'}},res=>{
+      request=requestImpl(url,{method:'GET',agent:false,rejectUnauthorized:true,headers:{Accept:'application/json','Accept-Encoding':'identity'}},res=>{
         response=res;
         res.once('error',()=>fail(failure('transport_error')));
         res.once('aborted',()=>fail(failure('truncated_response')));

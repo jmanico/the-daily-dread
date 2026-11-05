@@ -157,10 +157,6 @@ Counts: {'eligible_deferred': 12, 'blocked': 127}.
 Open decision titles:
 
 - #23 — [REQ-DECISION-012] Supply and validate company installation inputs
-- #26 — [REQ-DECISION-015] Approve runtime audit tool and command
-- #28 — [REQ-DECISION-017] Resolve security-event consumers and destinations
-- #29 — [REQ-DECISION-018] Resolve retention and disposal for event copies
-- #30 — [REQ-DECISION-019] Resolve failure-path audit durability
 - #31 — [REQ-DECISION-020] Resolve versioned AI-egress audit representation
 - #32 — [REQ-DECISION-021] Resolve evidence-based threat risk ratings
 - #33 — [REQ-DECISION-022] Resolve authoritative signal for SEC-002

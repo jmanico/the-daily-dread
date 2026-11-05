@@ -15,7 +15,7 @@ test('runtime audit checks vulnerable and patched ranges without severity/platfo
 });
 test('empty, malformed and incomplete advisory data never becomes a passing audit',()=>{
   for(const value of [null,[],{}, {'1':{}},{'bad-id':advisory}]) assert.throws(()=>assessRuntime('26.13.0',value,schedule,now));
-  for(const value of ['', 'not a range', '^26.0.0\n', ' '.repeat(257),null]) {
+  for(const value of ['', ' ', 'not a range', '^26.0.0\n', ' '.repeat(257),null]) {
     assert.throws(()=>assessRuntime('26.13.0',{'1':{...advisory,vulnerable:value}},schedule,now));
     assert.throws(()=>assessRuntime('26.13.0',{'1':{...advisory,patched:value}},schedule,now));
   }
@@ -32,7 +32,10 @@ async function endpoint(handler,use){
   const server=createServer(handler);await new Promise(resolve=>server.listen(0,'127.0.0.1',()=>resolve(undefined)));
   const address=server.address();assert.ok(address && typeof address==='object');
   /** @type {import('../scripts/audit-node.mjs').RequestFunction} */
-  const transport=(url,options,callback)=>request(`http://127.0.0.1:${address.port}`,/** @type {import('node:http').RequestOptions} */(options),callback);
+  const transport=(url,options,callback)=>{
+    assert.equal(options.rejectUnauthorized,true);
+    return request(`http://127.0.0.1:${address.port}`,/** @type {import('node:http').RequestOptions} */(options),callback);
+  };
   try{await use(transport);}finally{server.closeAllConnections();await new Promise(resolve=>server.close(()=>resolve(undefined)));}
 }
 test('bounded source transport reads real socket bytes and rejects caller destinations',async()=>{
