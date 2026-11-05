@@ -9,7 +9,7 @@ import { readBoundedBody } from './read-body.js';
 /** @typedef {{kind:'wait',status:number,notBeforeMs:number|null}} ProviderWait */
 /** @typedef {import('./connect-destination.js').Failure|import('./read-body.js').BodyFailure|'busy'|'redirect'|'provider_wait'|'headers'|'framing'|'protocol'|'transport'} Failure */
 /** @typedef {{kind:'failed',reason:Failure,wait?:ProviderWait}} Failed */
-/** @typedef {{kind:'retrieved',body:Buffer,status:number,contentType:string|null}|ProviderWait|{kind:'status',status:number}|Failed} Retrieval */
+/** @typedef {{kind:'retrieved',body:Buffer,status:number,contentType:string|null,pollAfterMs:number|null}|ProviderWait|{kind:'status',status:number}|Failed} Retrieval */
 /** No request can supply credentials, arbitrary headers, proxy/agent options or a
  * method/body. This read-only transport owns only GET retrieval; effectful
  * provider adapters require separate authorized request/projection contracts.
@@ -78,7 +78,7 @@ export function createRetrievalTransport(configuration,authorize,limitsInput={},
                 }
                 if (response.wait) return {kind:'wait',status:response.wait.status,notBeforeMs:response.wait.notBeforeMs};
                 if (response.status<200 || response.status>299) return {kind:'status',status:response.status};
-                return {kind:'retrieved',body:response.body,status:response.status,contentType:response.contentType};
+                return {kind:'retrieved',body:response.body,status:response.status,contentType:response.contentType,pollAfterMs:response.pollAfterMs};
               } finally {connected.socket.destroy();}
             }
             return {kind:'failed',reason:budget.snapshot().failure ?? 'attempt_limit'};
@@ -110,7 +110,7 @@ export function providerWait(header,observedAtMs) {
 }
 
 /** @param {import('./connect-destination.js').Connected} connected @param {Budget} budget
- * @returns {Promise<{kind:'response',status:number,body:Buffer,contentType:string|null,location:string|null,wait:ProviderWait|undefined}|Failed>}
+ * @returns {Promise<{kind:'response',status:number,body:Buffer,contentType:string|null,pollAfterMs:number|null,location:string|null,wait:ProviderWait|undefined}|Failed>}
  */
 async function readResponse(connected,budget) {
   // HTTP framing is applied only to the already verified encrypted socket. This
@@ -140,6 +140,8 @@ async function readResponse(connected,budget) {
     if (state.reason==='protocol') return {kind:'failed',reason:state.reason};
     const headers=responseHeaders(response);
     if (!headers) return {kind:'failed',reason:'headers'};
+    const pollAfterMs=headers.pollInterval===null?null:providerWait(headers.pollInterval,Date.now());
+    if(headers.pollInterval!==null && (!/^[0-9]{1,16}$/.test(headers.pollInterval) || pollAfterMs===undefined))return {kind:'failed',reason:'provider_wait',wait:Object.freeze({kind:'wait',status:headers.status,notBeforeMs:null})};
     if (headers.status===429 || headers.status===503) {
       const notBeforeMs=providerWait(headers.retryAfter,Date.now());
       if (notBeforeMs===undefined) return {kind:'failed',reason:'provider_wait',wait:Object.freeze({kind:'wait',status:headers.status,notBeforeMs:null})};
@@ -148,7 +150,7 @@ async function readResponse(connected,budget) {
     const body=await readBoundedBody(response,headers.encoding,budget);
     if (body.kind==='failed') return wait ? {kind:'failed',reason:body.reason,wait} : body;
     if (!response.complete || response.rawTrailers.length!==0) return wait ? {kind:'failed',reason:'framing',wait} : {kind:'failed',reason:'framing'};
-    return {kind:'response',status:headers.status,body:body.body,contentType:headers.contentType,location:headers.location,wait};
+    return {kind:'response',status:headers.status,body:body.body,contentType:headers.contentType,pollAfterMs:pollAfterMs??null,location:headers.location,wait};
   } catch {return wait ? {kind:'failed',reason:budget.snapshot().failure ?? state.reason,wait} : {kind:'failed',reason:budget.snapshot().failure ?? state.reason};}
   finally {budget.endRead();incoming?.destroy();outgoing?.destroy();agent.destroy();}
 }
@@ -158,7 +160,7 @@ function responseHeaders(response) {
   const status=response.statusCode;
   if (!status || status<200 || status>599 || response.rawHeaders.length>200) return;
   /** @type {Map<string,string>} */ const selected=new Map();
-  const singletons=['content-length','transfer-encoding','content-encoding','content-type','location','retry-after'];
+  const singletons=['content-length','transfer-encoding','content-encoding','content-type','location','retry-after','x-poll-interval'];
   for(let i=0;i<response.rawHeaders.length;i+=2) {
     const name=response.rawHeaders[i].toLowerCase(),value=response.rawHeaders[i+1];
     if (singletons.includes(name)) {if(selected.has(name))return;selected.set(name,value);}
@@ -167,5 +169,5 @@ function responseHeaders(response) {
   if (contentType!==null && (Buffer.byteLength(contentType)>256 || /[\u0000-\u001f\u007f]/u.test(contentType))) return;
   const transfer=selected.get('transfer-encoding');
   if (transfer!==undefined && transfer.toLowerCase()!=='chunked') return;
-  return {status,contentType,encoding:selected.get('content-encoding')?.toLowerCase() ?? 'identity',location:selected.get('location') ?? null,retryAfter:selected.get('retry-after') ?? null};
+  return {status,contentType,pollInterval:selected.get('x-poll-interval')??null,encoding:selected.get('content-encoding')?.toLowerCase() ?? 'identity',location:selected.get('location') ?? null,retryAfter:selected.get('retry-after') ?? null};
 }

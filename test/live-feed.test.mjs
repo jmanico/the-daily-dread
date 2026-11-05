@@ -17,7 +17,8 @@ test('hostile destinations, malformed fields and excessive records fail closed',
   for(const delta of [{severity:'safe'},{type:'verified'},{published:'yesterday'},{cve:'CVE-fake'},{withdrawn:'false'},{title:'x'.repeat(2049)},{description:'x'.repeat(200001)},{credits:[{}]},{vulnerabilities:[{}]}]) assert.equal(advisory({...good,...delta}),null);
   for(const bad of [null,[],{}, {...raw,items:[good,good]}, {...raw,items:Array(101).fill(good)}, {...raw,retrievedAt:'unknown'}]) assert.equal(snapshot(bad),null);
   const projected=advisory({...good,credential:'DREAD_SECRET_CANARY',innerHTML:'<img src=x>'});
-  assert.ok(projected);assert.equal(Object.hasOwn(projected,'credential'),false);assert.equal(Object.hasOwn(projected,'innerHTML'),false);
+  // Live network projections now reject unknown fields outright, rather than discard them.
+  assert.equal(projected,null);
 });
 
 test('live filters keep types distinct and never evaluate search strings',()=>{
