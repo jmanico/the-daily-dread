@@ -1,6 +1,7 @@
 // SEC-1/SEC-9: new runtime modules and imports require an explicit review here.
 // This is a review guard, not a JavaScript capability sandbox.
 export const runtimePolicy = new Map([
+  ['src/lifecycle/process-boundary.js', ['node:process']],
   ['src/audit/envelope.js', []],
   ['src/audit/http-diagnostics.js', []],
   ['src/contracts/http-results.js', []],

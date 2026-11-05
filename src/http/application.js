@@ -47,6 +47,8 @@ function rejectExpectation(response,diagnostics) {
 export function createApplication(authorize,diagnostics=createDiagnosticCapture()) {
   if (typeof authorize !== 'function') throw new Error('An access owner is required');
   const routes=new Set();
+  let admitting=true;
+  const controllers=new Set();
   /** @type {WeakMap<Request,{id:string,start:number,method:string,route:string}>} */ const observations=new WeakMap();
   /** @param {Request} request @param {number|undefined} status */
   function observeEnd(request,status) {
@@ -85,6 +87,11 @@ export function createApplication(authorize,diagnostics=createDiagnosticCapture(
   });
   bindDiagnostics(diagnostics,app.log);
   app.decorate('diagnosticCapture',diagnostics);
+  // Trusted composition capability only; no shutdown HTTP route is installed.
+  app.decorate('stopAdmission',()=>{
+    admitting=false;
+    for(const controller of controllers)controller.abort();
+  });
   app.addHook('onRoute', route => {
     if(typeof route.url!=='string' || route.url.length>256 || !/^\/[A-Za-z0-9_/:.*-]*$/.test(route.url)) throw new Error('Invalid diagnostic route template');
     routes.add(route.url);
@@ -107,6 +114,7 @@ export function createApplication(authorize,diagnostics=createDiagnosticCapture(
     const method=['GET','HEAD','POST','PUT','PATCH','DELETE','OPTIONS','CONNECT','TRACE'].includes(request.method) ? request.method : 'OTHER';
     observations.set(request,{id:request.id,start:performance.now(),method,route});
     const controller = new AbortController();
+    controllers.add(controller);
     operations.set(request, { controller, deadline: performance.now() + 10000 });
     const timer = setTimeout(() => {
       controller.abort();
@@ -121,11 +129,13 @@ export function createApplication(authorize,diagnostics=createDiagnosticCapture(
       clearTimeout(timer); request.raw.removeListener('aborted', abort);
       reply.raw.removeListener('close', closed); reply.raw.removeListener('finish', cleanup);
       operations.delete(request); abort();
+      controllers.delete(controller);
     };
     const closed = () => { if (!reply.raw.writableFinished) {abort();observeEnd(request,undefined);} cleanup(); };
     request.raw.once('aborted', abort); reply.raw.once('close', closed); reply.raw.once('finish', cleanup);
     if (request.raw.aborted || reply.raw.destroyed) abort();
     reply.raw.setHeader('Cache-Control', 'no-store'); reply.raw.setHeader('X-Content-Type-Options', 'nosniff'); reply.raw.setHeader('Referrer-Policy', 'no-referrer');
+    if(!admitting)throw new HttpFailure(503);
     const names = new Set();
     if (request.raw.rawHeaders.length > 200) throw new HttpFailure(400);
     for (let i = 0; i < request.raw.rawHeaders.length; i += 2) {
@@ -145,6 +155,13 @@ export function createApplication(authorize,diagnostics=createDiagnosticCapture(
       (media !== undefined && !/^application\/json(?:;\s*charset=utf-8)?$/i.test(media))) throw new HttpFailure(415);
   });
   app.addHook('onResponse',async (request,reply)=>{observeEnd(request,reply.statusCode);});
+  app.addHook('onSend',async (request,reply,payload)=>{
+    if(admitting || reply.statusCode>=400)return payload;
+    // These fluent mutators return the reply thenable; awaiting it inside onSend
+    // would wait for the response that this hook still owns. Return encoded bytes.
+    const safeReply=reply.code(503).type('application/json').removeHeader('content-length');
+    return JSON.stringify(projection(safeReply.statusCode,observations.get(request)?.id ?? request.id));
+  });
   app.addHook('preValidation', async request => {
     if (request.raw.rawTrailers?.length) throw new HttpFailure(400);
     if (operationSignal(request).aborted) throw new HttpFailure(503);

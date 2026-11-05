@@ -25,7 +25,7 @@ Demo #233 has the scoped keyboard, theme/storage, reduced-motion, two-tab prefer
 | [#102](https://github.com/jmanico/the-daily-dread/issues/102) | REQ-PLATFORM-020 | Deferred: credential envelope/rotation acceptance requires durable nonce reservations, scoped transactions and restore evidence; persistence foundation #92 is unavailable. No partial cryptographic envelope is claimed complete. |
 | [#103](https://github.com/jmanico/the-daily-dread/issues/103) | REQ-PLATFORM-021 | Skipped: open decision prerequisites [#23](https://github.com/jmanico/the-daily-dread/issues/23) |
 | [#104](https://github.com/jmanico/the-daily-dread/issues/104) | REQ-PLATFORM-022 | In progress: reviewed-graph, runtime import/security, artifact and failure-preserving build checks plus confined CI. Draft; TOOL-003 (#26), human/change review and production acceptance remain unmet. |
-| [#105](https://github.com/jmanico/the-daily-dread/issues/105) | REQ-PLATFORM-023 | Deferred: recorded decision prerequisites resolved; eligible for implementation after the current foundation slice. |
+| [#105](https://github.com/jmanico/the-daily-dread/issues/105) | REQ-PLATFORM-023 | In progress: fatal process termination, five-second graceful shutdown and HTTP admission cancellation implemented; 106 combined local tests pass. Durable recovery, production supervisor/monitoring, capacity and merge reviews remain unmet. See [evidence](PROCESS_BOUNDARY_EVIDENCE.md). |
 | [#106](https://github.com/jmanico/the-daily-dread/issues/106) | REQ-AUDIT-010 | In progress: audit decisions #28–#30 resolved under delegated policy; bounded Wave-0 envelope projection and safe Fastify HTTP capture implemented; 99 combined local tests pass. Authority/security-event consumer/persistence integration, independent health, full Wave-0 verification and merge gates remain unmet. See [evidence](AUDIT_ENVELOPE_EVIDENCE.md). |
 | [#107](https://github.com/jmanico/the-daily-dread/issues/107) | REQ-AUDIT-011 | Deferred: recorded decision prerequisites resolved; incomplete implementation prerequisites #92, #106. |
 | [#108](https://github.com/jmanico/the-daily-dread/issues/108) | REQ-AUDIT-012 | Skipped: open decision prerequisites [#63](https://github.com/jmanico/the-daily-dread/issues/63) |
@@ -152,7 +152,7 @@ Demo #233 has the scoped keyboard, theme/storage, reduced-motion, two-tab prefer
 | [#229](https://github.com/jmanico/the-daily-dread/issues/229) | REQ-PLATFORM-034 | Skipped: open decision prerequisites [#63](https://github.com/jmanico/the-daily-dread/issues/63) |
 | [#230](https://github.com/jmanico/the-daily-dread/issues/230) | REQ-WEB-011 | Skipped: open decision prerequisites [#63](https://github.com/jmanico/the-daily-dread/issues/63) |
 
-Current counts after delegated audit decisions (2026-11-05): 139 original leaves; 76 blocked by open decisions, 7 in-progress draft implementations, and 56 deferred/not yet started. Decision closure does not complete implementation prerequisites or merge gates.
+Current counts after delegated audit decisions (2026-11-05): 139 original leaves; 76 blocked by open decisions, 8 in-progress draft implementations, and 55 deferred/not yet started. Decision closure does not complete implementation prerequisites or merge gates.
 
 Open decision titles:
 
