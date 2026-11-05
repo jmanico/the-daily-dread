@@ -1,5 +1,7 @@
 # Dependency review for the architecture
 
+2026-11-05 implementation update: [Postgres.js 4.0.0 review](decisions/POSTGRES_CLIENT.md) replaces the uninstalled pg 8.23.1 selection after its reproduced startup defect. The generated lock adds one runtime package and zero transitives. The baseline below remains historical evidence. [Transaction evidence](POSTGRES_TRANSACTION_EVIDENCE.md) records PostgreSQL 18.6 verification and remaining gates.
+
 Reviewed **2026-11-04**. [ARCHITECTURE.md](../ARCHITECTURE.md) owns the selected stack and each requirement justification. [REQUIREMENTS.md](../REQUIREMENTS.md), NFR-5.1–NFR-5.5, records the dependency policy supplied during the architecture interview.
 
 This is a review of **proposed** dependencies for a documentation-only repository. No application package manifest, lockfile, runtime dependency or font binary is added by this change. The implementation must repeat the checks against its real lockfile before adding dependencies; this snapshot is not a permanent approval or a claim that the application has been tested.
