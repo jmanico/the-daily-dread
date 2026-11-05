@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto';
 import { InputFailure, parseQuery } from './input.js';
 import { parseBody, ParserUnavailable } from './parse-body.js';
 import { errorProjection as projection, errorSchema, errorStatuses, isErrorStatus } from '../contracts/http-results.js';
+import { createDiagnosticCapture, diagnosticOptions, bindDiagnostics, recordHttpOutcome, recordIngressRejection } from '../audit/http-diagnostics.js';
 
 /** @typedef {'allowed' | 'unauthenticated' | 'forbidden' | 'unavailable' | 'conflict'} Access */
 /** @typedef {import('fastify').FastifyRequest} Request */
@@ -22,15 +23,18 @@ export class HttpFailure extends Error {
   /** @param {number} status */
   constructor(status) { super('Request rejected'); this.status = isErrorStatus(status) ? status : 503; }
 }
-/** Native framing failures never serialize the parser's rawPacket or error. @param {import('node:stream').Duplex} socket */
-function rejectSocket(socket) {
+/** Native framing failures never serialize the parser's rawPacket or error.
+ * @param {import('node:stream').Duplex} socket @param {import('../audit/http-diagnostics.js').Capture} diagnostics */
+function rejectSocket(socket,diagnostics) {
   if (socket.destroyed || !socket.writable || socket.writableEnded) return;
-  const body = JSON.stringify(projection(400, randomUUID()));
+  const id=randomUUID();recordIngressRejection(diagnostics,id);
+  const body = JSON.stringify(projection(400, id));
   socket.end(`HTTP/1.1 400 Bad Request\r\nConnection: close\r\nContent-Type: application/json\r\nCache-Control: no-store\r\nContent-Length: ${Buffer.byteLength(body)}\r\n\r\n${body}`);
 }
-/** @param {import('node:http').ServerResponse} response */
-function rejectExpectation(response) {
-  const body = JSON.stringify(projection(400, randomUUID()));
+/** @param {import('node:http').ServerResponse} response @param {import('../audit/http-diagnostics.js').Capture} diagnostics */
+function rejectExpectation(response,diagnostics) {
+  const id=randomUUID();recordIngressRejection(diagnostics,id);
+  const body = JSON.stringify(projection(400, id));
   response.writeHead(400, { Connection: 'close', 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'Content-Length': Buffer.byteLength(body) });
   response.end(body);
 }
@@ -38,18 +42,28 @@ function rejectExpectation(response) {
 /** Composition-only factory. No routes, authentication implementation or listener is installed here.
  * The trusted access owner authenticates/coarsely authorizes before body parsing; use cases still
  * recheck object/property authority and revisions at the commitment boundary.
- * @param {(request: Request) => Promise<Access>} authorize */
-export function createApplication(authorize) {
+ * @param {(request: Request) => Promise<Access>} authorize
+ * @param {import('../audit/http-diagnostics.js').Capture} [diagnostics] */
+export function createApplication(authorize,diagnostics=createDiagnosticCapture()) {
   if (typeof authorize !== 'function') throw new Error('An access owner is required');
+  const routes=new Set();
+  /** @type {WeakMap<Request,{id:string,start:number,method:string,route:string}>} */ const observations=new WeakMap();
+  /** @param {Request} request @param {number|undefined} status */
+  function observeEnd(request,status) {
+    const observation=observations.get(request);if(!observation)return;
+    observations.delete(request);
+    recordHttpOutcome(diagnostics,observation.id,observation.method,observation.route,status,Math.max(0,Math.floor(performance.now()-observation.start)));
+  }
   const app = Fastify({
-    logger: false, trustProxy: false, requestIdHeader: false,
+    logger: diagnosticOptions(diagnostics), trustProxy: false, requestIdHeader: false,
     genReqId: () => randomUUID(), bodyLimit: 65536,
     onProtoPoisoning: 'error', onConstructorPoisoning: 'error',
     ajv: { customOptions: { coerceTypes: false, useDefaults: false, removeAdditional: false, allErrors: false } },
     routerOptions: { querystringParser(text) { try { return parseQuery(text); } catch { return invalidQuery; } } },
-    clientErrorHandler(_error, socket) { rejectSocket(socket); },
+    clientErrorHandler(_error, socket) { rejectSocket(socket,diagnostics); },
     frameworkErrors(error, request, reply) {
       const status = error.code === 'FST_ERR_BAD_URL' || error.code === 'FST_ERR_MAX_PARAM_LENGTH' ? 400 : 503;
+      recordIngressRejection(diagnostics,request.id,status);
       const body = JSON.stringify(projection(status, request.id));
       reply.raw.writeHead(status, { 'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body),
         'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff', 'Referrer-Policy': 'no-referrer' });
@@ -62,14 +76,18 @@ export function createApplication(authorize) {
       server.maxHeadersCount = 0; // Retain all bounded headers, then reject >100 instead of truncating.
       server.maxRequestsPerSocket = 100; server.maxConnections = 200;
       server.setTimeout(30000, socket => socket.destroy());
-      server.on('checkContinue', (_request, response) => rejectExpectation(response));
-      server.on('checkExpectation', (_request, response) => rejectExpectation(response));
-      server.on('upgrade', (_request, socket) => rejectSocket(socket));
-      server.on('connect', (_request, socket) => rejectSocket(socket));
+      server.on('checkContinue', (_request, response) => rejectExpectation(response,diagnostics));
+      server.on('checkExpectation', (_request, response) => rejectExpectation(response,diagnostics));
+      server.on('upgrade', (_request, socket) => rejectSocket(socket,diagnostics));
+      server.on('connect', (_request, socket) => rejectSocket(socket,diagnostics));
       return server;
     },
   });
+  bindDiagnostics(diagnostics,app.log);
+  app.decorate('diagnosticCapture',diagnostics);
   app.addHook('onRoute', route => {
+    if(typeof route.url!=='string' || route.url.length>256 || !/^\/[A-Za-z0-9_/:.*-]*$/.test(route.url)) throw new Error('Invalid diagnostic route template');
+    routes.add(route.url);
     // The selected Fastify request.signal/handlerTimeout path has upstream bugs #7047/#7069.
     // The application owns the same mandatory deadline below; enabling that path is forbidden.
     if (route.handlerTimeout !== undefined) throw new Error('Use the application operation deadline');
@@ -84,6 +102,10 @@ export function createApplication(authorize) {
   app.addContentTypeParser('application/json', { parseAs: 'buffer', bodyLimit: 65536 },
     async (/** @type {Request} */ request, /** @type {Buffer} */ bytes) => parseBody(bytes, operationSignal(request)));
   app.addHook('onRequest', async (request, reply) => {
+    const template=request.routeOptions.url;
+    const route=typeof template==='string' && routes.has(template) ? template : 'unmatched';
+    const method=['GET','HEAD','POST','PUT','PATCH','DELETE','OPTIONS','CONNECT','TRACE'].includes(request.method) ? request.method : 'OTHER';
+    observations.set(request,{id:request.id,start:performance.now(),method,route});
     const controller = new AbortController();
     operations.set(request, { controller, deadline: performance.now() + 10000 });
     const timer = setTimeout(() => {
@@ -100,7 +122,7 @@ export function createApplication(authorize) {
       reply.raw.removeListener('close', closed); reply.raw.removeListener('finish', cleanup);
       operations.delete(request); abort();
     };
-    const closed = () => { if (!reply.raw.writableFinished) abort(); cleanup(); };
+    const closed = () => { if (!reply.raw.writableFinished) {abort();observeEnd(request,undefined);} cleanup(); };
     request.raw.once('aborted', abort); reply.raw.once('close', closed); reply.raw.once('finish', cleanup);
     if (request.raw.aborted || reply.raw.destroyed) abort();
     reply.raw.setHeader('Cache-Control', 'no-store'); reply.raw.setHeader('X-Content-Type-Options', 'nosniff'); reply.raw.setHeader('Referrer-Policy', 'no-referrer');
@@ -122,6 +144,7 @@ export function createApplication(authorize) {
       (['POST', 'PUT', 'PATCH'].includes(request.method) && media === undefined) ||
       (media !== undefined && !/^application\/json(?:;\s*charset=utf-8)?$/i.test(media))) throw new HttpFailure(415);
   });
+  app.addHook('onResponse',async (request,reply)=>{observeEnd(request,reply.statusCode);});
   app.addHook('preValidation', async request => {
     if (request.raw.rawTrailers?.length) throw new HttpFailure(400);
     if (operationSignal(request).aborted) throw new HttpFailure(503);
