@@ -5,7 +5,7 @@ import { join, relative, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { runtimePolicy } from './runtime-policy.mjs';
 
-const forbiddenNames = new Set(['eval', 'Function', 'fetch', 'XMLHttpRequest', 'WebSocket', 'Worker', 'require']);
+const forbiddenNames = new Set(['eval', 'Function', 'fetch', 'XMLHttpRequest', 'WebSocket', 'EventSource', 'Worker', 'require']);
 const forbiddenProperties = new Set(['innerHTML', 'outerHTML', 'insertAdjacentHTML', 'dangerouslySetInnerHTML', 'execScript', 'constructor']);
 
 /** @typedef {{file:string,line:number,rule:string}} Finding */
@@ -73,7 +73,15 @@ export async function checkRuntime(root, policy = runtimePolicy) {
               }
             }
           }
-          if (ast.isIdentifier(node) && forbiddenNames.has(node.text) && !workerImports.has(node)) report(node,'prohibited-runtime-capability');
+          // Only this credential-free read-only same-origin stream may use fetch.
+          const streamCall=node.parent;
+          const options=streamCall && ast.isCallExpression(streamCall)?streamCall.arguments[1]:undefined;
+          const expectedOptions=new Map([['credentials','omit'],['cache','no-store'],['redirect','error'],['signal',null]]);
+          const publicStream=name==='demo/stream.js' && ast.isIdentifier(node) && node.text==='fetch' && ast.isCallExpression(streamCall) && streamCall.expression===node && streamCall.arguments.length===2 && ast.isStringLiteral(streamCall.arguments[0]) && streamCall.arguments[0].text==='/demo/feed-events' && options && ast.isObjectLiteralExpression(options) && options.properties.length===4 && options.properties.every(property=>{
+            if(ast.isShorthandPropertyAssignment(property))return ast.isIdentifier(property.name) && property.name.text==='signal';
+            return ast.isPropertyAssignment(property) && ast.isIdentifier(property.name) && expectedOptions.has(property.name.text) && ast.isStringLiteral(property.initializer) && property.initializer.text===expectedOptions.get(property.name.text);
+          }) && new Set(options.properties.map(property=>(ast.isPropertyAssignment(property) || ast.isShorthandPropertyAssignment(property)) && ast.isIdentifier(property.name)?property.name.text:'')).size===4;
+          if (ast.isIdentifier(node) && forbiddenNames.has(node.text) && !workerImports.has(node) && !publicStream) report(node,'prohibited-runtime-capability');
           if (ast.isIdentifier(node) && forbiddenProperties.has(node.text)) report(node,'html-or-code-sink');
           if (ast.isElementAccessExpression(node)) {
             const argument = node.argumentExpression;

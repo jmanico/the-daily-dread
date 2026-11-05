@@ -156,3 +156,14 @@ test('failed, canceled and competing builds preserve the last valid artifact', a
   await assert.rejects(buildDemo(root));
   assert.equal(await readFile(join(out,'marker'),'utf8'),'last complete artifact');
 });
+
+test('browser transport guard permits only the fixed credential-free stream call',async t=>{
+  const root=await fixture(t),path=join(root,'demo/stream.js'),policy=new Map([['demo/stream.js',[]]]);
+  const safe="export {};const signal=new AbortController().signal;await fetch('/demo/feed-events',{credentials:'omit',cache:'no-store',redirect:'error',signal});";
+  await writeFile(path,safe);assert.deepEqual(await checkRuntime(root,policy),[]);
+  for(const source of [safe.replace("'/demo/feed-events'","'https://evil.test'"),safe.replace("'omit'","'include'"),safe.replace("'error'","'follow'"),safe.replace("cache:'no-store'","credentials:'omit'"),safe.replace(',signal}',',signal,method:\'POST\'}'),"export {};const f=fetch;", "export {};new EventSource('/demo/feed-events');"]){
+    await writeFile(path,source);assert.ok((await checkRuntime(root,policy)).some(finding=>finding.rule==='prohibited-runtime-capability'));
+  }
+  await writeFile(path,'export {};');await writeFile(join(root,'demo/other.js'),safe);
+  assert.ok((await checkRuntime(root,new Map([...policy,['demo/other.js',[]]]))).some(finding=>finding.rule==='prohibited-runtime-capability'));
+});

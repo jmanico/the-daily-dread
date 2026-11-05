@@ -1,3 +1,4 @@
+import { closedRecord } from '../src/contracts/http-results.js';
 /** @typedef {{id:string,cve:string|null,title:string,description:string,url:string,severity:string,type:string,published:string,updated:string,withdrawn:string|null,credits:{name:string,type:string}[],vulnerabilities:{package:string,ecosystem:string,range:string,patched:string|null}[]}} Advisory */
 /** @param {unknown} value @returns {value is Record<string,unknown>} */
 function record(value) { return typeof value === 'object' && value !== null && !Array.isArray(value); }
@@ -10,7 +11,7 @@ function timestamp(value) { return typeof value === 'string' && /^\d{4}-\d{2}-\d
  * @param {unknown} value @returns {Advisory|null}
  */
 export function advisory(value) {
-  if (!record(value) || !text(value.id,32) || !/^GHSA-[23456789cfghjmpqrvwx]{4}-[23456789cfghjmpqrvwx]{4}-[23456789cfghjmpqrvwx]{4}$/.test(value.id)) return null;
+  if (!closedRecord(value,['id','cve','title','description','url','severity','type','published','updated','withdrawn','credits','vulnerabilities']) || !text(value.id,32) || !/^GHSA-[23456789cfghjmpqrvwx]{4}-[23456789cfghjmpqrvwx]{4}-[23456789cfghjmpqrvwx]{4}$/.test(value.id)) return null;
   if (!text(value.title,2048) || !value.title || !text(value.description,200000) || !text(value.url,200)) return null;
   if (value.url !== `https://github.com/advisories/${value.id}` || !timestamp(value.published) || !timestamp(value.updated) || value.withdrawn !== null && !timestamp(value.withdrawn)) return null;
   if (value.cve !== null && (!text(value.cve,32) || !/^CVE-\d{4}-\d{4,}$/.test(value.cve))) return null;
@@ -18,11 +19,11 @@ export function advisory(value) {
   if (!Array.isArray(value.credits) || value.credits.length > 100 || !Array.isArray(value.vulnerabilities) || value.vulnerabilities.length > 100) return null;
   const credits=[]; const vulnerabilities=[];
   for (const credit of value.credits) {
-    if(!record(credit) || !text(credit.name,200) || !text(credit.type,100)) return null;
+    if(!closedRecord(credit,['name','type']) || !text(credit.name,200) || !text(credit.type,100)) return null;
     credits.push({name:credit.name,type:credit.type});
   }
   for (const entry of value.vulnerabilities) {
-    if(!record(entry) || !text(entry.package,1000) || !text(entry.ecosystem,100) || !text(entry.range,2000) || entry.patched !== null && !text(entry.patched,500)) return null;
+    if(!closedRecord(entry,['package','ecosystem','range','patched']) || !text(entry.package,1000) || !text(entry.ecosystem,100) || !text(entry.range,2000) || entry.patched !== null && !text(entry.patched,500)) return null;
     vulnerabilities.push({package:entry.package,ecosystem:entry.ecosystem,range:entry.range,patched:entry.patched});
   }
   return {id:value.id,cve:value.cve,title:value.title,description:value.description,url:value.url,severity:value.severity,type:value.type,published:value.published,updated:value.updated,withdrawn:value.withdrawn,credits,vulnerabilities};

@@ -5,4 +5,4 @@ set -euo pipefail
 if [ "$#" -ne 1 ] || [ ! -x "$1" ]; then exit 1; fi
 ip link set lo up
 ip address add 11.0.0.1/32 dev lo
-exec "$1" --test integration/outbound-sockets.mjs integration/outbound-http.mjs
+exec "$1" --test integration/outbound-sockets.mjs integration/outbound-http.mjs integration/public-advisories.mjs
