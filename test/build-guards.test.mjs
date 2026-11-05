@@ -30,6 +30,8 @@ test('real compiler rejects unsafe syntax patterns without printing fixture data
     ['export * from "node:fs";', 'unapproved-import'],
     ['await import("node:net");', 'dynamic-runtime-import'],
     ['const execute = eval; execute("1");', 'prohibited-runtime-capability'],
+    ['new Worker("unsafe.js");', 'prohibited-runtime-capability'],
+    ['import { Worker as ParserWorker } from "node:worker_threads";', 'prohibited-runtime-capability'],
     ['const execute = globalThis["Function"];', 'prohibited-runtime-capability'],
     ['const key = "fetch"; window[key]("https://invalid.test");', 'computed-capability-access'],
     ['document.body["innerHTML"] = "unsafe";', 'prohibited-runtime-capability'],
