@@ -105,3 +105,51 @@ test('cancellation and the real five-second connect deadline destroy stalled soc
   assert.deepEqual(await connector.connect({url:origin+'/',context:{},signal:new AbortController().signal}),{kind:'failed',reason:'timeout'});
   assert.ok(performance.now()-start>=4500 && performance.now()-start<10000);
 });
+
+test('established idle TLS streams close at the ten-second inactivity limit', {timeout:20000}, async t=>{
+  const f=await fixture(t);
+  const connector=createDestinationConnector(f.config,()=> 'allowed',{ca:f.ca,resolve:async()=>[address]});
+  t.after(()=>connector.retire());
+  const result=await connector.connect(f.command);assert.equal(result.kind,'connected');
+  if(result.kind!=='connected')return;
+  const start=performance.now();
+  await once(result.socket,'close');
+  const elapsed=performance.now()-start;
+  assert.ok(elapsed>=9000 && elapsed<15000,`idle close took ${elapsed}ms`);
+  assert.equal(f.bytes(),0);
+  assert.equal(result.socket.destroyed,true);
+});
+
+test('ongoing TLS traffic cannot extend the thirty-second total connection limit', {timeout:40000}, async t=>{
+  const f=await fixture(t);
+  const connector=createDestinationConnector(f.config,()=> 'allowed',{ca:f.ca,resolve:async()=>[address]});
+  t.after(()=>connector.retire());
+  const start=performance.now();
+  const result=await connector.connect(f.command);assert.equal(result.kind,'connected');
+  if(result.kind!=='connected')return;
+  let responses=0,lastResponse=0;
+  result.socket.on('data',()=>{responses++;lastResponse=performance.now()-start;});
+  const heartbeat=setInterval(()=>result.socket.write('synthetic-heartbeat'),1000);
+  t.after(()=>clearInterval(heartbeat));
+  await once(result.socket,'close');
+  clearInterval(heartbeat);
+  const elapsed=performance.now()-start;
+  assert.ok(elapsed>=29000 && elapsed<35000,`total close took ${elapsed}ms`);
+  assert.ok(responses>=25 && lastResponse>=25000,'traffic remained active near the total deadline');
+  assert.equal(result.socket.destroyed,true);
+});
+
+test('caller cancellation destroys an established TLS stream and allows a fresh connection',async t=>{
+  const f=await fixture(t);
+  const connector=createDestinationConnector(f.config,()=> 'allowed',{ca:f.ca,resolve:async()=>[address]});
+  t.after(()=>connector.retire());
+  const controller=new AbortController();
+  const first=await connector.connect({...f.command,signal:controller.signal});assert.equal(first.kind,'connected');
+  if(first.kind!=='connected')return;
+  const closed=once(first.socket,'close');controller.abort();await closed;
+  assert.equal(first.socket.destroyed,true);
+  const second=await connector.connect(f.command);assert.equal(second.kind,'connected');
+  if(second.kind==='connected'){const ended=once(second.socket,'close');second.socket.destroy();await ended;}
+  assert.equal(f.connections(),2);
+  assert.equal(f.bytes(),0);
+});
