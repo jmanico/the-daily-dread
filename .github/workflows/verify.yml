@@ -63,12 +63,24 @@ jobs:
 
   runtime-audit:
     runs-on: ubuntu-24.04
-    timeout-minutes: 2
-    permissions: {}
+    timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
-      # Deliberately fail until #26 supplies a reviewed, locked runtime auditor.
-      # Do not install the rejected candidate, use npx, or turn this into a skip.
-      - name: Unresolved TOOL-003 release gate
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          submodules: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '26.13.0'
+          package-manager-cache: false
+      - name: Check selected runtime and reviewed dependencies
         run: |
-          echo 'Runtime audit is blocked by REQ-DECISION-015 (#26).'
-          exit 1
+          node -e "if (process.version !== 'v26.13.0') process.exit(1)"
+          test "$(npm --version)" = '11.20.0'
+          node scripts/check-dependencies.mjs
+      - name: Reproducible installation without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Audit actual runtime against official security and support data
+        run: node scripts/audit-node.mjs

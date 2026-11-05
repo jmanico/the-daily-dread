@@ -52,6 +52,8 @@ Development-tool additions approved by AR-002 (NFR-5 revalidation still applies)
 | `esbuild` | 0.28.2 | FR-6.1 / NFR-5.1 / SEC-9: compile browser JSX and bundle/minify local production assets without a framework or development server. |
 | `typescript` | 7.0.2 | FR-6.2 / NFR-5.1 / SEC-1 / SEC-9: check JavaScript/JSDoc and client contracts through the stable CLI; no runtime dependency or source-language migration. |
 
+TOOL-003 additionally selects development-only `semver` **7.8.6** for NFR-4/NFR-5 and SEC-9 runtime advisory comparison. The [bounded local checker](docs/decisions/RUNTIME_AUDIT.md) uses native HTTPS/hashing and the existing JSON worker. Node has no native npm-range comparator; this reuses Fastify's already resolved package without adding a transitive tree. This build-tool use does not establish FR-2.7/FR-3.14 ecosystem matching acceptance.
+
 ### Service and persistence organization
 
 One modular service contains HTTP handlers, orchestration, durable-job consumers, domain policies and integration adapters. CPU-heavy parsing and PDF work use native worker threads within that service; resource enforcement is in [SEC-5](SECURITY.md#sec-5--repository-inspection-and-resource-budgets). No current requirement forces independently deployed workers.

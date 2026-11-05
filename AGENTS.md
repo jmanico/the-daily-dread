@@ -31,7 +31,7 @@ Run the applicable checks before calling implementation work done.
 | Type-check | TOOL-002 selected: `node_modules/.bin/tsc --project jsconfig.json --noEmit` using TypeScript 7.0.2 with checked JavaScript/JSDoc and client contracts; configuration belongs to REQ-PLATFORM-022. No TypeScript-source migration is selected. |
 | Test | `node --test` |
 | Dependency audit | `npm audit --audit-level=high` |
-| Runtime audit | DEFERRED TOOL-003 — runtime audit tool requires NFR-5 verification and an approved locked dev dependency; no ad-hoc npx execution. |
+| Runtime audit | TOOL-003 selected: `node scripts/audit-node.mjs` using locked `semver` 7.8.6 and official Node.js security/support data; fails on affected or unsupported runtimes and unavailable/invalid data. No ad-hoc npx execution. |
 
 ## Presentation validation
 
@@ -52,6 +52,6 @@ For missing ledger rows, implement at the named component, resolve applicable OD
 
 ## Toolchain handoff
 
-TOOL-001 and TOOL-002 have selected commands and reviewed tool pins under AR-002; implementation of the build/check configuration remains in [REQ-PLATFORM-022](https://github.com/jmanico/the-daily-dread/issues/104). A command selection is not a successful application build. TOOL-003 remains deferred: the reviewed `is-my-node-vulnerable` 1.6.1 candidate was rejected because its resolved tree introduces high-severity advisories; see [the dependency review](docs/DEPENDENCY_REVIEW.md#backlog-decision-review--2026-11-04). Do not install that candidate or force a transitive override. The release maintainer owns this remaining runtime-audit gate.
+TOOL-001 and TOOL-002 have selected commands and reviewed tool pins under AR-002; implementation of the build/check configuration remains in [REQ-PLATFORM-022](https://github.com/jmanico/the-daily-dread/issues/104). A command selection is not a successful application build. TOOL-003 selects the bounded local checker and reviewed `semver` 7.8.6 development dependency under [REQ-DECISION-015](https://github.com/jmanico/the-daily-dread/issues/26); see [the decision and verification contract](docs/decisions/RUNTIME_AUDIT.md) and [dependency review](docs/DEPENDENCY_REVIEW.md#runtime-audit-alternative--2026-11-05). The rejected `is-my-node-vulnerable` 1.6.1 candidate remains prohibited because its resolved tree introduces high-severity advisories; do not install it or force a transitive override. The release maintainer must run the selected command on the actual release runtime; command selection is not a permanent passing audit.
 
 TOOL-004 is resolved to this repository's [.manicode/secure-coding.md](.manicode/secure-coding.md). This newly established project-local guide points to the owning controls; it does not claim discovery of a previously missing external pack. Read it on demand before implementation. G-009's location/provenance handoff is satisfied; additional concrete prescription gaps must still be recorded if encountered.

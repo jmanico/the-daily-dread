@@ -9,7 +9,7 @@ const approved = new Map([
   ['react','19.3.1'],['react-dom','19.3.1'],['@types/node','26.6.6'],
   ['@types/react','19.3.0'],['@types/react-dom','19.3.0'],
   ['esbuild','0.28.2'],['typescript','7.0.2'],
-  ['fastify','5.12.8'],['jsonc-parser','3.3.1'],
+  ['fastify','5.12.8'],['jsonc-parser','3.3.1'],['semver','7.8.6'],
 ]);
 
 /** @param {unknown} value @returns {value is Record<string,unknown>} */
