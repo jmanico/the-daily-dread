@@ -1,0 +1,23 @@
+# Project secure-coding reading guide
+
+This is the authoritative project-local `.manicode/secure-coding.md`, established by the project lead's 2026-11-04 instruction to resolve implementation blockers. It is a reading guide to this project's controls, not a recovered external Manicode pack or a claim that another project's guidance was imported. [SECURITY.md](../SECURITY.md) remains the control owner; this guide does not waive or replace it.
+
+Before implementing an area, read its row below, the complete linked control sections, and the named component's contracts in [ARCHITECTURE.md](../ARCHITECTURE.md). Follow [AGENTS.md](../AGENTS.md) for dependency review, tests and change-review gates. If a necessary technology-specific prescription is still absent, record the concrete gap rather than substituting an unrelated pack.
+
+| Area | Required sections and implementation focus |
+| --- | --- |
+| HTTP and browser commands | SEC-1, SEC-2, SEC-3, SEC-5, SEC-7, SEC-8, SEC-10: authenticate before effects; scoped function/object/property authorization; reject unknown and duplicate fields; explicit response projections; CSRF/origin checks; finite transport limits; safe errors. |
+| OIDC, sessions and company access | SEC-1, SEC-2, SEC-4, SEC-8, SEC-10, SEC-11: trusted issuer/sub identity, PKCE and one-use browser-bound transactions, opaque server sessions, current roles, fresh operation-bound reauthentication and safe attribution. |
+| PostgreSQL and owner operations | SEC-1, SEC-3, SEC-8, SEC-10: parameterized/scoped statements, one checked-out transaction client, explicit isolation/constraints, revision conflicts, atomic mutation/audit/work intent, whole-operation retries and append-only audit privileges. |
+| Source retrieval and external adapters | SEC-1, SEC-4, SEC-5, SEC-6, SEC-8, SEC-10: destination/address/socket/TLS validation, bounded streaming and cancellation, rights-bound collections, inert configuration and closed typed provider facts. |
+| Repository inspection and ecosystem matching | SEC-1, SEC-4, SEC-5, SEC-6, SEC-8, SEC-10: immutable authorized reads, no repository execution, static bounded parsers, ecosystem conformance, exact provenance, redaction and explicit incomplete outcomes. |
+| Jobs, effects and recovery | SEC-1, SEC-3, SEC-5, SEC-8, SEC-10: durable logical identities, current effect-time authority, fencing, cumulative budgets, bounded retries, uncertain-outcome reconciliation and no duplicate effects. |
+| Credentials and restore | SEC-2, SEC-3, SEC-6, SEC-8, SEC-9, SEC-10, SEC-11: restricted secret adapter, authenticated envelopes and unique nonce reservations, rotation, decrypt-only recovery keys, session invalidation and restore quarantine. |
+| AI input and output | SEC-1, SEC-4, SEC-5, SEC-6, SEC-7, SEC-8, SEC-10, SEC-11: local classification and final-byte gate, local placeholder mappings, source-use approval, assessment-scoped evidence, advisory-only output and no model authority. OD-005 remains a separate audit-representation blocker. |
+| React, notes and output projections | SEC-1, SEC-2, SEC-3, SEC-7, SEC-9, SEC-10: JSX text and code-owned props, validated destinations, one restricted note representation, strict CSP, authorized minimal data and clearing stale private state. |
+| PDF, CSV, JSON and temporary output | SEC-1, SEC-2, SEC-3, SEC-5, SEC-7, SEC-8, SEC-10: current authorization at request/generation/status/download, safe formats, no remote PDF resources, bounded restricted temporary files and the specified expiry/invalidation rules. |
+| Notifications and GitHub issues | SEC-1, SEC-4, SEC-5, SEC-6, SEC-7, SEC-8, SEC-10, SEC-11: current recipient/destination/source rights, minimal public/private projections, typed acknowledgments, stable effect identity and original-recipient corrections. |
+| Events and operational health | SEC-1, SEC-8, SEC-10, SEC-11 and SECURITY_EVENTS.md: immutable allowlisted snapshots, trusted opaque attribution, bounded serialization, atomic audit, independent failure observation and authorized consumers. Start with Wave 0; unresolved OD policies cannot be guessed. |
+| Build, dependencies and deployment | SEC-1, SEC-5, SEC-6, SEC-9, SEC-10: verified exact pins and lockfile, scripts disabled by default, confined CI credentials, local production assets, non-root/read-only runtime, bounded resources and real release evidence. |
+
+Every security-critical allowed, denied and error path needs positive and negative tests at its real enforcement boundary. A mock, schema, logger call, dependency scan or this guide is not evidence that the corresponding runtime control works. Preserve all deferred deployment/evidence gates and the saved threat-model/event-ledger statuses until actual verification supports changing them.
