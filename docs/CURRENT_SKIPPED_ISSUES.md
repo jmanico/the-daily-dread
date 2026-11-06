@@ -35,11 +35,11 @@ The other nine open decision/evidence issues are not upstream implementation pre
 - #32: threat ratings remain unrated; no evidence-based rubric/acceptance is invented.
 - #64 (G-001): complete the concrete implementation/evidence handoff; local scope selection does not prove it.
 - #65 (G-002): complete route/use-case authorization evidence, including the new local profile.
-- #66 (G-003): complete scoped authorization/property and commitment-boundary evidence.
-- #67 (G-004): complete its recorded implementation/verification evidence; no documentary closure.
-- #68 (G-005): complete its recorded implementation/verification evidence; no documentary closure.
-- #69 (G-006): complete its recorded implementation/verification evidence; no documentary closure.
-- #70 (G-007): complete its recorded implementation/verification evidence; no documentary closure.
+- #66 (G-003): complete the browser-route matrix covering intended requests, Origin, credentials and server authorization.
+- #67 (G-004): verify export ownership, temporary-output lifecycle and status/download authorization.
+- #68 (G-005): verify adapter response schemas, semantic authority, transition owners and negative cases.
+- #69 (G-006): observe private-response headers, browser storage, signout and authority-change behavior.
+- #70 (G-007): independently verify event representation, durability, consumers and silence monitoring; optional AI representation remains #31.
 - #72: actual local backup/restore evidence remains outstanding; local data still needs verified recovery.
 
 No new issue was skipped in the local-session slice; #254 has no open decision prerequisite. Private activation remains incomplete integration, including required audit and HTTP/browser/launcher enforcement. No unchanged threat or ledger status was promoted by passing credential-owner tests.

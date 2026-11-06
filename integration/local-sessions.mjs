@@ -186,6 +186,28 @@ test('local identity lifecycle on PostgreSQL with TLS and a restricted role',{ti
     finally{release();await holder;}
     assert.equal(await count(active.scope.workspaceRef),0);
   });
+  await t.test('AC-02/05: lost or late commit acknowledgment never releases a session secret',async()=>{
+    for(const mode of ['unknown','stopped']){
+      let lose=false,release=()=>{},committed=()=>{};
+      const gate=new Promise(resolve=>{release=()=>resolve(undefined);}),ready=new Promise(resolve=>{committed=()=>resolve(undefined);});
+      /** @type {ReturnType<typeof createTransactionBoundary>} */
+      const fault={...boundary,async run(context,work){
+        const result=await boundary.run(context,work);
+        if(lose && result.kind==='committed'){
+          if(mode==='stopped'){committed();await gate;return result;}
+          return Object.freeze({kind:'unknown',operationId:result.operationId});
+        }
+        return result;
+      }};
+      const scope=identity(),owner=createLocalSessions(fault,scope);owners.push(owner);
+      assert.equal((await owner.start(signal())).kind,'ready');const code=credential(await owner.issue(signal()),'code');lose=true;
+      const pending=owner.exchange(signal(),code);
+      if(mode==='stopped'){await ready;owner.stop();release();}
+      assert.deepEqual(await pending,{kind:'unavailable'});assert.equal(await count(scope.workspaceRef),1);
+      assert.deepEqual(await owner.issue(signal()),{kind:'unavailable'});assert.deepEqual(await owner.exchange(signal(),code),{kind:'unavailable'});
+      const restarted=createLocalSessions(boundary,scope);owners.push(restarted);assert.equal((await restarted.start(signal())).kind,'ready');assert.equal(await count(scope.workspaceRef),0);
+    }
+  });
   await t.test('AC-05/06: canceled startup, reinitialization and foreign bootstrap never replace authority',async()=>{
     const scope=identity(),owner=createLocalSessions(boundary,scope);owners.push(owner);
     const c=new AbortController();c.abort();assert.equal((await owner.start(c.signal)).kind,'cancelled');assert.equal((await owner.issue(signal())).kind,'unavailable');
