@@ -48,6 +48,8 @@ jobs:
         run: node --test
       - name: PostgreSQL 18.6 transactions, TLS and failure injection
         run: node --test integration/postgres-transactions.mjs
+      - name: Local launch codes and session lifecycle on PostgreSQL
+        run: node --test integration/local-sessions.mjs
       - name: Durable work crash recovery, fencing and current authority
         run: node --test integration/durable-work.mjs
       - name: Atomic administrative audit and append-only privilege enforcement

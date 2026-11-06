@@ -1,8 +1,12 @@
 # Build disposition — 2026-11-05
 
+**Current skips:** [the refreshed issue list](CURRENT_SKIPPED_ISSUES.md) identifies all 21 leaves still blocked by open decision #31 and distinguishes historical company-profile blockers from current local work.
+
 **Current delivery target:** the project lead has now explicitly selected a single-user local Mac application, with no hosting. [AR-006](decisions/LOCAL_WORKSTATION.md) and the [local decision register](decisions/LOCAL_DECISION_REGISTER.md) supersede company-installation assumptions for this target. The 139-row table below preserves the original production backlog and historical implementation state; its #23 company-profile and #31 optional-AI dependency reasons do not define the new local critical path. No leaf is closed or test promoted by this scope change.
 
 Local workspace preparation #252 now has its own [implementation evidence](LOCAL_WORKSPACE_EVIDENCE.md): fixed OS-owned state root and closed manifest, 157 passing standard tests, and successful local init/check. This does not enable private access or close an original leaf.
+
+Local credential lifecycle #254 now has its own [PostgreSQL evidence](LOCAL_SESSION_EVIDENCE.md): 162 standard tests and 17 new real-database tests pass. Codes/sessions, expiry, bounded attempts and revocation are implemented as an unactivated owner. HTTP/terminal/browser, audit commitment and private startup remain required; no security-event coverage or original leaf is promoted.
 
 The project lead redirected this build to a demonstrable UI, then explicitly requested real feed data. Demo issues #232 and #249 were added under the web workstream. No original production leaf is closed by the demo. States below were read from GitHub in this build session.
 

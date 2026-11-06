@@ -1,6 +1,7 @@
 // SEC-1/SEC-9: new runtime modules and imports require an explicit review here.
 // This is a review guard, not a JavaScript capability sandbox.
 export const runtimePolicy = new Map([
+  ['src/persistence/local-sessions.js', ['node:crypto', '../contracts/http-results.js', './transactions.js']],
   ['src/local/workspace.js', ['node:fs', 'node:fs/promises', 'node:path', 'node:crypto', '../contracts/http-results.js', '../workers/json-tasks.js']],
   ['scripts/local-workspace.mjs', ['node:os', '../src/local/workspace.js']],
   ['src/audit/independent-monitor.js', ['../contracts/http-results.js', 'node:timers/promises']],
