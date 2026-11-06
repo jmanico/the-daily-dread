@@ -4,6 +4,8 @@
 
 Local workspace preparation #252 now has its own [implementation evidence](LOCAL_WORKSPACE_EVIDENCE.md): fixed OS-owned state root and closed manifest, 157 passing standard tests, and successful local init/check. This does not enable private access or close an original leaf.
 
+Local credential lifecycle #254 now has its own [PostgreSQL evidence](LOCAL_SESSION_EVIDENCE.md): 162 standard tests and 16 new real-database tests pass. Codes/sessions, expiry, bounded attempts and revocation are implemented as an unactivated owner. HTTP/terminal/browser, audit commitment and private startup remain required; no security-event coverage or original leaf is promoted.
+
 The project lead redirected this build to a demonstrable UI, then explicitly requested real feed data. Demo issues #232 and #249 were added under the web workstream. No original production leaf is closed by the demo. States below were read from GitHub in this build session.
 
 An open decision blocks dependent work transitively. The overnight build resumed foundation work after the requested demo milestone. Eligible leaves below are distinguished from decision-blocked leaves. Production implementation remains incomplete.
